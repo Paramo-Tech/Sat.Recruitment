@@ -2,18 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace DataAccess
 {
     public class UserDataAccess : IUserDataAccess
     {
-        public IEnumerable<User> GetUsers()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
             var users = new List<User>();
             using (var readerUser = new FileReaderUser().GetStreamReaderUser())
             {
                 string line;
-                while ((line = readerUser.ReadLine()) != null)
+                while ((line = await readerUser.ReadLineAsync()) != null)
                 {
                     var lineSeparated = line.Split(',');
                     var userToAdd = new User

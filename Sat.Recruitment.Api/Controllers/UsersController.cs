@@ -19,8 +19,11 @@ namespace Sat.Recruitment.Api.Controllers
     {
         [HttpPost]
         [Route("/create-user")]
-        public Result CreateUser(User user)
+        public async Task<Result> CreateUserAsync(User user)
         {
+            var readUsers = new ReadUsers();
+            var userTask = readUsers.GetUsersAsync();
+
             var validationResultList = new List<ValidationResult>();
             var validModel = Validator.TryValidateObject(user, new ValidationContext(user), validationResultList, true);
             if (!validModel)
@@ -32,11 +35,9 @@ namespace Sat.Recruitment.Api.Controllers
             user.Money = factory.GetMoneyCalculatedByUser(user);
             user.Email = EmailHelper.Normalize(user.Email);
             
-            var readUsers = new ReadUsers();
-            var _users = readUsers.GetUsers();
-
+            var users = await userTask;
             var result = new Result() { IsSuccess = true };
-            if (_users.Any(u => u.Email == user.Email && u.Name == u.Name))
+            if (users.Any(u => u.Email == user.Email && u.Name == u.Name))
             {
                 result = new Result() { IsSuccess = false, Errors = new List<string>() { "The user is duplicated" }};
             }

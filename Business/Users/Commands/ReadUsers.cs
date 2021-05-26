@@ -1,6 +1,7 @@
 ﻿using DataAccess;
 using Domain;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business.Users.Commands
 {
@@ -13,9 +14,9 @@ namespace Business.Users.Commands
             userDataAcess = new UserDataAccess();
         }
 
-        public IEnumerable<User> GetUsers()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            return userDataAcess.GetUsers();
+            return await userDataAcess.GetUsersAsync();
         }
     }
 }
