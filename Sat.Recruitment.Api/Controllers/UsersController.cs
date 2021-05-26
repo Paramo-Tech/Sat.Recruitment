@@ -1,4 +1,6 @@
-﻿using Domain;
+﻿using Business.Strategies;
+using Business.Users.Commands;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
@@ -15,8 +17,6 @@ namespace Sat.Recruitment.Api.Controllers
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
     {
-        private readonly List<User> _users = new List<User>();
-
         [HttpPost]
         [Route("/create-user")]
         public Result CreateUser(User user)
@@ -28,27 +28,11 @@ namespace Sat.Recruitment.Api.Controllers
                 return new Result() { IsSuccess = false, Errors = validationResultList.Select(e => e.ErrorMessage) };
             }
 
-            Business.FactoryMoneyUser factory = new Business.FactoryMoneyUser();
+            FactoryMoneyUser factory = new FactoryMoneyUser();
             user.Money = factory.GetMoneyCalculatedByUser(user);
             user.Email = EmailHelper.Normalize(user.Email);
-
-
-            var reader = ReadUsersFromFile();
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var userToAdd = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(userToAdd);
-            }
-            reader.Close();
+            var readUsers = new ReadUsers();
+            var _users = readUsers.GetUsers();
             try
             {
                 var isDuplicated = false;
