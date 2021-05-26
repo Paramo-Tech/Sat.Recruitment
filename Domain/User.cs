@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
-    
+
     public class User
     {
         [Required(ErrorMessage = "Name is required")]

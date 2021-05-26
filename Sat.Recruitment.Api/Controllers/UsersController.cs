@@ -32,42 +32,8 @@ namespace Sat.Recruitment.Api.Controllers
                 return new Result() { IsSuccess = false, Errors = validationResultList.Select(e => e.ErrorMessage) };
             }
 
-            if (user.UserType == "Normal")
-            {
-                if (user.Money > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.12);
-                    var gif = user.Money * percentage;
-                    user.Money += gif;
-                }
-                if (user.Money < 100)
-                {
-                    if (user.Money > 10)
-                    {
-                        var percentage = Convert.ToDecimal(0.8);
-                        var gif = user.Money * percentage;
-                        user.Money += gif;
-                    }
-                }
-            }
-            if (user.UserType == "SuperUser")
-            {
-                if (user.Money > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.20);
-                    var gif = user.Money * percentage;
-                    user.Money = user.Money + gif;
-                }
-            }
-            if (user.UserType == "Premium")
-            {
-                if (user.Money > 100)
-                {
-                    var gif = user.Money * 2;
-                    user.Money += gif;
-                }
-            }
-
+            Application.FactoryMoneyUser factory = new Application.FactoryMoneyUser();
+            user.Money = factory.GetMoneyCalculatedByUser(user);
 
             var reader = ReadUsersFromFile();
 
