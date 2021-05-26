@@ -7,7 +7,7 @@ namespace Sat.Recruitment.Test
     public class UnitTest1
     {
         [Fact]
-        public void Test1()
+        public void Create_User_Successfully()
         {
             var userController = new UsersController();
 
@@ -18,7 +18,7 @@ namespace Sat.Recruitment.Test
         }
 
         [Fact]
-        public void Test2()
+        public void Create_Duplicate_User()
         {
             var userController = new UsersController();
 
