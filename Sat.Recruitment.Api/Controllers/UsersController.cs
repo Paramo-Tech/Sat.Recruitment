@@ -28,7 +28,7 @@ namespace Sat.Recruitment.Api.Controllers
                 return new Result() { IsSuccess = false, Errors = validationResultList.Select(e => e.ErrorMessage) };
             }
 
-            Application.FactoryMoneyUser factory = new Application.FactoryMoneyUser();
+            Business.FactoryMoneyUser factory = new Business.FactoryMoneyUser();
             user.Money = factory.GetMoneyCalculatedByUser(user);
             user.Email = EmailHelper.Normalize(user.Email);
 
