@@ -1,9 +1,11 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
@@ -23,7 +25,6 @@ namespace Sat.Recruitment.Api.Controllers
         [Route("/create-user")]
         public Result CreateUser(User user)
         {
-            var errors = "";
             var name = user.Name;
             var email = user.Email;
             var address = user.Address;
@@ -31,15 +32,11 @@ namespace Sat.Recruitment.Api.Controllers
             var money = user.Money;
             var userType = user.UserType;
 
-            ValidateErrors(name, email, address, phone, ref errors);
-
-            if (errors != null && errors != "")
+            var validationResultList = new List<ValidationResult>();
+            bool validModel = Validator.TryValidateObject(user, new ValidationContext(user), validationResultList);
+            if (!validModel)
             {
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
+                return new Result() { IsSuccess = false, Errors = validationResultList.Select(e => e.ErrorMessage) };
             }
 
             var newUser = new User
@@ -144,8 +141,7 @@ namespace Sat.Recruitment.Api.Controllers
 
                     return new Result()
                     {
-                        IsSuccess = true,
-                        Errors = "User Created"
+                        IsSuccess = true
                     };
                 }
                 else
@@ -155,7 +151,7 @@ namespace Sat.Recruitment.Api.Controllers
                     return new Result()
                     {
                         IsSuccess = false,
-                        Errors = "The user is duplicated"
+                        Errors = new List<string>() { "The user is duplicated" }
                     };
                 }
             }
@@ -165,36 +161,8 @@ namespace Sat.Recruitment.Api.Controllers
                 return new Result()
                 {
                     IsSuccess = false,
-                    Errors = "The user is duplicated"
+                    Errors = new List<string>() { "The user is duplicated" }
                 };
-            }
-        }
-
-        //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
-        {
-            if (name == null)
-            {
-                //Validate if Name is null
-                errors = "The name is required";
-            }
-
-            if (email == null)
-            {
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            }
-
-            if (address == null)
-            {
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            }
-
-            if (phone == null)
-            {
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
             }
         }
     }

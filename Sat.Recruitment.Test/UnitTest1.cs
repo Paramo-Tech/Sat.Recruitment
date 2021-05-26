@@ -1,6 +1,7 @@
 using Domain;
 using Sat.Recruitment.Api.Controllers;
 using Xunit;
+using System.Linq;
 
 namespace Sat.Recruitment.Test
 {
@@ -25,7 +26,6 @@ namespace Sat.Recruitment.Test
             var result = userController.CreateUser(userCorrect);
 
             Assert.True(result.IsSuccess);
-            Assert.Equal("User Created", result.Errors);
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace Sat.Recruitment.Test
             var result = userController.CreateUser(user_duplicated);
 
             Assert.False(result.IsSuccess);
-            Assert.Equal("The user is duplicated", result.Errors);
+            Assert.Contains("The user is duplicated", result.Errors);
         }
     }
 }

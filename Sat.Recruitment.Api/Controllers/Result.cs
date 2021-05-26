@@ -1,8 +1,10 @@
-﻿namespace Sat.Recruitment.Api.Controllers
+﻿using System.Collections.Generic;
+
+namespace Sat.Recruitment.Api.Controllers
 {
     public class Result
     {
         public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
+        public IEnumerable<string> Errors { get; set; }
     }
 }
