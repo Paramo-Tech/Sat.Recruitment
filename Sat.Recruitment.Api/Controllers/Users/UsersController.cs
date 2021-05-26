@@ -2,11 +2,8 @@
 using Business.Users.Commands;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,15 +28,15 @@ namespace Sat.Recruitment.Api.Controllers
                 return new Result() { IsSuccess = false, Errors = validationResultList.Select(e => e.ErrorMessage) };
             }
 
-            FactoryMoneyUser factory = new FactoryMoneyUser();
+            var factory = new FactoryMoneyUser();
             user.Money = factory.GetMoneyCalculatedByUser(user);
             user.Email = EmailHelper.Normalize(user.Email);
-            
+
             var users = await userTask;
             var result = new Result() { IsSuccess = true };
             if (users.Any(u => u.Email == user.Email && u.Name == u.Name))
             {
-                result = new Result() { IsSuccess = false, Errors = new List<string>() { "The user is duplicated" }};
+                result = new Result() { IsSuccess = false, Errors = new List<string>() { "The user is duplicated" } };
             }
             return result;
         }

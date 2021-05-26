@@ -1,7 +1,7 @@
 using Domain;
 using Sat.Recruitment.Api.Controllers;
-using Xunit;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Sat.Recruitment.Test
 {

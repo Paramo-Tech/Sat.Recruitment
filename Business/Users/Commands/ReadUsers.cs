@@ -7,7 +7,7 @@ namespace Business.Users.Commands
 {
     public class ReadUsers : IReadUsers
     {
-        private IUserDataAccess userDataAcess;
+        private readonly IUserDataAccess userDataAcess;
 
         public ReadUsers()
         {
