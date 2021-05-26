@@ -15,18 +15,14 @@ namespace Sat.Recruitment.Api.Controllers
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
     {
-
         private readonly List<User> _users = new List<User>();
-        public UsersController()
-        {
-        }
 
         [HttpPost]
         [Route("/create-user")]
         public Result CreateUser(User user)
         {
             var validationResultList = new List<ValidationResult>();
-            bool validModel = Validator.TryValidateObject(user, new ValidationContext(user), validationResultList);
+            var validModel = Validator.TryValidateObject(user, new ValidationContext(user), validationResultList, true);
             if (!validModel)
             {
                 return new Result() { IsSuccess = false, Errors = validationResultList.Select(e => e.ErrorMessage) };
@@ -34,18 +30,10 @@ namespace Sat.Recruitment.Api.Controllers
 
             Application.FactoryMoneyUser factory = new Application.FactoryMoneyUser();
             user.Money = factory.GetMoneyCalculatedByUser(user);
+            user.Email = EmailHelper.Normalize(user.Email);
+
 
             var reader = ReadUsersFromFile();
-
-            //Normalize email
-            var aux = user.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-
-            user.Email = string.Join("@", new string[] { aux[0], aux[1] });
-
             while (reader.Peek() >= 0)
             {
                 var line = reader.ReadLineAsync().Result;
