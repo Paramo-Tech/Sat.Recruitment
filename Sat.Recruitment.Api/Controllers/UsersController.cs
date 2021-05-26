@@ -31,59 +31,16 @@ namespace Sat.Recruitment.Api.Controllers
             FactoryMoneyUser factory = new FactoryMoneyUser();
             user.Money = factory.GetMoneyCalculatedByUser(user);
             user.Email = EmailHelper.Normalize(user.Email);
+            
             var readUsers = new ReadUsers();
             var _users = readUsers.GetUsers();
-            try
+
+            var result = new Result() { IsSuccess = true };
+            if (_users.Any(u => u.Email == user.Email && u.Name == u.Name))
             {
-                var isDuplicated = false;
-                foreach (var userRead in _users)
-                {
-                    if (userRead.Email == user.Email
-                        ||
-                        userRead.Phone == user.Phone)
-                    {
-                        isDuplicated = true;
-                    }
-                    else if (userRead.Name == user.Name)
-                    {
-                        if (userRead.Address == user.Address)
-                        {
-                            isDuplicated = true;
-                            throw new Exception("User is duplicated");
-                        }
-
-                    }
-                }
-
-                if (!isDuplicated)
-                {
-                    Debug.WriteLine("User Created");
-
-                    return new Result()
-                    {
-                        IsSuccess = true
-                    };
-                }
-                else
-                {
-                    Debug.WriteLine("The user is duplicated");
-
-                    return new Result()
-                    {
-                        IsSuccess = false,
-                        Errors = new List<string>() { "The user is duplicated" }
-                    };
-                }
+                result = new Result() { IsSuccess = false, Errors = new List<string>() { "The user is duplicated" }};
             }
-            catch
-            {
-                Debug.WriteLine("The user is duplicated");
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = new List<string>() { "The user is duplicated" }
-                };
-            }
+            return result;
         }
     }
 }

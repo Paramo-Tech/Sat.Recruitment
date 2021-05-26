@@ -6,7 +6,7 @@ using System.Linq;
 namespace Sat.Recruitment.Test
 {
     [CollectionDefinition("Tests", DisableParallelization = true)]
-    public class UnitTest1
+    public class CreateUserTest
     {
         [Fact]
         public void Create_User_Successfully()
