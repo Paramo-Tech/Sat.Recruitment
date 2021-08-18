@@ -9,6 +9,8 @@ namespace Sat.Recruitment.Api.Controllers
     /// <summary>
     /// a base controller to add all the generic stuffs 
     /// </summary>
+    [ApiController]
+    [Route("[controller]")]
     public class BaseApiController : ControllerBase
     {
         private IMediator _mediator;
@@ -23,6 +25,5 @@ namespace Sat.Recruitment.Api.Controllers
                 return NotFound();
             return BadRequest(result.Error);
         }
-
     }
 }
