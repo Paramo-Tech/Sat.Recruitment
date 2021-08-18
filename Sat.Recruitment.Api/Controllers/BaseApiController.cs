@@ -10,7 +10,7 @@ namespace Sat.Recruitment.Api.Controllers
     /// a base controller to add all the generic stuffs 
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api]")]
     public class BaseApiController : ControllerBase
     {
         private IMediator _mediator;

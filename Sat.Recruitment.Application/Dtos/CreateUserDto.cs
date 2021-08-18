@@ -13,7 +13,9 @@ namespace Sat.Recruitment.Application.Dtos
         public string Address { get; set; }
         [Required(ErrorMessage = "The phone is required")]
         public string Phone { get; set; }
+        [Required(ErrorMessage = "The userType is required")]
         public string UserType { get; set; }
-        public decimal Money { get; set; }
+        [Required(ErrorMessage = "The money is required")]
+        public string Money { get; set; }
     }
 }
