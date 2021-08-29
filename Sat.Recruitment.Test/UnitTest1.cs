@@ -1,5 +1,6 @@
 using System;
 using System.Dynamic;
+using Sat.Recruitment.Api.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,16 @@ namespace Sat.Recruitment.Test
         {
             var userController = new UsersController();
 
-            var result = userController.CreateUser("Mike", "mike@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
+            var result = userController.CreateUser(
+                new UserRequestData()
+                {
+                    name = "Mike",
+                    email = "mike@gmail.com",
+                    address = "Av. Juan G",
+                    phone = "+349 1122354215",
+                    userType = UserType.Normal,
+                    money = "124"
+                }).Result;
 
 
             Assert.Equal(true, result.IsSuccess);
@@ -29,7 +39,15 @@ namespace Sat.Recruitment.Test
         {
             var userController = new UsersController();
 
-            var result = userController.CreateUser("Agustina", "Agustina@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
+            var result = userController.CreateUser(new UserRequestData()
+            {
+                name = "Agustina",
+                email = "Agustina@gmail.com",
+                address = "Av. Juan G",
+                phone = "+349 1122354215",
+                userType = UserType.Normal,
+                money = "124"
+            }).Result;
 
 
             Assert.Equal(false, result.IsSuccess);
