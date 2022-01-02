@@ -8,4 +8,4 @@ Se puede realizar cualquier cambio que considere necesario en el código y en lo
 
 - Todos los test deben pasar.
 - El código debe seguir los principios de la programación orientada a objetos (SOLID, DRY, etc...).
-- El código resultante debe ser mantenible y extensible.
+- El código resultante debe ser mantenible y extensible..
