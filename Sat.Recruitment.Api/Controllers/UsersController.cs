@@ -33,21 +33,25 @@ namespace Sat.Recruitment.Api.Controllers
         [Route("/create-user")]
         public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
         {
-            string errors = string.Empty;
+            
             try
             {
                 _userService.AddUser(name, email, address, phone, userType, money);
             }
             catch(Exception ex)
             {
-                errors = ex.Message;
-            }
-
-            if (errors != null && errors != "")
                 return new Result()
                 {
                     IsSuccess = false,
-                    Errors = errors
+                    Errors = String.Join(Environment.NewLine, ex.Message)
+                };
+            }
+
+            if (_userService.Errors.Count > 0)
+                return new Result()
+                {
+                    IsSuccess = false,
+                    Errors = String.Join(Environment.NewLine, _userService.Errors)
                 };
 
 

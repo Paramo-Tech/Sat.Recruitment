@@ -46,16 +46,34 @@ namespace Sat.Recruitment.Test
             var result = userController.CreateUser("Mike", "mike@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
 
             Assert.True(result.IsSuccess);
-            Assert.Equal("User Created.", result.Errors);
+            Assert.Contains("User Created.", result.Errors);
         }
 
         [Fact]
-        public void UserCreation_failed_user_duplicated()
+        public void UserCreation_Failed_User_Duplicated()
         {
 
             var result = userController.CreateUser("Agustina", "Agustina@gmail.com", "Garay y Otra Calle", "+534645213542", "SuperUser", "112234").Result;
             Assert.False(result.IsSuccess);
-            Assert.Equal("The user is duplicated.", result.Errors);
+            Assert.Contains("The user is duplicated.", result.Errors);
+        }
+
+        [Fact]
+        public void UserCreation_Failed_User_NameIsNull()
+        {
+
+            var result = userController.CreateUser("", "Agustina@gmail.com", "Garay y Otra Calle", "+534645213542", "SuperUser", "112234").Result;
+            Assert.False(result.IsSuccess);
+            Assert.Contains("The name is required.", result.Errors);
+        }
+        public void UserCreation_Failed_User_NameAndAddress_IsNull()
+        {
+
+            var result = userController.CreateUser("", "Agustina@gmail.com", "", "+534645213542", "SuperUser", "112234").Result;
+            Assert.False(result.IsSuccess);
+            Assert.Contains("The name is required.", result.Errors);
+            Assert.Contains("The address is required.", result.Errors);
+
         }
     }
 }

@@ -6,20 +6,27 @@ using System;
 using System.Collections.Generic;
 using Sat.Recruitment.Business.Helpers;
 using Sat.Recruitment.Business.Types;
+using Sat.Recruitment.Business.Validations;
+using Sat.Recruitment.Services.Interfaces;
 
 namespace Services
 {
-    public class UserService
+    public class UserService:IService
     {
         IRepository<User, string> _userReporsitory;
         IParser<User,string> _userParser;
         IParser<UserType, string> _userTypeParser;
+        public List<string> Errors { get; set; }
+
         public UserService(IRepository<User, string> userRepository, IParser<User,string> userParse, IParser<UserType,string> userTypeParsers)
         {
             _userReporsitory = userRepository;
             _userParser = userParse;
             _userTypeParser = userTypeParsers;
+            Errors = new List<string>();
         }
+
+
         public List<User> GetUsers()
         {
             return _userReporsitory.GetAll().Result;
@@ -28,6 +35,15 @@ namespace Services
         public string AddUser(User user)
         {
             string id;
+
+            var validator = new UserValidator();
+            var result = validator.Validate(user);
+
+            if(!result.IsValid)
+            {
+                 result.Errors.ForEach(err => Errors.Add(err.ErrorMessage));
+                return null;
+            }
 
             if (!UserExists(user))
             {
