@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.30709.64
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api", "Sat.Recruitment.Api\Sat.Recruitment.Api.csproj", "{1F342EA2-E7B1-4E53-AB93-9C62288D3FB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Entities", "Sat.Recruitment.Entities\Sat.Recruitment.Entities.csproj", "{B80CA000-82F3-4BF7-BC4B-DBA0DAC1CD74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Business", "Sat.Recruitment.Business\Sat.Recruitment.Business.csproj", "{6D2E4DCB-1CA4-41FB-A556-35F826EC2E8B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.DAccess", "Sat.Recruitment.DAccess\Sat.Recruitment.DAccess.csproj", "{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B80CA000-82F3-4BF7-BC4B-DBA0DAC1CD74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B80CA000-82F3-4BF7-BC4B-DBA0DAC1CD74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B80CA000-82F3-4BF7-BC4B-DBA0DAC1CD74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B80CA000-82F3-4BF7-BC4B-DBA0DAC1CD74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D2E4DCB-1CA4-41FB-A556-35F826EC2E8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D2E4DCB-1CA4-41FB-A556-35F826EC2E8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D2E4DCB-1CA4-41FB-A556-35F826EC2E8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D2E4DCB-1CA4-41FB-A556-35F826EC2E8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
