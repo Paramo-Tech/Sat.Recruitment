@@ -10,18 +10,33 @@ namespace Sat.Recruitment.DAccess.Base
     {
         public string FileName { get; set; }
 
-
         public async Task<List<T>> GetAll()
         {
-            var read = this.ReadFile();
-            return await MapFromReaderToList(read);
+            try
+            {
+                var read = this.ReadFile();
+                return await MapFromReaderToList(read);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
 
         }
 
         public async Task<T> Get(Func<T, bool> filter)
         {
-            var list = await this.GetAll();
-            return list.Where(filter).FirstOrDefault();
+            try
+            {
+                var list = await this.GetAll();
+                return list.Where(filter).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
 
         }
 
@@ -29,8 +44,16 @@ namespace Sat.Recruitment.DAccess.Base
 
         public async Task<List<T>> GetListByFilter(Func<T, bool> filter)
         {
-            var list = await this.GetAll();
-            return list.Where(filter).ToList();
+            try
+            {
+                var list = await this.GetAll();
+                return list.Where(filter).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
 
         }
 

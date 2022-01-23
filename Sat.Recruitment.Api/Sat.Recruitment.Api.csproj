@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Business\Sat.Recruitment.Business.csproj" />
     <ProjectReference Include="..\Sat.Recruitment.Entities\Sat.Recruitment.Entities.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.GlobalResources\Sat.Recruitment.GlobalResources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

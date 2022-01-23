@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sat.Recruitment.Business;
 using Sat.Recruitment.Business.Contracts;
 using Sat.Recruitment.Entities;
+using Sat.Recruitment.GlobalResources;
 
 namespace Sat.Recruitment.Api.Controllers
 {
@@ -25,7 +26,7 @@ namespace Sat.Recruitment.Api.Controllers
                     return result;
                 }
                 else
-                    throw new Exception("Invalid model");
+                    throw new Exception(Translations.ErrorInvalidModel);
 
 
             }

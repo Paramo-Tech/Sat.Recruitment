@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sat.Recruitment.GlobalResources;
 
 namespace Sat.Recruitment.Business.Base
 {
@@ -48,28 +49,42 @@ namespace Sat.Recruitment.Business.Base
                 // validate again in business layer to verify if all fields are properly filled
                 string errors = string.Empty;
                 if (!this.Validate(item, ref errors))
-                    throw new Exception("Invalid model. " + errors);
+                    throw new Exception(Translations.ErrorInvalidModel + errors);
 
                 // validate if item already exist
                 if (await this.DataAccess.Get(Filter(item)) != null)
-                    throw new Exception("The item is duplicated");
-
+                    throw new Exception(Translations.ErrorItemDuplicated);
+                
                 var result = this.DataAccess.Create(item);
 
                 if (result)
                     return new Result()
                     {
                         IsSuccess = true,
-                        Message = "Item Created"
+                        Message = Translations.SuccessItemCreated
                     };
                 else
-                    throw new Exception("Error, item was not created");
+                    throw new Exception(Translations.ErrorItemNotCreated);
 
             }
             catch (Exception ex)
             {
                 throw ex;
 
+            }
+
+        }
+
+        public async Task<List<T>> GetListByFilter(Func<T, bool> filter)
+        {
+            try
+            {
+                return await this.DataAccess.GetListByFilter(filter);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
         }

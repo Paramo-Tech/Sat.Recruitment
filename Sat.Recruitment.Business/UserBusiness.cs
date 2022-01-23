@@ -2,6 +2,7 @@
 using Sat.Recruitment.Business.Contracts;
 using Sat.Recruitment.DAccess;
 using Sat.Recruitment.Entities;
+using Sat.Recruitment.GlobalResources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,13 +82,13 @@ namespace Sat.Recruitment.Business
             errors = string.Empty;
 
             if (string.IsNullOrEmpty(item.Name))
-                errors = " | The name is required";
+                errors = Translations.ValidationNameRequired;
             if (string.IsNullOrEmpty(item.Email))
-                errors += " | The email is required";
+                errors += Translations.ValidationEmailRequired;
             if (string.IsNullOrEmpty(item.Address))
-                errors += " | The address is required";
+                errors += Translations.ValidationAddressRequired;
             if (string.IsNullOrEmpty(item.Phone))
-                errors += " | The phone is required";
+                errors += Translations.ValidationPhoneRequired;
 
             if (!string.IsNullOrEmpty(errors))
                 errors = errors[3..]; // removes first 3 chars " | "

@@ -19,7 +19,7 @@ namespace Sat.Recruitment.Business.Base
 
         Func<T, bool> Filter(T item);
 
-       
+        Task<List<T>> GetListByFilter(Func<T, bool> filter);
 
 
     }

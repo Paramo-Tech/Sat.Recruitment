@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Business", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.DAccess", "Sat.Recruitment.DAccess\Sat.Recruitment.DAccess.csproj", "{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.GlobalResources", "Sat.Recruitment.GlobalResources\Sat.Recruitment.GlobalResources.csproj", "{8C8547D2-4D8A-4DB9-A1A3-CEE728E9CB01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD010D8C-CFCE-4FB9-A951-15C0B302CB07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C8547D2-4D8A-4DB9-A1A3-CEE728E9CB01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C8547D2-4D8A-4DB9-A1A3-CEE728E9CB01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C8547D2-4D8A-4DB9-A1A3-CEE728E9CB01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C8547D2-4D8A-4DB9-A1A3-CEE728E9CB01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
