@@ -22,7 +22,7 @@ namespace Sat.Recruitment.Api.Controllers
                 if (ModelState.IsValid)
                 {
                     IUserBusiness userBusiness = new UserBusiness();
-                    var result = await userBusiness.CreateUser(user);
+                    var result = await userBusiness.Create(user);
                     return result;
                 }
                 else
@@ -88,7 +88,7 @@ namespace Sat.Recruitment.Api.Controllers
             try
             {
                 IUserBusiness userBusiness = new UserBusiness();
-                var result = await userBusiness.CreateUser(user);
+                var result = await userBusiness.Create(user);
                 return result;
 
             }

@@ -33,12 +33,12 @@ namespace Sat.Recruitment.Business
 
         }
 
-        public async Task<Result> CreateUser(User item)
+        public override async Task<Result> Create(User item)
         {
             try
             {
                 ConfigureItem(item);
-                return await this.Create(item);
+                return await base.Create(item);
 
             }
             catch (Exception ex)

@@ -6,7 +6,7 @@ namespace Sat.Recruitment.Business.Contracts
 {
     public interface IUserBusiness
     {
-        Task<Result> CreateUser(User item);
+        Task<Result> Create(User item);
 
         Func<User, bool> Filter(User item);
 
