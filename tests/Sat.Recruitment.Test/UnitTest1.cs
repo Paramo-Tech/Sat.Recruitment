@@ -19,12 +19,12 @@ namespace Sat.Recruitment.Test
 
             CreateUserRequest createUserRequest = new CreateUserRequest()
             {
-                name = "Mike",
-                email = "mike@gmail.com",
-                address = "Av. Juan G",
-                phone = "+349 1122354215",
-                userType = "Normal",
-                money = "124"
+                Name = "Mike",
+                Email = "mike@gmail.com",
+                Address = "Av. Juan G",
+                Phone = "+349 1122354215",
+                UserType = "Normal",
+                Money = "124"
             };
 
             var result = userController.CreateUser(createUserRequest).Result;
@@ -41,12 +41,12 @@ namespace Sat.Recruitment.Test
 
             CreateUserRequest createUserRequest = new CreateUserRequest()
             {
-                name = "Agustina",
-                email = "Agustina@gmail.com",
-                address = "Av. Juan G",
-                phone = "+349 1122354215",
-                userType = "Normal",
-                money = "124"
+                Name = "Agustina",
+                Email = "Agustina@gmail.com",
+                Address = "Av. Juan G",
+                Phone = "+349 1122354215",
+                UserType = "Normal",
+                Money = "124"
             };
 
             var result = userController.CreateUser(createUserRequest).Result;

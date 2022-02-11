@@ -1,12 +1,25 @@
-﻿namespace Sat.Recruitment.Api.DTO
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Sat.Recruitment.Api.DTO
 {
     public class CreateUserRequest
     {
-        public string name { get; set; }
-        public string email { get; set; }
-        public string address { get; set; }
-        public string phone { get; set; }
-        public string userType { get; set; }
-        public string money { get; set; }
+        [BindProperty(Name = "name")]
+        public string Name { get; set; }
+
+        [BindProperty(Name = "email")]
+        public string Email { get; set; }
+
+        [BindProperty(Name = "address")]
+        public string Address { get; set; }
+
+        [BindProperty(Name = "phone")]
+        public string Phone { get; set; }
+
+        [BindProperty(Name = "userType")]
+        public string UserType { get; set; }
+
+        [BindProperty(Name = "money")]
+        public string Money { get; set; }
     }
 }
