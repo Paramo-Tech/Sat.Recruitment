@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.DTO;
+using Sat.Recruitment.Core.DomainEntities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -205,14 +206,5 @@ namespace Sat.Recruitment.Api.Controllers
                 Errors = "User Created"
             };
         }
-    }
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
     }
 }
