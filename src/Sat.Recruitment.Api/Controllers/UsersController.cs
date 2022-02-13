@@ -122,6 +122,8 @@ namespace Sat.Recruitment.Api.Controllers
 
             #endregion // Normalize email
 
+            #region Get users from storage
+
             while (reader.Peek() >= 0)
             {
                 var line = reader.ReadLineAsync().Result;
@@ -137,6 +139,11 @@ namespace Sat.Recruitment.Api.Controllers
                 _users.Add(user);
             }
             reader.Close();
+
+            #endregion // Get users from storage
+
+            #region Check duplicated user
+
             try
             {
                 var isDuplicated = false;
@@ -189,6 +196,8 @@ namespace Sat.Recruitment.Api.Controllers
                     Errors = "The user is duplicated"
                 };
             }
+
+            #endregion // Check duplicated user
 
             return new Result()
             {
