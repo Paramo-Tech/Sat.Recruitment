@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using Sat.Recruitment.Api.Controllers;
 using Sat.Recruitment.Api.DTO;
+using Sat.Recruitment.Core.Abstractions.Services;
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -12,10 +13,17 @@ namespace Sat.Recruitment.Test
     [CollectionDefinition("Tests", DisableParallelization = true)]
     public class UnitTest1
     {
+        private readonly IUserService _userService;
+
+        public UnitTest1(IUserService userService)
+        {
+            this._userService = userService;
+        }
+
         [Fact]
         public void Test1()
         {
-            var userController = new UsersController();
+            var userController = new UsersController(_userService);
 
             CreateUserRequest createUserRequest = new CreateUserRequest()
             {
@@ -37,7 +45,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public void Test2()
         {
-            var userController = new UsersController();
+            var userController = new UsersController(_userService);
 
             CreateUserRequest createUserRequest = new CreateUserRequest()
             {
