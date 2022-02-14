@@ -34,7 +34,7 @@ namespace Sat.Recruitment.Api.Controllers
                 Address = request.Address,
                 Phone = request.Phone,
                 UserType = request.UserType,
-                Money = decimal.Parse(request.Money)
+                Money = request.Money
             };
 
             return _userService.Create(newUser);

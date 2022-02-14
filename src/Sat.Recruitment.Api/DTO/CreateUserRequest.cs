@@ -25,6 +25,6 @@ namespace Sat.Recruitment.Api.DTO
         public string UserType { get; set; }
 
         [BindProperty(Name = "money")]
-        public string Money { get; set; }
+        public decimal Money { get; set; }
     }
 }
