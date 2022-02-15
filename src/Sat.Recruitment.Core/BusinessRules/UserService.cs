@@ -1,4 +1,5 @@
-﻿using Sat.Recruitment.Core.Abstractions.Repositories;
+﻿using Sat.Recruitment.Core.Abstractions.BusinessFeatures.GiftByUserType;
+using Sat.Recruitment.Core.Abstractions.Repositories;
 using Sat.Recruitment.Core.Abstractions.Services;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Enums;
@@ -12,50 +13,25 @@ namespace Sat.Recruitment.Core.BusinessRules
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IGiftByUserTypeMediator _giftByUserTypeMediator;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IGiftByUserTypeMediator giftByUserTypeMediator)
         {
             this._userRepository = userRepository;
+            this._giftByUserTypeMediator = giftByUserTypeMediator;
         }
 
         public Result Create(User newUser)
         {
-            if (newUser.UserType == UserType.Normal)
-            {
-                if (newUser.Money > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.12);
-                    //If new user is normal and has more than USD100
-                    var gif = newUser.Money * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-                if (newUser.Money < 100)
-                {
-                    if (newUser.Money > 10)
-                    {
-                        var percentage = Convert.ToDecimal(0.8);
-                        var gif = newUser.Money * percentage;
-                        newUser.Money = newUser.Money + gif;
-                    }
-                }
-            }
-            if (newUser.UserType == UserType.SuperUser)
-            {
-                if (newUser.Money > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.20);
-                    var gif = newUser.Money * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
-            if (newUser.UserType == UserType.Premium)
-            {
-                if (newUser.Money > 100)
-                {
-                    var gif = newUser.Money * 2;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
+            #region Gift functionality
+
+            // Get Gift for the user depending on it UserType and amount of money
+            decimal giftAmount = _giftByUserTypeMediator.GetGiftByUserType(newUser.UserType, newUser.Money);
+
+            // Add the amount of the gift, to the initial amount of money
+            newUser.Money = newUser.Money + giftAmount;
+
+            #endregion // Gift functionality
 
             #region Normalize email
 
