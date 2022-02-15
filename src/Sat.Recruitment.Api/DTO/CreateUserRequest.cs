@@ -12,6 +12,7 @@ namespace Sat.Recruitment.Api.DTO
 
         [BindProperty(Name = "email")]
         [Required(ErrorMessage = "The email is required")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [BindProperty(Name = "address")]
@@ -20,6 +21,7 @@ namespace Sat.Recruitment.Api.DTO
 
         [BindProperty(Name = "phone")]
         [Required(ErrorMessage = "The phone is required")]
+        [Phone]
         public string Phone { get; set; }
 
         [BindProperty(Name = "userType")]
