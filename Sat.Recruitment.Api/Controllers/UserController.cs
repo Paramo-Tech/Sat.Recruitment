@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sat.Recruitment.Business;
@@ -19,7 +21,10 @@ namespace Sat.Recruitment.Api.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                var validationResultList = new List<ValidationResult>();
+                var validModel = Validator.TryValidateObject(user, new ValidationContext(user), validationResultList, true);
+
+                if (validModel)
                 {
                     IUserBusiness userBusiness = new UserBusiness();
                     var result = await userBusiness.Create(user);
@@ -32,12 +37,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
             catch (Exception ex)
             {
-
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Message = ex.Message
-                };
+                return new Result() { IsSuccess = false, Message = ex.Message };
             }
 
         }
@@ -87,6 +87,15 @@ namespace Sat.Recruitment.Api.Controllers
 
             try
             {
+                var validationResultList = new List<ValidationResult>();
+                var validModel = Validator.TryValidateObject(user, new ValidationContext(user), validationResultList, true);
+                if (!validModel)
+                {
+                    return new Result() { IsSuccess = false, Message = Translations.ErrorInvalidModel };
+                }
+
+
+
                 IUserBusiness userBusiness = new UserBusiness();
                 var result = await userBusiness.Create(user);
                 return result;
