@@ -1,6 +1,7 @@
 ﻿using Sat.Recruitment.Core.Abstractions.Repositories;
 using Sat.Recruitment.Core.Abstractions.Services;
 using Sat.Recruitment.Core.DomainEntities;
+using Sat.Recruitment.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +20,7 @@ namespace Sat.Recruitment.Core.BusinessRules
 
         public Result Create(User newUser)
         {
-            if (newUser.UserType == "Normal")
+            if (newUser.UserType == UserType.Normal)
             {
                 if (newUser.Money > 100)
                 {
@@ -38,7 +39,7 @@ namespace Sat.Recruitment.Core.BusinessRules
                     }
                 }
             }
-            if (newUser.UserType == "SuperUser")
+            if (newUser.UserType == UserType.SuperUser)
             {
                 if (newUser.Money > 100)
                 {
@@ -47,7 +48,7 @@ namespace Sat.Recruitment.Core.BusinessRules
                     newUser.Money = newUser.Money + gif;
                 }
             }
-            if (newUser.UserType == "Premium")
+            if (newUser.UserType == UserType.Premium)
             {
                 if (newUser.Money > 100)
                 {

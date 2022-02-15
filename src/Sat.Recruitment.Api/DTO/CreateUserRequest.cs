@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sat.Recruitment.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sat.Recruitment.Api.DTO
@@ -22,7 +23,7 @@ namespace Sat.Recruitment.Api.DTO
         public string Phone { get; set; }
 
         [BindProperty(Name = "userType")]
-        public string UserType { get; set; }
+        public UserType? UserType { get; set; }
 
         [BindProperty(Name = "money")]
         public decimal Money { get; set; }
