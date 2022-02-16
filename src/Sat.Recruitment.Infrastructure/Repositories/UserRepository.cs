@@ -5,12 +5,14 @@ using Sat.Recruitment.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Sat.Recruitment.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public List<User> GetAll()
+        public List<User> GetAll(Func<User, bool> filter = null)
         {
             List<User> users = new List<User>();
 
@@ -63,6 +65,12 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             reader.Close();
 
             #endregion // Get users from storage
+
+            // If filter parameter is not null, apply it to the results
+            if (filter != null)
+            {
+               users = users.Where(filter).ToList();
+            }
 
             return users;
         }
