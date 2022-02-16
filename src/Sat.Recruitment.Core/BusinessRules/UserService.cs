@@ -44,27 +44,17 @@ namespace Sat.Recruitment.Core.BusinessRules
 
             #region Check duplicated user
 
-            List<User> users = _userRepository.GetAll();
+            List<User> users = _userRepository.GetAll(u => u.Email == newUser.Email || 
+                                                           u.Phone == newUser.Phone ||
+                                                           (u.Name == newUser.Name && u.Address == newUser.Address));
 
             try
             {
                 var isDuplicated = false;
-                foreach (var user in users)
+
+                if (users.Count > 0)
                 {
-                    if (user.Email == newUser.Email
-                        ||
-                        user.Phone == newUser.Phone)
-                    {
-                        isDuplicated = true;
-                    }
-                    else if (user.Name == newUser.Name)
-                    {
-                        if (user.Address == newUser.Address)
-                        {
-                            isDuplicated = true;
-                            throw new Exception("User is duplicated");
-                        }
-                    }
+                    isDuplicated = true;
                 }
 
                 if (!isDuplicated)
