@@ -4,6 +4,7 @@ using Sat.Recruitment.Core.Abstractions.Repositories;
 using Sat.Recruitment.Core.Abstractions.Services;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Enums;
+using Sat.Recruitment.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -48,47 +49,14 @@ namespace Sat.Recruitment.Core.BusinessRules
                                                            u.Phone == newUser.Phone ||
                                                            (u.Name == newUser.Name && u.Address == newUser.Address));
 
-            try
+            if (users.Count > 0)
             {
-                var isDuplicated = false;
-
-                if (users.Count > 0)
-                {
-                    isDuplicated = true;
-                }
-
-                if (!isDuplicated)
-                {
-                    Debug.WriteLine("User Created");
-
-                    return new Result()
-                    {
-                        IsSuccess = true,
-                        Errors = "User Created"
-                    };
-                }
-                else
-                {
-                    Debug.WriteLine("The user is duplicated");
-
-                    return new Result()
-                    {
-                        IsSuccess = false,
-                        Errors = "The user is duplicated"
-                    };
-                }
-            }
-            catch
-            {
-                Debug.WriteLine("The user is duplicated");
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = "The user is duplicated"
-                };
+                throw new EntityAlreadyExistsException(typeof(User).Name, "The user is duplicated.");
             }
 
             #endregion // Check duplicated user
+
+            Debug.WriteLine("User Created");
 
             return new Result()
             {
