@@ -6,12 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public List<User> GetAll(Func<User, bool> filter = null)
+        public async Task<List<User>> GetAll(Func<User, bool> filter = null)
         {
             List<User> users = new List<User>();
 
@@ -24,7 +25,7 @@ namespace Sat.Recruitment.Infrastructure.Repositories
                 while (reader.Peek() >= 0)
                 {
                     // Read a line
-                    string line = reader.ReadLineAsync().Result;
+                    string line = await reader.ReadLineAsync();
 
                     // Map line to User
                     User user = MapFileRowToUser(line);

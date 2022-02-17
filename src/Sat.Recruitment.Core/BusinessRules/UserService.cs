@@ -3,11 +3,8 @@ using Sat.Recruitment.Core.Abstractions.BusinessFeatures.NormalizeEmail;
 using Sat.Recruitment.Core.Abstractions.Repositories;
 using Sat.Recruitment.Core.Abstractions.Services;
 using Sat.Recruitment.Core.DomainEntities;
-using Sat.Recruitment.Core.Enums;
 using Sat.Recruitment.Core.Exceptions;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Core.BusinessRules
@@ -25,7 +22,7 @@ namespace Sat.Recruitment.Core.BusinessRules
             this._normalizeEmail = normalizeEmail;
         }
 
-        public User Create(User newUser)
+        public async Task<User> Create(User newUser)
         {
             #region Gift functionality
 
@@ -45,9 +42,9 @@ namespace Sat.Recruitment.Core.BusinessRules
 
             #region Check duplicated user
 
-            List<User> users = _userRepository.GetAll(u => u.Email == newUser.Email || 
-                                                           u.Phone == newUser.Phone ||
-                                                           (u.Name == newUser.Name && u.Address == newUser.Address));
+            List<User> users = await _userRepository.GetAll(u => u.Email == newUser.Email || 
+                                                            u.Phone == newUser.Phone ||
+                                                            (u.Name == newUser.Name && u.Address == newUser.Address));
 
             if (users.Count > 0)
             {

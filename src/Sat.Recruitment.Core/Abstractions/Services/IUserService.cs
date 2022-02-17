@@ -5,6 +5,6 @@ namespace Sat.Recruitment.Core.Abstractions.Services
 {
     public interface IUserService
     {
-        User Create(User newUser);
+        Task<User> Create(User newUser);
     }
 }

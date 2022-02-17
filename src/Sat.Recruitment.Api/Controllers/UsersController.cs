@@ -38,7 +38,7 @@ namespace Sat.Recruitment.Api.Controllers
                 User user = _mapper.Map<User>(request);
 
                 // Persist the new entity
-                user = _userService.Create(user);
+                user = await _userService.Create(user);
 
                 _logger.LogInformation($"User created. Name: {user.Name}, Email: {user.Email}, Address: {user.Address}, Phone: {user.Phone}");
 
