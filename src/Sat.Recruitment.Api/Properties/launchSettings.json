@@ -27,5 +27,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
+  },
+  "Logging": { // Default, all providers.
+    "LogLevel": {
+      "Microsoft": "Critical"
+    },
+    "Console": { // Console provider.
+      "LogLevel": {
+        "Microsoft": "Critical"
+      }
+    }
   }
 }

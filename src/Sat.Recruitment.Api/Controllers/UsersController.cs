@@ -18,10 +18,12 @@ namespace Sat.Recruitment.Api.Controllers
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
     {
+        private readonly ILogger<UsersController> _logger;
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(ILogger<UsersController> logger, IUserService userService)
         {
+            this._logger = logger;
             this._userService = userService;
         }
 
@@ -41,10 +43,15 @@ namespace Sat.Recruitment.Api.Controllers
                     Money = request.Money
                 };
 
-                return _userService.Create(newUser);
+                Result result = _userService.Create(newUser);
+
+                _logger.LogInformation($"User created. Name: {newUser.Name}, Email: {newUser.Email}, Address: {newUser.Address}, Phone: {newUser.Phone}");
+
+                return Created("", result);
             }
             catch (EntityAlreadyExistsException ex)
             {
+                _logger.LogWarning(ex.Message);
                 return StatusCode(
                     StatusCodes.Status409Conflict,
                     ex.Message
@@ -52,6 +59,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode(
                     StatusCodes.Status500InternalServerError,
                     ex.Message);
