@@ -25,7 +25,7 @@ namespace Sat.Recruitment.Core.BusinessRules
             this._normalizeEmail = normalizeEmail;
         }
 
-        public Result Create(User newUser)
+        public User Create(User newUser)
         {
             #region Gift functionality
 
@@ -56,13 +56,7 @@ namespace Sat.Recruitment.Core.BusinessRules
 
             #endregion // Check duplicated user
 
-            Debug.WriteLine("User Created");
-
-            return new Result()
-            {
-                IsSuccess = true,
-                Errors = "User Created"
-            };
+            return newUser;
         }
     }
 }

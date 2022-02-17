@@ -3,12 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.DTO;
 using Sat.Recruitment.Core.Abstractions.Services;
-using Sat.Recruitment.Core.BusinessRules;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
@@ -27,12 +24,14 @@ namespace Sat.Recruitment.Api.Controllers
             this._userService = userService;
         }
 
+
         [HttpPost]
         [Route("/create-user")]
-        public async Task<ActionResult<Result>> CreateUser(CreateUserRequest request)
+        public async Task<ActionResult<CreateUserResponse>> CreateUser(CreateUserRequest request)
         {
             try
             {
+                // Map the request parameters to the business entity
                 var newUser = new User
                 {
                     Name = request.Name,
@@ -43,11 +42,23 @@ namespace Sat.Recruitment.Api.Controllers
                     Money = request.Money
                 };
 
-                Result result = _userService.Create(newUser);
+                // Persist the new entity
+                User createdUser = _userService.Create(newUser);
 
-                _logger.LogInformation($"User created. Name: {newUser.Name}, Email: {newUser.Email}, Address: {newUser.Address}, Phone: {newUser.Phone}");
+                _logger.LogInformation($"User created. Name: {createdUser.Name}, Email: {createdUser.Email}, Address: {createdUser.Address}, Phone: {createdUser.Phone}");
 
-                return Created("", result);
+                // Map the new entity to response DTO
+                CreateUserResponse createUserRespose = new CreateUserResponse()
+                {
+                    Name = createdUser.Name,
+                    Email = createdUser.Email,
+                    Address = createdUser.Address,
+                    Phone = createdUser.Phone,
+                    UserType = createdUser.UserType,
+                    Money = createdUser.Money
+                };
+
+                return Created("", createUserRespose);
             }
             catch (EntityAlreadyExistsException ex)
             {
