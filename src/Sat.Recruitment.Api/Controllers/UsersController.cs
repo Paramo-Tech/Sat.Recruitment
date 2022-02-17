@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.DTO;
@@ -16,11 +17,13 @@ namespace Sat.Recruitment.Api.Controllers
     public partial class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
+        private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        public UsersController(ILogger<UsersController> logger, IUserService userService)
+        public UsersController(ILogger<UsersController> logger, IMapper mapper, IUserService userService)
         {
             this._logger = logger;
+            this._mapper = mapper;
             this._userService = userService;
         }
 
@@ -32,33 +35,17 @@ namespace Sat.Recruitment.Api.Controllers
             try
             {
                 // Map the request parameters to the business entity
-                var newUser = new User
-                {
-                    Name = request.Name,
-                    Email = request.Email,
-                    Address = request.Address,
-                    Phone = request.Phone,
-                    UserType = request.UserType,
-                    Money = request.Money
-                };
+                User user = _mapper.Map<User>(request);
 
                 // Persist the new entity
-                User createdUser = _userService.Create(newUser);
+                user = _userService.Create(user);
 
-                _logger.LogInformation($"User created. Name: {createdUser.Name}, Email: {createdUser.Email}, Address: {createdUser.Address}, Phone: {createdUser.Phone}");
+                _logger.LogInformation($"User created. Name: {user.Name}, Email: {user.Email}, Address: {user.Address}, Phone: {user.Phone}");
 
                 // Map the new entity to response DTO
-                CreateUserResponse createUserRespose = new CreateUserResponse()
-                {
-                    Name = createdUser.Name,
-                    Email = createdUser.Email,
-                    Address = createdUser.Address,
-                    Phone = createdUser.Phone,
-                    UserType = createdUser.UserType,
-                    Money = createdUser.Money
-                };
+                CreateUserResponse response = _mapper.Map<CreateUserResponse>(user);
 
-                return Created("", createUserRespose);
+                return Created("", response);
             }
             catch (EntityAlreadyExistsException ex)
             {

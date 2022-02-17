@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Sat.Recruitment.Api.MappingProfiles;
 using Sat.Recruitment.Core;
 using Sat.Recruitment.Core.Abstractions.Repositories;
 using Sat.Recruitment.Core.Abstractions.Services;
@@ -30,9 +31,16 @@ namespace Sat.Recruitment.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sat.Recruitment", Version = "v1" });
             });
 
+            // AutoMapper
+            services.AddAutoMapper(typeof(DomainEntitiesMappingProfile));
+
+            // Repositories
             services.AddTransient<IUserRepository, UserRepository>();
+
+            // Services
             services.AddTransient<IUserService, UserService>();
 
+            // Assembly specific
             services.AddCoreDependencies(Configuration);
         }
 
