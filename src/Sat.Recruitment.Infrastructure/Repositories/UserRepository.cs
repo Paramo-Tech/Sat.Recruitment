@@ -12,14 +12,20 @@ namespace Sat.Recruitment.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly string _path;
+
+        public UserRepository()
+        {
+            _path = AppContext.BaseDirectory + "/Files/Users.txt";
+        }
+
         public async Task<List<User>> GetAll(Func<User, bool> filter = null)
         {
             List<User> users = new List<User>();
 
             #region Get users from file
 
-            string path = AppContext.BaseDirectory + "/Files/Users.txt";
-            using (FileStream fileStream = new FileStream(path, FileMode.Open))
+            using (FileStream fileStream = new FileStream(_path, FileMode.Open))
             using (StreamReader reader = new StreamReader(fileStream))
             {
                 while (reader.Peek() >= 0)
@@ -43,6 +49,25 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             }
 
             return users;
+        }
+
+        public async Task<User> Add(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            using (StreamWriter writer = new StreamWriter(_path, append: true))
+            {
+                // Map User to Line
+                string line = MapUserToFileRow(user);
+
+                // Write line
+                await writer.WriteAsync(Environment.NewLine + line);
+            }
+
+            return user;
         }
 
         /// <summary>
@@ -87,6 +112,19 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             }
 
             return user;
+        }
+
+        /// <summary>
+        /// Given a User, transform each of its properties to the columns of a file row.
+        /// </summary>
+        private string MapUserToFileRow(User user)
+        {
+            // Transform the UserType to proper form to be stored in a text file
+            string userType = (user.UserType == null) ? String.Empty : ((int)user.UserType).ToString();
+
+            string fileRow = $"{user.Name},{user.Email},{user.Phone},{user.Address},{userType},{user.Money}";
+
+            return fileRow;
         }
     }
 }

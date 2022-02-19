@@ -53,6 +53,9 @@ namespace Sat.Recruitment.Core.BusinessRules
 
             #endregion // Check duplicated user
 
+            // Persist the new User
+            await _userRepository.Add(newUser);
+
             return newUser;
         }
     }
