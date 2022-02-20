@@ -30,7 +30,6 @@ namespace Sat.Recruitment.Api.Controllers
 
 
         [HttpPost]
-        [Route("/create-user")]
         public async Task<ActionResult<CreateUserResponse>> CreateUser(CreateUserRequest request)
         {
             try
