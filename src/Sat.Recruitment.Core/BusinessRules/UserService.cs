@@ -4,6 +4,7 @@ using Sat.Recruitment.Core.Abstractions.Repositories;
 using Sat.Recruitment.Core.Abstractions.Services;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -57,6 +58,11 @@ namespace Sat.Recruitment.Core.BusinessRules
             await _userRepository.Add(newUser);
 
             return newUser;
+        }
+
+        public async Task<List<User>> GetAll(Func<User, bool> filter = null)
+        {
+            return await _userRepository.GetAll(filter);
         }
     }
 }
