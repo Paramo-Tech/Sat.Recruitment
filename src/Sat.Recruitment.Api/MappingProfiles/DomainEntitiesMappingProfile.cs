@@ -24,6 +24,15 @@ namespace Sat.Recruitment.Api.MappingProfiles
             .ForMember(dto => dto.Phone, m => m.MapFrom(domain => domain.Phone))
             .ForMember(dto => dto.UserType, m => m.MapFrom(domain => domain.UserType))
             .ForMember(dto => dto.Money, m => m.MapFrom(domain => domain.Money));
+
+            CreateMap<User, ListUsersResponse>()
+            .ForMember(dto => dto.Id, m => m.MapFrom(domain => domain.Id))
+            .ForMember(dto => dto.Name, m => m.MapFrom(domain => domain.Name))
+            .ForMember(dto => dto.Email, m => m.MapFrom(domain => domain.Email))
+            .ForMember(dto => dto.Address, m => m.MapFrom(domain => domain.Address))
+            .ForMember(dto => dto.Phone, m => m.MapFrom(domain => domain.Phone))
+            .ForMember(dto => dto.UserType, m => m.MapFrom(domain => domain.UserType))
+            .ForMember(dto => dto.Money, m => m.MapFrom(domain => domain.Money));
         }
     }
 }

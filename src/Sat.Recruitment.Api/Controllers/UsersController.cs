@@ -7,6 +7,7 @@ using Sat.Recruitment.Core.Abstractions.Services;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Exceptions;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
@@ -54,6 +55,30 @@ namespace Sat.Recruitment.Api.Controllers
                     StatusCodes.Status409Conflict,
                     ex.Message
                     );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<CreateUserResponse>>> ListUsers()
+        {
+            try
+            {
+                // TODO: Implement a request schema to support filtering
+
+                // Get all the persisted Users
+                List<User> users = await _userService.GetAll();
+
+                // Map all the users to response DTO
+                List<CreateUserResponse> response = _mapper.Map<List<CreateUserResponse>>(users);
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
