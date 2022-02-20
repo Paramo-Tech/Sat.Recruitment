@@ -23,8 +23,7 @@ namespace Sat.Recruitment.Infrastructure.Repositories
         {
             List<User> users = new List<User>();
 
-            #region Get users from file
-
+            // Get users from file
             using (FileStream fileStream = new FileStream(_path, FileMode.Open))
             using (StreamReader reader = new StreamReader(fileStream))
             {
@@ -39,8 +38,6 @@ namespace Sat.Recruitment.Infrastructure.Repositories
                     users.Add(user);
                 }
             }
-
-            #endregion // Get users from file
 
             // If filter parameter is not null, apply it to the results
             if (filter != null)
@@ -58,6 +55,10 @@ namespace Sat.Recruitment.Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(user));
             }
 
+            // Create Id for the new user
+            user.Id = Guid.NewGuid();
+
+            // Add user to file
             using (StreamWriter writer = new StreamWriter(_path, append: true))
             {
                 // Map User to Line
@@ -79,26 +80,28 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             // Split a line by the , symbol separator
             string[] lineColumns = fileRow.Split(new char[] { ',' });
 
-            if (lineColumns.Length != 6)
+            if (lineColumns.Length != 7)
             {
                 throw new CorruptRegistryException(fileRow, $"Amount of columns: {lineColumns.Length}");
             }
 
             // Pass each row column to a corresponding field name
-            string name = lineColumns[0];
-            string email = lineColumns[1];
-            string phone = lineColumns[2];
-            string address = lineColumns[3];
-            string userType = lineColumns[4];
-            string money = lineColumns[5];
+            string id = lineColumns[0];
+            string name = lineColumns[1];
+            string email = lineColumns[2];
+            string phone = lineColumns[3];
+            string address = lineColumns[4];
+            string userType = lineColumns[5];
+            string money = lineColumns[6];
 
-            // Fiel a User entity with the corresponding fields, and do the corresponding conversion in case is needed
+            // Fill a User entity with the corresponding fields, and do the corresponding conversion in case is needed
             var user = new User();
             try
             {
                 // TODO: Throw specific exceptions for each field that is parsed (Email with a correct pattern,
                 // UserType with an integer belonging to the Enum, etc).
 
+                user.Id = Guid.Parse(id);
                 user.Name = name;
                 user.Email = email;
                 user.Phone = phone;
@@ -122,7 +125,7 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             // Transform the UserType to proper form to be stored in a text file
             string userType = (user.UserType == null) ? String.Empty : ((int)user.UserType).ToString();
 
-            string fileRow = $"{user.Name},{user.Email},{user.Phone},{user.Address},{userType},{user.Money}";
+            string fileRow = $"{user.Id},{user.Name},{user.Email},{user.Phone},{user.Address},{userType},{user.Money}";
 
             return fileRow;
         }
