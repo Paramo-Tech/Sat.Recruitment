@@ -40,6 +40,7 @@ namespace Sat.Recruitment.Api.Controllers
                 // Persist the new entity
                 user = await _userService.Create(user);
 
+                // Write in log
                 _logger.LogInformation($"User created. Id: {user.Id}, Name: {user.Name}, Email: {user.Email}, Address: {user.Address}, Phone: {user.Phone}");
 
                 // Map the new entity to response DTO
@@ -121,6 +122,42 @@ namespace Sat.Recruitment.Api.Controllers
                     StatusCodes.Status500InternalServerError,
                     ex.Message
                     );
+            }
+        }
+
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            try
+            {
+                // Get persisted User
+                User user = await _userService.GetById(id);
+
+                if (user == null)
+                {
+                    throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {id}");
+                }
+
+                // Write in log
+                _logger.LogInformation($"User deleted. Id: {user.Id}, Name: {user.Name}, Email: {user.Email}, Address: {user.Address}, Phone: {user.Phone}");
+
+                // Delete persisted User
+                await _userService.Delete(user);
+
+                return NoContent();
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return this.NotFound(
+                    ex.Message
+                    );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    ex.Message);
             }
         }
     }
