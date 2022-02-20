@@ -71,6 +71,38 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             return user;
         }
 
+        public async Task Delete(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            // Get all the lines from the file
+            List<string> lines = (await File.ReadAllLinesAsync(_path)).ToList();
+
+            // Search the corresponding line to the User to be deleted
+            for (int i = 0; i < lines.Count; i++)
+            {
+                // Get a line from the file
+                string line = lines[i];
+
+                // Map line to User
+                User currentUser = MapFileRowToUser(line);
+
+                // If the Id of the curren User matches with the Id of the User to be deleted,
+                // then, remove the current line and end the search.
+                if (currentUser.Id == user.Id)
+                {
+                    lines.RemoveAt(i);
+                    break;
+                }
+            }
+
+            // Write the remaining lines to the file
+            await File.WriteAllLinesAsync(_path, lines.ToArray());
+        }
+
         /// <summary>
         /// Given a file row, fill each of a User entity properties with each
         /// corresponding column of the row.

@@ -77,5 +77,15 @@ namespace Sat.Recruitment.Core.BusinessRules
 
             return users.FirstOrDefault();
         }
+
+        public async Task Delete(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            
+            await _userRepository.Delete(user);
+        }
     }
 }
