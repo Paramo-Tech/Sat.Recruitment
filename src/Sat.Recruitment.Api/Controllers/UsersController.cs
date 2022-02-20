@@ -45,7 +45,7 @@ namespace Sat.Recruitment.Api.Controllers
                 // Map the new entity to response DTO
                 CreateUserResponse response = _mapper.Map<CreateUserResponse>(user);
 
-                return Created("", response);
+                return this.CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
             }
             catch (EntityAlreadyExistsException ex)
             {
