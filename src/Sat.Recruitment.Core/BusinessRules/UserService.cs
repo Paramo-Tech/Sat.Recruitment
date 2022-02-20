@@ -6,6 +6,7 @@ using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Core.BusinessRules
@@ -63,6 +64,18 @@ namespace Sat.Recruitment.Core.BusinessRules
         public async Task<List<User>> GetAll(Func<User, bool> filter = null)
         {
             return await _userRepository.GetAll(filter);
+        }
+
+        public async Task<User> GetById(Guid id)
+        {
+            List<User> users = await _userRepository.GetAll(u => u.Id == id);
+
+            if (users.Count > 1)
+            {
+                throw new SequenceContainsMoreThanOneElementException("When searching for a User by its Id -which is unique-, more than one entity was found.");
+            }
+
+            return users.FirstOrDefault();
         }
     }
 }
