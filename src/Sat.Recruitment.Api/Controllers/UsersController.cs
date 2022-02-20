@@ -64,6 +64,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
         }
 
+
         [HttpGet]
         public async Task<ActionResult<List<CreateUserResponse>>> ListUsers()
         {
@@ -85,6 +86,41 @@ namespace Sat.Recruitment.Api.Controllers
                 return StatusCode(
                     StatusCodes.Status500InternalServerError,
                     ex.Message);
+            }
+        }
+
+
+        [HttpGet("{id:Guid}", Name = "GetById")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                // Get persisted User
+                User user = await _userService.GetById(id);
+
+                if (user == null)
+                {
+                    throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {id}");
+                }
+
+                // Map the new entity to response DTO
+                GetByIdResponse response = _mapper.Map<GetByIdResponse>(user);
+
+                return this.Ok(response);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return this.NotFound(
+                    ex.Message
+                    );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    ex.Message
+                    );
             }
         }
     }
