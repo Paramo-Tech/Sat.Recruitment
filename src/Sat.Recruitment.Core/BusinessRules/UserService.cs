@@ -109,7 +109,7 @@ namespace Sat.Recruitment.Core.BusinessRules
             }
 
             // Normalize email
-            _normalizeEmail.Normalize(user.Email);
+            user.Email = _normalizeEmail.Normalize(user.Email);
 
             // Check duplicated user
             List<User> users = await _userRepository.GetAll(u =>
