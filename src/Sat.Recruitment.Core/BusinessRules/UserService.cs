@@ -76,7 +76,14 @@ namespace Sat.Recruitment.Core.BusinessRules
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            
+
+            // Check if the Id of the User to be updated exists in the storage
+            User exist = await GetById(user.Id);
+            if (exist == null)
+            {
+                throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {user.Id}");
+            }
+
             await _userRepository.Delete(user);
         }
 
