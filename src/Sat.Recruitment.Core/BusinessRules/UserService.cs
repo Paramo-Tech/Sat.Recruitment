@@ -68,14 +68,14 @@ namespace Sat.Recruitment.Core.BusinessRules
 
         public async Task<User> GetById(Guid id)
         {
-            List<User> users = await _userRepository.GetAll(u => u.Id == id);
-
-            if (users.Count > 1)
+            if (id == null)
             {
-                throw new SequenceContainsMoreThanOneElementException("When searching for a User by its Id -which is unique-, more than one entity was found.");
+                throw new ArgumentNullException(nameof(id));
             }
 
-            return users.FirstOrDefault();
+            User user = await _userRepository.GetById(id);
+
+            return user;
         }
 
         public async Task Delete(User user)
@@ -86,6 +86,23 @@ namespace Sat.Recruitment.Core.BusinessRules
             }
             
             await _userRepository.Delete(user);
+        }
+
+        public async Task<User> Update(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            // Check if the Id of the User to be updated exists in the storage
+            User exist = await GetById(user.Id);
+            if (exist == null)
+            {
+                throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {user.Id}");
+            }
+
+            return await _userRepository.Update(user);
         }
     }
 }
