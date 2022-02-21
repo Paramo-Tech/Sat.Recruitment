@@ -31,7 +31,7 @@ namespace Sat.Recruitment.Api.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<CreateUserResponse>> Create(CreateUserRequest request)
+        public async Task<ActionResult<CreateResponse>> Create(CreateRequest request)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Sat.Recruitment.Api.Controllers
                 _logger.LogInformation($"User created. Id: {user.Id}, Name: {user.Name}, Email: {user.Email}, Address: {user.Address}, Phone: {user.Phone}");
 
                 // Map the new entity to response DTO
-                CreateUserResponse response = _mapper.Map<CreateUserResponse>(user);
+                CreateResponse response = _mapper.Map<CreateResponse>(user);
 
                 return this.CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
             }
@@ -68,7 +68,7 @@ namespace Sat.Recruitment.Api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<List<CreateUserResponse>>> List()
+        public async Task<ActionResult<List<CreateResponse>>> List()
         {
             try
             {
@@ -78,7 +78,7 @@ namespace Sat.Recruitment.Api.Controllers
                 List<User> users = await _userService.GetAll();
 
                 // Map all the users to response DTO
-                List<CreateUserResponse> response = _mapper.Map<List<CreateUserResponse>>(users);
+                List<CreateResponse> response = _mapper.Map<List<CreateResponse>>(users);
 
                 return Ok(response);
             }
@@ -150,7 +150,7 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpPut("{id:Guid}")]
-        public async Task<ActionResult<UpdateUserResponse>> Update(
+        public async Task<ActionResult<UpdateResponse>> Update(
             [Required]
             [FromRoute]
             Guid id,
@@ -170,7 +170,7 @@ namespace Sat.Recruitment.Api.Controllers
                 _logger.LogInformation($"User updated. Id: {user.Id}, Name: {user.Name}, Email: {user.Email}, Address: {user.Address}, Phone: {user.Phone}");
 
                 // Map the new entity to response DTO
-                UpdateUserResponse response = _mapper.Map<UpdateUserResponse>(user);
+                UpdateResponse response = _mapper.Map<UpdateResponse>(user);
 
                 return Ok(response);
             }

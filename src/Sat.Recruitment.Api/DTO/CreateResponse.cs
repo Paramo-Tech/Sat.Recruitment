@@ -3,7 +3,7 @@ using System;
 
 namespace Sat.Recruitment.Api.DTO
 {
-    public class UpdateUserResponse
+    public class CreateResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

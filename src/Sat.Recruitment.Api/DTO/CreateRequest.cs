@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sat.Recruitment.Api.DTO
 {
-    public class CreateUserRequest
+    public class CreateRequest
     {
         [BindProperty(Name = "name")]
         [Required(ErrorMessage = "The name is required")]

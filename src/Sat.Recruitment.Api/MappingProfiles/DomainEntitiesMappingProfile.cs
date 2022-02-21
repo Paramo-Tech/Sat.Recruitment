@@ -8,7 +8,7 @@ namespace Sat.Recruitment.Api.MappingProfiles
     {
         public DomainEntitiesMappingProfile()
         {
-            CreateMap<CreateUserRequest, User>()
+            CreateMap<CreateRequest, User>()
             .ForMember(domain => domain.Name, m => m.MapFrom(dto => dto.Name))
             .ForMember(domain => domain.Email, m => m.MapFrom(dto => dto.Email))
             .ForMember(domain => domain.Address, m => m.MapFrom(dto => dto.Address))
@@ -16,7 +16,7 @@ namespace Sat.Recruitment.Api.MappingProfiles
             .ForMember(domain => domain.UserType, m => m.MapFrom(dto => dto.UserType))
             .ForMember(domain => domain.Money, m => m.MapFrom(dto => dto.Money));
 
-            CreateMap<User, CreateUserResponse>()
+            CreateMap<User, CreateResponse>()
             .ForMember(dto => dto.Id, m => m.MapFrom(domain => domain.Id))
             .ForMember(dto => dto.Name, m => m.MapFrom(domain => domain.Name))
             .ForMember(dto => dto.Email, m => m.MapFrom(domain => domain.Email))
@@ -25,7 +25,7 @@ namespace Sat.Recruitment.Api.MappingProfiles
             .ForMember(dto => dto.UserType, m => m.MapFrom(domain => domain.UserType))
             .ForMember(dto => dto.Money, m => m.MapFrom(domain => domain.Money));
 
-            CreateMap<User, ListUsersResponse>()
+            CreateMap<User, ListResponse>()
             .ForMember(dto => dto.Id, m => m.MapFrom(domain => domain.Id))
             .ForMember(dto => dto.Name, m => m.MapFrom(domain => domain.Name))
             .ForMember(dto => dto.Email, m => m.MapFrom(domain => domain.Email))
@@ -51,7 +51,7 @@ namespace Sat.Recruitment.Api.MappingProfiles
             .ForMember(domain => domain.UserType, m => m.MapFrom(dto => dto.UserType))
             .ForMember(domain => domain.Money, m => m.MapFrom(dto => dto.Money));
 
-            CreateMap<User, UpdateUserResponse>()
+            CreateMap<User, UpdateResponse>()
             .ForMember(dto => dto.Id, m => m.MapFrom(domain => domain.Id))
             .ForMember(dto => dto.Name, m => m.MapFrom(domain => domain.Name))
             .ForMember(dto => dto.Email, m => m.MapFrom(domain => domain.Email))
