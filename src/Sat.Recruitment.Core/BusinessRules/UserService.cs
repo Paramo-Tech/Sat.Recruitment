@@ -102,6 +102,19 @@ namespace Sat.Recruitment.Core.BusinessRules
                 throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {user.Id}");
             }
 
+            // Normalize email
+            _normalizeEmail.Normalize(user.Email);
+
+            // Check duplicated user
+            List<User> users = await _userRepository.GetAll(u =>
+                (u.Email == user.Email || u.Phone == user.Phone || (u.Name == user.Name && u.Address == user.Address)) && u.Id != user.Id);
+
+            if (users.Count > 0)
+            {
+                throw new EntityAlreadyExistsException(typeof(User).Name, "The user is duplicated.");
+            }
+
+            // Persist the changes
             return await _userRepository.Update(user);
         }
     }
