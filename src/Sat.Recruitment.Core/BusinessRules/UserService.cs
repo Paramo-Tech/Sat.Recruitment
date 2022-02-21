@@ -24,41 +24,33 @@ namespace Sat.Recruitment.Core.BusinessRules
             this._normalizeEmail = normalizeEmail;
         }
 
-        public async Task<User> Create(User newUser)
+        public async Task<User> Create(User user)
         {
-            #region Gift functionality
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
 
             // Get Gift for the user depending on it UserType and amount of money
-            decimal giftAmount = _giftByUserTypeMediator.GetGiftByUserType(newUser.UserType, newUser.Money);
-
+            decimal giftAmount = _giftByUserTypeMediator.GetGiftByUserType(user.UserType, user.Money);
             // Add the amount of the gift, to the initial amount of money
-            newUser.Money = newUser.Money + giftAmount;
+            user.Money = user.Money + giftAmount;
 
-            #endregion // Gift functionality
+            // Normalize email
+            user.Email = _normalizeEmail.Normalize(user.Email);
 
-            #region Normalize email
-
-            newUser.Email = _normalizeEmail.Normalize(newUser.Email);
-
-            #endregion // Normalize email
-
-            #region Check duplicated user
-
-            List<User> users = await _userRepository.GetAll(u => u.Email == newUser.Email || 
-                                                            u.Phone == newUser.Phone ||
-                                                            (u.Name == newUser.Name && u.Address == newUser.Address));
+            // Check duplicated user
+            List<User> users = await _userRepository.GetAll(u => u.Email == user.Email || 
+                                                            u.Phone == user.Phone ||
+                                                            (u.Name == user.Name && u.Address == user.Address));
 
             if (users.Count > 0)
             {
                 throw new EntityAlreadyExistsException(typeof(User).Name, "The user is duplicated.");
             }
 
-            #endregion // Check duplicated user
-
             // Persist the new User
-            await _userRepository.Add(newUser);
-
-            return newUser;
+            return await _userRepository.Add(user);
         }
 
         public async Task<List<User>> GetAll(Func<User, bool> filter = null)
