@@ -100,11 +100,6 @@ namespace Sat.Recruitment.Api.Controllers
                 // Get persisted User
                 User user = await _userService.GetById(id);
 
-                if (user == null)
-                {
-                    throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {id}");
-                }
-
                 // Map the new entity to response DTO
                 GetByIdResponse response = _mapper.Map<GetByIdResponse>(user);
 

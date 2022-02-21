@@ -65,7 +65,13 @@ namespace Sat.Recruitment.Core.BusinessRules
                 throw new ArgumentNullException(nameof(id));
             }
 
+            // Get entity from storage
             User user = await _userRepository.GetById(id);
+
+            if (user == null)
+            {
+                throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {id}");
+            }
 
             return user;
         }
