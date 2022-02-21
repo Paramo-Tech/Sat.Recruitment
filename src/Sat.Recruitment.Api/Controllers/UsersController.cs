@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sat.Recruitment.Api.DTO;
+using Sat.Recruitment.Api.DTOs.Users;
 using Sat.Recruitment.Core.Abstractions.Services;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Exceptions;

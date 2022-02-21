@@ -1,9 +1,9 @@
 ﻿using Sat.Recruitment.Core.Enums;
 using System;
 
-namespace Sat.Recruitment.Api.DTO
+namespace Sat.Recruitment.Api.DTOs.Users
 {
-    public class GetByIdResponse
+    public class CreateResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

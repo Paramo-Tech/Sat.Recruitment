@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Sat.Recruitment.Api.DTO;
+using Sat.Recruitment.Api.DTOs.Users;
 using Sat.Recruitment.Core.DomainEntities;
 
 namespace Sat.Recruitment.Api.MappingProfiles
