@@ -48,6 +48,29 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             return users;
         }
 
+        /// <summary>
+        /// Returns the User corresponding to the Id received by parameter,
+        /// or null if the user does not exist.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="CorruptStorageException"></exception>
+        public async Task<User> GetById(Guid id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            List<User> users = await this.GetAll(u => u.Id == id);
+
+            if (users.Count > 1)
+            {
+                throw new CorruptStorageException($"When searching for a User by its Id -which is unique-, more than one entity was found. Id: {id}");
+            }
+            
+            return users.FirstOrDefault();
+        }
+
         public async Task<User> Add(User user)
         {
             if (user == null)
@@ -90,7 +113,7 @@ namespace Sat.Recruitment.Infrastructure.Repositories
                 // Map line to User
                 User currentUser = MapFileRowToUser(line);
 
-                // If the Id of the curren User matches with the Id of the User to be deleted,
+                // If the Id of the current User matches with the Id of the User to be deleted,
                 // then, remove the current line and end the search.
                 if (currentUser.Id == user.Id)
                 {
@@ -101,6 +124,57 @@ namespace Sat.Recruitment.Infrastructure.Repositories
 
             // Write the remaining lines to the file
             await File.WriteAllLinesAsync(_path, lines.ToArray());
+        }
+
+        public async Task<User> Update(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            // User to be returned after all the process
+            User updatedUser = null;
+
+            // Get all the lines from the file
+            List<string> lines = (await File.ReadAllLinesAsync(_path)).ToList();
+
+            // Search the corresponding line to the User to be updated
+            for (int i = 0; i < lines.Count; i++)
+            {
+                // Get a line from the file
+                string line = lines[i];
+
+                // Map line to User
+                User currentUser = MapFileRowToUser(line);
+
+                // If the Id of the current User matches with the Id of the User to be updated,
+                // then, update the current line and end the search.
+                if (currentUser.Id == user.Id)
+                {
+                    // Update the fields of the persisted entity, with the new fields
+                    // received by parameter
+                    currentUser.Name = user.Name;
+                    currentUser.Email = user.Email;
+                    currentUser.Address = user.Address;
+                    currentUser.Phone = user.Phone;
+                    currentUser.UserType = user.UserType;
+                    currentUser.Money = user.Money;
+
+                    // Update the line
+                    lines[i] = MapUserToFileRow(currentUser);
+
+                    // Entity to be returned
+                    updatedUser = currentUser;
+
+                    break;
+                }
+            }
+
+            // Write the lines to the file
+            await File.WriteAllLinesAsync(_path, lines.ToArray());
+
+            return updatedUser;
         }
 
         /// <summary>
