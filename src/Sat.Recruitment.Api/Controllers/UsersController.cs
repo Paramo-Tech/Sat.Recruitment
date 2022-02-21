@@ -8,6 +8,7 @@ using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
@@ -158,6 +159,47 @@ namespace Sat.Recruitment.Api.Controllers
                 return StatusCode(
                     StatusCodes.Status500InternalServerError,
                     ex.Message);
+            }
+        }
+
+        [HttpPut("{id:Guid}")]
+        public async Task<ActionResult<UpdateUserResponse>> Update(
+            [Required]
+            [FromRoute]
+            Guid id,
+
+            [FromBody] UpdateRequest request)
+        {
+            try
+            {
+                // Map the request parameters to the business entity
+                User user = _mapper.Map<User>(request);
+                user.Id = id;
+
+                // Update persisted User
+                user = await _userService.Update(user);
+
+                // Write in log
+                _logger.LogInformation($"User updated. Id: {user.Id}, Name: {user.Name}, Email: {user.Email}, Address: {user.Address}, Phone: {user.Phone}");
+
+                // Map the new entity to response DTO
+                UpdateUserResponse response = _mapper.Map<UpdateUserResponse>(user);
+
+                return Ok(response);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return this.NotFound(
+                    ex.Message
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    ex.Message
+                    );
             }
         }
     }
