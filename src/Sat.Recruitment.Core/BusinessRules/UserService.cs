@@ -84,7 +84,7 @@ namespace Sat.Recruitment.Core.BusinessRules
             }
 
             // Check if the Id of the User to be updated exists in the storage
-            User exist = await GetById(id);
+            User exist = await _userRepository.GetById(id);
             if (exist == null)
             {
                 throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {id}");
@@ -102,7 +102,7 @@ namespace Sat.Recruitment.Core.BusinessRules
             }
 
             // Check if the Id of the User to be updated exists in the storage
-            User exist = await GetById(user.Id);
+            User exist = await _userRepository.GetById(user.Id);
             if (exist == null)
             {
                 throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {user.Id}");
