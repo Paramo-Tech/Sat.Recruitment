@@ -31,7 +31,7 @@ namespace Sat.Recruitment.Api.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<CreateUserResponse>> CreateUser(CreateUserRequest request)
+        public async Task<ActionResult<CreateUserResponse>> Create(CreateUserRequest request)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Sat.Recruitment.Api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<List<CreateUserResponse>>> ListUsers()
+        public async Task<ActionResult<List<CreateUserResponse>>> List()
         {
             try
             {
