@@ -94,11 +94,11 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             return user;
         }
 
-        public async Task Delete(User user)
+        public async Task Delete(Guid id)
         {
-            if (user == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(id));
             }
 
             // Get all the lines from the file
@@ -115,7 +115,7 @@ namespace Sat.Recruitment.Infrastructure.Repositories
 
                 // If the Id of the current User matches with the Id of the User to be deleted,
                 // then, remove the current line and end the search.
-                if (currentUser.Id == user.Id)
+                if (currentUser.Id == id)
                 {
                     lines.RemoveAt(i);
                     break;

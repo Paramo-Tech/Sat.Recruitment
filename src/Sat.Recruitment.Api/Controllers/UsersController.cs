@@ -131,19 +131,11 @@ namespace Sat.Recruitment.Api.Controllers
         {
             try
             {
-                // Get persisted User
-                User user = await _userService.GetById(id);
-
-                if (user == null)
-                {
-                    throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {id}");
-                }
+                // Delete persisted User
+                await _userService.Delete(id);
 
                 // Write in log
-                _logger.LogInformation($"User deleted. Id: {user.Id}, Name: {user.Name}, Email: {user.Email}, Address: {user.Address}, Phone: {user.Phone}");
-
-                // Delete persisted User
-                await _userService.Delete(user);
+                _logger.LogInformation($"User deleted. Id: {id}");
 
                 return NoContent();
             }

@@ -70,21 +70,22 @@ namespace Sat.Recruitment.Core.BusinessRules
             return user;
         }
 
-        public async Task Delete(User user)
+        public async Task Delete(Guid id)
         {
-            if (user == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                throw new ArgumentNullException(nameof(id));
             }
 
             // Check if the Id of the User to be updated exists in the storage
-            User exist = await GetById(user.Id);
+            User exist = await GetById(id);
             if (exist == null)
             {
-                throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {user.Id}");
+                throw new EntityNotFoundException(typeof(User).Name, $"Searching with the Id = {id}");
             }
 
-            await _userRepository.Delete(user);
+            // Persis the deletion
+            await _userRepository.Delete(id);
         }
 
         public async Task<User> Update(User user)

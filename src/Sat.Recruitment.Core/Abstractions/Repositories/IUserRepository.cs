@@ -10,7 +10,7 @@ namespace Sat.Recruitment.Core.Abstractions.Repositories
         Task<List<User>> GetAll(Func<User, bool> filter = null);
         Task<User> GetById(Guid id);
         Task<User> Add(User user);
-        Task Delete(User user);
+        Task Delete(Guid id);
         Task<User> Update(User user);
     }
 }
