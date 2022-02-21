@@ -1,4 +1,5 @@
-﻿using Sat.Recruitment.Core.Abstractions.BusinessFeatures.GiftByUserType;
+﻿using FluentValidation;
+using Sat.Recruitment.Core.Abstractions.BusinessFeatures.GiftByUserType;
 using Sat.Recruitment.Core.Abstractions.BusinessFeatures.NormalizeEmail;
 using Sat.Recruitment.Core.Abstractions.Repositories;
 using Sat.Recruitment.Core.Abstractions.Services;
@@ -6,7 +7,6 @@ using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Core.BusinessRules
@@ -14,12 +14,14 @@ namespace Sat.Recruitment.Core.BusinessRules
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IValidator<User> _validator;
         private readonly IGiftByUserTypeMediator _giftByUserTypeMediator;
         private readonly INormalizeEmail _normalizeEmail;
 
-        public UserService(IUserRepository userRepository, IGiftByUserTypeMediator giftByUserTypeMediator, INormalizeEmail normalizeEmail)
+        public UserService(IUserRepository userRepository, IValidator<User> validator, IGiftByUserTypeMediator giftByUserTypeMediator, INormalizeEmail normalizeEmail)
         {
             this._userRepository = userRepository;
+            this._validator = validator;
             this._giftByUserTypeMediator = giftByUserTypeMediator;
             this._normalizeEmail = normalizeEmail;
         }
@@ -30,6 +32,9 @@ namespace Sat.Recruitment.Core.BusinessRules
             {
                 throw new ArgumentNullException(nameof(user));
             }
+
+            // Apply validations (through FluentValidation)
+            _validator.ValidateAndThrow(user);
 
             // Get Gift for the user depending on it UserType and amount of money
             decimal giftAmount = _giftByUserTypeMediator.GetGiftByUserType(user.UserType, user.Money);
@@ -100,6 +105,9 @@ namespace Sat.Recruitment.Core.BusinessRules
             {
                 throw new ArgumentNullException(nameof(user));
             }
+
+            // Apply validations (through FluentValidation)
+            _validator.ValidateAndThrow(user);
 
             // Check if the Id of the User to be updated exists in the storage
             User exist = await _userRepository.GetById(user.Id);

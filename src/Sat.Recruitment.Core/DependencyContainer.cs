@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sat.Recruitment.Core.Abstractions.BusinessFeatures.GiftByUserType;
 using Sat.Recruitment.Core.Abstractions.BusinessFeatures.NormalizeEmail;
 using Sat.Recruitment.Core.BusinessRules.Features.GiftByUserType;
 using Sat.Recruitment.Core.BusinessRules.Features.NormalizeEmail;
+using Sat.Recruitment.Core.DomainEntities;
+using Sat.Recruitment.Core.Validators;
 
 namespace Sat.Recruitment.Core
 {
@@ -21,6 +24,9 @@ namespace Sat.Recruitment.Core
 
             // Add NormalizeEmail functionality
             services.AddSingleton<INormalizeEmail, NormalizeEmail>();
+
+            // Add Validators
+            services.AddScoped<IValidator<User>, UserValidator>();
 
             return services;
         }
