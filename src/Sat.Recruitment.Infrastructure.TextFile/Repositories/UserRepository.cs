@@ -4,6 +4,7 @@ using Sat.Recruitment.Core.Enums;
 using Sat.Recruitment.Infrastructure.TextFile.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -214,7 +215,7 @@ namespace Sat.Recruitment.Infrastructure.TextFile.Repositories
                 user.Phone = phone;
                 user.Address = address;
                 user.UserType = (string.IsNullOrEmpty(userType)) ? null : (UserType?)Int32.Parse(userType);
-                user.Money = decimal.Parse(money);
+                user.Money = decimal.Parse(money, CultureInfo.InvariantCulture);
             }
             catch (Exception)
             {
@@ -232,7 +233,7 @@ namespace Sat.Recruitment.Infrastructure.TextFile.Repositories
             // Transform the UserType to proper form to be stored in a text file
             string userType = (user.UserType == null) ? String.Empty : ((int)user.UserType).ToString();
 
-            string fileRow = $"{user.Id},{user.Name},{user.Email},{user.Phone},{user.Address},{userType},{user.Money}";
+            string fileRow = $"{user.Id},{user.Name},{user.Email},{user.Phone},{user.Address},{userType},{user.Money.ToString(CultureInfo.InvariantCulture)}";
 
             return fileRow;
         }
