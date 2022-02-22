@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sat.Recruitment.Core.Abstractions.BusinessFeatures.GiftByUserType;
 using Sat.Recruitment.Core.Abstractions.BusinessFeatures.NormalizeEmail;
+using Sat.Recruitment.Core.Abstractions.Services;
+using Sat.Recruitment.Core.BusinessRules;
 using Sat.Recruitment.Core.BusinessRules.Features.GiftByUserType;
 using Sat.Recruitment.Core.BusinessRules.Features.NormalizeEmail;
 using Sat.Recruitment.Core.DomainEntities;
@@ -27,6 +29,9 @@ namespace Sat.Recruitment.Core
 
             // Add Validators
             services.AddScoped<IValidator<User>, UserValidator>();
+
+            // BusinessRules
+            services.AddTransient<IUserService, UserService>();
 
             return services;
         }

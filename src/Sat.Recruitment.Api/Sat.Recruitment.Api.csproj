@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sat.Recruitment.Core\Sat.Recruitment.Core.csproj" />
-    <ProjectReference Include="..\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Gateway.IoC\Sat.Recruitment.Gateway.IoC.csproj" />
   </ItemGroup>
 
 
