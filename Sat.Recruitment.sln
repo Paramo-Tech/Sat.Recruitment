@@ -20,9 +20,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Gateway.IoC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Infrastructure.EF", "src\Sat.Recruitment.Infrastructure.EF\Sat.Recruitment.Infrastructure.EF.csproj", "{ECFF3C52-D33C-4598-8288-427EF2491E4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Infrastructure.TextFile", "src\Sat.Recruitment.Infrastructure.TextFile\Sat.Recruitment.Infrastructure.TextFile.csproj", "{070D14BA-B473-49FE-B4C5-48E92872B370}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Infrastructure.TextFile", "src\Sat.Recruitment.Infrastructure.TextFile\Sat.Recruitment.Infrastructure.TextFile.csproj", "{070D14BA-B473-49FE-B4C5-48E92872B370}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Api.UnitTests", "tests\Sat.Recruitment.Api.UnitTests\Sat.Recruitment.Api.UnitTests.csproj", "{1153E369-ED68-46C3-BBCE-9139F528E303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api.UnitTests", "tests\Sat.Recruitment.Api.UnitTests\Sat.Recruitment.Api.UnitTests.csproj", "{1153E369-ED68-46C3-BBCE-9139F528E303}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Core.IntegrationTests", "tests\Sat.Recruitment.Core.IntegrationTests\Sat.Recruitment.Core.IntegrationTests.csproj", "{21A8AA90-F709-4BDA-8787-CF95C8F2DF2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,10 @@ Global
 		{1153E369-ED68-46C3-BBCE-9139F528E303}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1153E369-ED68-46C3-BBCE-9139F528E303}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1153E369-ED68-46C3-BBCE-9139F528E303}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A8AA90-F709-4BDA-8787-CF95C8F2DF2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A8AA90-F709-4BDA-8787-CF95C8F2DF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A8AA90-F709-4BDA-8787-CF95C8F2DF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A8AA90-F709-4BDA-8787-CF95C8F2DF2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{ECFF3C52-D33C-4598-8288-427EF2491E4B} = {6F415023-A1F9-4573-9298-33F29F7EFD14}
 		{070D14BA-B473-49FE-B4C5-48E92872B370} = {6F415023-A1F9-4573-9298-33F29F7EFD14}
 		{1153E369-ED68-46C3-BBCE-9139F528E303} = {C8AA25E0-E8BD-4EDC-9521-11E86A4E1588}
+		{21A8AA90-F709-4BDA-8787-CF95C8F2DF2B} = {C8AA25E0-E8BD-4EDC-9521-11E86A4E1588}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2A05765-05B9-484D-8D3D-506849EB716F}
