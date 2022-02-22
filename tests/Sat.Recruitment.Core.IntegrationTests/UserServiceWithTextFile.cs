@@ -7,10 +7,13 @@ using Sat.Recruitment.Core.BusinessRules.Features.GiftByUserType;
 using Sat.Recruitment.Core.BusinessRules.Features.NormalizeEmail;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Enums;
+using Sat.Recruitment.Core.Exceptions;
 using Sat.Recruitment.Core.Validators;
 using Sat.Recruitment.Infrastructure.TextFile.Repositories;
+using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Priority;
 
 namespace Sat.Recruitment.Core.IntegrationTests
 {
@@ -22,10 +25,14 @@ namespace Sat.Recruitment.Core.IntegrationTests
     /// assemblies:
     /// - Sat.Recruitment.Core
     /// - Sat.Recruitment.Infrastructure.TextFile
+    /// 
+    /// ! It is mandatory to clean the project before running the tests,
+    /// to ensure you have a text file without being altered.
     /// </summary>
+    [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
     public class UserServiceWithTextFile
     {
-        [Fact]
+        [Fact, Priority(0)]
         public async Task Create_WithUnexistingUser_ReturnsNewUser()
         {
             // Arrange
@@ -65,6 +72,41 @@ namespace Sat.Recruitment.Core.IntegrationTests
             Assert.Equal(persistedUser.Phone, newUser.Phone);
             Assert.Equal(persistedUser.UserType, newUser.UserType);
             Assert.Equal(138.88M, newUser.Money);
+        }
+
+        [Fact, Priority(1)]
+        public async Task Create_WithExistingUser_ThrowsEntityAlreadyExistsException()
+        {
+            // Arrange
+            IUserRepository userRepository = new UserRepository();
+
+            IValidator<User> validator = new UserValidator();
+
+            INormalUserGiftStrategy normalUserGiftStrategy = new NormalUserGiftStrategy();
+            IPremiumUserGiftTrategy premiumUserGiftTrategy = new PremiumUserGiftTrategy();
+            ISuperUserGiftStrategy superUserGiftStrategy = new SuperUserGiftStrategy();
+
+            IGiftByUserTypeMediator giftByUserTypeMediator = new GiftByUserTypeMediator(normalUserGiftStrategy, premiumUserGiftTrategy, superUserGiftStrategy);
+
+            INormalizeEmail normalizeEmail = new NormalizeEmail();
+
+            UserService userService = new UserService(userRepository, validator, giftByUserTypeMediator, normalizeEmail);
+
+            User newUser = new User()
+            {
+                Name = "Mike",
+                Email = "mike@gmail.com",
+                Address = "Av. Juan G",
+                Phone = "+349 1122354215",
+                UserType = UserType.Normal,
+                Money = 124
+            };
+
+            //Act
+            Func<Task> act = async () => await userService.Create(newUser);
+
+            //Assert
+            await Assert.ThrowsAsync<EntityAlreadyExistsException>(act);
         }
     }
 }
