@@ -5,9 +5,7 @@ namespace Sat.Recruitment.Infrastructure.EF.EFSpecifics
 {
     public class RecruitmentDbContext : DbContext
     {
-        public RecruitmentDbContext(DbContextOptions options) : base(options)
-        {
-        }
+        public RecruitmentDbContext(DbContextOptions<RecruitmentDbContext> options) : base(options) {}
 
         public DbSet<User> Users { get; set; }
     }
