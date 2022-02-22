@@ -10,7 +10,7 @@ namespace Sat.Recruitment.Core.BusinessRules.Features.GiftByUserType
     /// This strategy implementation is used to calculate the amount of gift for a
     /// PremiumUser.
     /// </summary>
-    internal class PremiumUserGiftTrategy : IPremiumUserGiftTrategy
+    public class PremiumUserGiftTrategy : IPremiumUserGiftTrategy
     {
         public decimal GetGift(decimal initialMoney)
         {

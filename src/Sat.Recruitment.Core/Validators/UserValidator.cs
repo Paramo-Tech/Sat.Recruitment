@@ -1,10 +1,9 @@
 ﻿using FluentValidation;
 using Sat.Recruitment.Core.DomainEntities;
-using System.Text.RegularExpressions;
 
 namespace Sat.Recruitment.Core.Validators
 {
-    internal class UserValidator : AbstractValidator<User>
+    public class UserValidator : AbstractValidator<User>
     {
         public UserValidator()
         {

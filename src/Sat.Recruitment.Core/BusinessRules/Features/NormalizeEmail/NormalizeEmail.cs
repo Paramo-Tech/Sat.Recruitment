@@ -12,7 +12,7 @@ namespace Sat.Recruitment.Core.BusinessRules.Features.NormalizeEmail
     /// the corresponding logic, according to each email provider, to keep a
     /// clean username, without labels or decorations, to avoid duplicates.
     /// </summary>
-    internal class NormalizeEmail : INormalizeEmail
+    public class NormalizeEmail : INormalizeEmail
     {
         public string Normalize(string email)
         {
