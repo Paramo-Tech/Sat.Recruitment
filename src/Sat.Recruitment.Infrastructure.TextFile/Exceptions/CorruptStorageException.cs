@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sat.Recruitment.Infrastructure.Exceptions
+namespace Sat.Recruitment.Infrastructure.TextFile.Exceptions
 {
     /// <summary>
     /// Exception used to handle situations where the storage (text file) is

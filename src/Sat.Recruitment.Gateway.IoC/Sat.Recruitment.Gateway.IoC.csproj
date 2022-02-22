@@ -12,7 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Core\Sat.Recruitment.Core.csproj" />
     <ProjectReference Include="..\Sat.Recruitment.Infrastructure.EF\Sat.Recruitment.Infrastructure.EF.csproj" />
-    <ProjectReference Include="..\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Infrastructure.TextFile\Sat.Recruitment.Infrastructure.TextFile.csproj" />
   </ItemGroup>
 
 </Project>

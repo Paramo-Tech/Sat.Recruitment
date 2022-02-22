@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Sat.Recruitment.Infrastructure.Exceptions
+namespace Sat.Recruitment.Infrastructure.TextFile.Exceptions
 {
     [Serializable]
     public class CorruptRegistryException

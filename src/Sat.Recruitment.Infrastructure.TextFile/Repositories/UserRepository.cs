@@ -1,14 +1,15 @@
 ﻿using Sat.Recruitment.Core.Abstractions.Repositories;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Enums;
-using Sat.Recruitment.Infrastructure.Exceptions;
+using Sat.Recruitment.Infrastructure.TextFile.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sat.Recruitment.Infrastructure.Repositories
+
+namespace Sat.Recruitment.Infrastructure.TextFile.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -67,7 +68,7 @@ namespace Sat.Recruitment.Infrastructure.Repositories
             {
                 throw new CorruptStorageException($"When searching for a User by its Id -which is unique-, more than one entity was found. Id: {id}");
             }
-            
+
             return users.FirstOrDefault();
         }
 
