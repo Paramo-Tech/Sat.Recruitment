@@ -79,3 +79,14 @@ All abstractions for Business and for Infrastructure are defined here. It also c
 Regarding the implementation of UserService, it validates the fields of the User entity using FluentValidation (to avoid repetition).
 
 Errata here: while Core should be completely agnostic, in this case it is using the FluentValidation library. This can be solved by generating the relevant abstractions, but this has not been done, since they have been considered as a functionality that does not need to be reimplemented.
+
+# Test projects:
+
+All projects use xUnit and moq. Both unit and integration tests were tried to refer to the initial tests of the project (create a new User, and try to insert it again), and add some more.
+
+- Sat.Recruitment.Api.UnitTests: contains some unit tests that only test Controllers (abstracting from the underlying implementations).
+- Sat.Recruitment.Core.IntegrationTests: The complete flow is tested from a Business implementation, passing through an Infrastructure implementation.
+
+Important, regarding Sat.Recruitment.Core.IntegrationTests: always clean the project before running these tests to make sure the environment is unaltered. Since running the tests makes a copy of the text file to the binaries folder, that file is not returned to its original state unless the project is recompiled or cleaned (just the project, not the entire solution).
+
+
