@@ -54,6 +54,7 @@ It is a REST service, with CRUD operations for a User.
 - To transform domain entities into DTOs, uses AutoMapper.
 - The logic of each Action is specific to the layer in which it is located (Frameworks & Drivers), and does not manage domain aspects at all.
 - The validation of the received fields is carried out using decorations in each Request entity, or received parameter.
+- Logging was added.
 
 Important comment: the validation of the fields of the Request Entities is carried out in the API, but later in the business the validation of the User Entity is carried out.
 
@@ -89,4 +90,12 @@ All projects use xUnit and moq. Both unit and integration tests were tried to re
 
 Important, regarding Sat.Recruitment.Core.IntegrationTests: always clean the project before running these tests to make sure the environment is unaltered. Since running the tests makes a copy of the text file to the binaries folder, that file is not returned to its original state unless the project is recompiled or cleaned (just the project, not the entire solution).
 
+# What else could we do?
+- Create an abstraction to audit sensitive entities like User
+- Increase test coverage
+- Create boilerplate code to facilitate integration tests (such as restoring the text file to the original state)
+- Consider a possible problem in the storage in text file, when texts with commas are sent (for which it will fail later in reading)
+- Use an authorization/authentication system such as Identity, since it is a system that will manage assets
+- Create a docker image and upload it
 
+(Why haven't we done it yet? Cause we're out of time 🤓)
