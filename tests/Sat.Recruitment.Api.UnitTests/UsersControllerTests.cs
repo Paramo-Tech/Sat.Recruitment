@@ -90,6 +90,34 @@ namespace Sat.Recruitment.Api.UnitTests
         }
 
         [Fact]
+        public async Task Create_WithExistingUser_ReturnsCreatedAtActionResultWithCreateResponse()
+        {
+            // Arrange
+            CreateRequest createRequest = new CreateRequest() // Irrelevant content, but needs to be correct
+            {
+                Name = "Testing User",
+                Email = "testinguser@domain.com",
+                Address = "Testing User 123",
+                Phone = "+54123123123",
+                UserType = UserType.Normal,
+                Money = 100
+            };
+
+            var userServiceStub = new Mock<IUserService>();
+            userServiceStub.Setup(userService => userService.Create(It.IsAny<User>())).Throws(new EntityAlreadyExistsException(typeof(User).Name));
+
+            var controller = new UsersController(_logger, _mapper, userServiceStub.Object);
+
+            // Act
+            var result = await controller.Create(createRequest);
+            ObjectResult obtainedObjectResult = result.Result as ObjectResult;
+
+            // Assert
+            Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(409, obtainedObjectResult.StatusCode);
+        }
+
+        [Fact]
         public async Task GetById_WithExistingUser_ReturnsOk()
         {
             // Arrange
