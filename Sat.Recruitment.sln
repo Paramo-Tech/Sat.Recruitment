@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C8AA25E0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api", "src\Sat.Recruitment.Api\Sat.Recruitment.Api.csproj", "{A95E71E5-75A6-4622-B5B0-E9DD5669B4BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Test", "tests\Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{419ABFE4-C721-475F-9112-60F1605AF6A2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Core", "src\Sat.Recruitment.Core\Sat.Recruitment.Core.csproj", "{5A1EF1B9-652B-4CBF-A469-D8D62C2D3E80}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Gateway.IoC", "src\Sat.Recruitment.Gateway.IoC\Sat.Recruitment.Gateway.IoC.csproj", "{44864B28-C345-4D1D-B20E-5D475E600EA2}"
@@ -24,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Infrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api.UnitTests", "tests\Sat.Recruitment.Api.UnitTests\Sat.Recruitment.Api.UnitTests.csproj", "{1153E369-ED68-46C3-BBCE-9139F528E303}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Core.IntegrationTests", "tests\Sat.Recruitment.Core.IntegrationTests\Sat.Recruitment.Core.IntegrationTests.csproj", "{21A8AA90-F709-4BDA-8787-CF95C8F2DF2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Core.IntegrationTests", "tests\Sat.Recruitment.Core.IntegrationTests\Sat.Recruitment.Core.IntegrationTests.csproj", "{21A8AA90-F709-4BDA-8787-CF95C8F2DF2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +34,6 @@ Global
 		{A95E71E5-75A6-4622-B5B0-E9DD5669B4BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A95E71E5-75A6-4622-B5B0-E9DD5669B4BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A95E71E5-75A6-4622-B5B0-E9DD5669B4BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{419ABFE4-C721-475F-9112-60F1605AF6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{419ABFE4-C721-475F-9112-60F1605AF6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{419ABFE4-C721-475F-9112-60F1605AF6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{419ABFE4-C721-475F-9112-60F1605AF6A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A1EF1B9-652B-4CBF-A469-D8D62C2D3E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A1EF1B9-652B-4CBF-A469-D8D62C2D3E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A1EF1B9-652B-4CBF-A469-D8D62C2D3E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,7 +64,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A95E71E5-75A6-4622-B5B0-E9DD5669B4BC} = {6F415023-A1F9-4573-9298-33F29F7EFD14}
-		{419ABFE4-C721-475F-9112-60F1605AF6A2} = {C8AA25E0-E8BD-4EDC-9521-11E86A4E1588}
 		{5A1EF1B9-652B-4CBF-A469-D8D62C2D3E80} = {6F415023-A1F9-4573-9298-33F29F7EFD14}
 		{44864B28-C345-4D1D-B20E-5D475E600EA2} = {6F415023-A1F9-4573-9298-33F29F7EFD14}
 		{ECFF3C52-D33C-4598-8288-427EF2491E4B} = {6F415023-A1F9-4573-9298-33F29F7EFD14}
