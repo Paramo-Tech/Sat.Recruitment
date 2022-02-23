@@ -72,4 +72,10 @@ How to switch between different Infrastructure implementations? Just comment/unc
 
 ![](https://user-images.githubusercontent.com/99493809/155357710-05784369-34f5-4f5a-b63b-51745568438b.png)
 
+## Sat.Recruitment.Core
 
+All abstractions for Business and for Infrastructure are defined here. It also contains the business entities (as defined in the definition graphs above), and the business implementations, such as the UserService, the gift strategies, the gift mediator.
+
+Regarding the implementation of UserService, it validates the fields of the User entity using FluentValidation (to avoid repetition).
+
+Errata here: while Core should be completely agnostic, in this case it is using the FluentValidation library. This can be solved by generating the relevant abstractions, but this has not been done, since they have been considered as a functionality that does not need to be reimplemented.
