@@ -1,0 +1,4 @@
+32fbf1e2-2d45-481d-842b-f9a691cdcbdc,Juan,Juan@marmol.com,+5491154762312,Peru 2464,0,1234
+b3e7f5ab-c1a0-4795-ba41-87ec9a2184a5,Franco,Franco.Perez@gmail.com,+534645213542,Alvear y Colombres,1,112234
+cf3fae61-ca59-46a1-9fc0-b33c2e65acb0,Agustina,Agustina@gmail.com,+534645213542,Garay y Otra Calle,2,112234
+91ab1042-03d1-4490-be57-3e94cd319960,Emanuel,Emanuel@gmail.com,+534645213547,Otra Calle y Otra Calle,,700
