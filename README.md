@@ -67,3 +67,9 @@ It is responsible for sending and receiving domain entities to a external storag
 
 - Sat.Recruitment.Infrastructure.TextFile: It implements the persistence system in a text file, as used in the original version of the system.
 - Sat.Recruitment.Infrastructure.EF: It implements the persistence system in a SQL database -currently configured an in-memory database-, with Entity Framework as ORM.
+
+How to switch between different Infrastructure implementations? Just comment/uncomment the container call of each implementation in the DependencyContainer file, of the Gateway.IoC assembly.
+
+![](https://user-images.githubusercontent.com/99493809/155357710-05784369-34f5-4f5a-b63b-51745568438b.png)
+
+
