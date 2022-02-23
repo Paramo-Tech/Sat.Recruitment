@@ -34,3 +34,5 @@ Then, so that a consumer of Gifts for Users depending on their Type of User, doe
 
 ![](https://user-images.githubusercontent.com/99493809/155348360-d1732ea1-b46b-4159-b651-3dee1125ae33.png)
 
+Another side comment: We might think that the Factory Pattern would be appropriate here (and indeed it would be). But since we are employing the Dependency Inversion Principle, whereby a high-level class should not depend on a low-level one, we delegate the responsibility of instantiating elements to a dependency injector, so we rely on an abstraction.
+
