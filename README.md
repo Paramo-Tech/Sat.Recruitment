@@ -45,3 +45,14 @@ Since the functionality is very concrete, a mechanism was not thought of in case
 
 In case the number of domains increases, then another strategy could be thought of to allow for scalability, as appropriate.
 
+# Brief description of each assembly
+## Sat.Recruitment.Api
+It is a REST service, with CRUD operations for a User.
+
+- It's documented with Swagger.
+- Request/Response contracts are assembly specific, they do not expose domain entities.
+- To transform domain entities into DTOs, uses AutoMapper.
+- The logic of each Action is specific to the layer in which it is located (Frameworks & Drivers), and does not manage domain aspects at all.
+- The validation of the received fields is carried out using decorations in each Request entity, or received parameter.
+
+Important comment: the validation of the fields of the Request Entities is carried out in the API, but later in the business the validation of the User Entity is carried out.
