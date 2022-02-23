@@ -36,3 +36,12 @@ Then, so that a consumer of Gifts for Users depending on their Type of User, doe
 
 Another side comment: We might think that the Factory Pattern would be appropriate here (and indeed it would be). But since we are employing the Dependency Inversion Principle, whereby a high-level class should not depend on a low-level one, we delegate the responsibility of instantiating elements to a dependency injector, so we rely on an abstraction.
 
+## Email normalization
+Since after investigating the functionality, we discovered that it was only applicable to the Gmail domain, a special purpose class (NormalizeEmail) was created to contain its functionality.
+
+In turn, the NormalizeEmail class implements the INormalizeEmail interface, which defines as a contract that the Normalize method must be implemented, which receives a string, and returns a string.
+
+Since the functionality is very concrete, a mechanism was not thought of in case of scalability (avoiding BDUF, Big Design Up Front).
+
+In case the number of domains increases, then another strategy could be thought of to allow for scalability, as appropriate.
+
