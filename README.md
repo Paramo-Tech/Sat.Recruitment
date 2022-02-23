@@ -56,3 +56,8 @@ It is a REST service, with CRUD operations for a User.
 - The validation of the received fields is carried out using decorations in each Request entity, or received parameter.
 
 Important comment: the validation of the fields of the Request Entities is carried out in the API, but later in the business the validation of the User Entity is carried out.
+
+## Sat.Recruitment.Gateway.IoC
+We could say that it is a "Facade", which resolves the dependencies of the most internal layers, without exposing them to a consumer from outside.
+
+In this way, any change that occurs further inside will be unknown by the layers above (as long as the established contracts are respected).
