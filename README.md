@@ -61,3 +61,9 @@ Important comment: the validation of the fields of the Request Entities is carri
 We could say that it is a "Facade", which resolves the dependencies of the most internal layers, without exposing them to a consumer from outside.
 
 In this way, any change that occurs further inside will be unknown by the layers above (as long as the established contracts are respected).
+
+## Sat.Recruitment.Infrastructure
+It is responsible for sending and receiving domain entities to a external storage. In this specific scenario, it will only be responsible for implementing the repositories defined in Core, with the corresponding underlying persistence technology.
+
+- Sat.Recruitment.Infrastructure.TextFile: It implements the persistence system in a text file, as used in the original version of the system.
+- Sat.Recruitment.Infrastructure.EF: It implements the persistence system in a SQL database -currently configured an in-memory database-, with Entity Framework as ORM.
