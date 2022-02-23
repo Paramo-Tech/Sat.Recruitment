@@ -6,6 +6,7 @@ using Sat.Recruitment.Api.DTOs.Users;
 using Sat.Recruitment.Core.Abstractions.Services;
 using Sat.Recruitment.Core.DomainEntities;
 using Sat.Recruitment.Core.Exceptions;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,8 +30,14 @@ namespace Sat.Recruitment.Api.Controllers
             this._userService = userService;
         }
 
-
         [HttpPost]
+        [SwaggerOperation(
+            Summary = "Registers a new User",
+            Description = "Registers a new User",
+            OperationId = "Users.Create")]
+        [SwaggerResponse(201, "Successfully created.")]
+        [SwaggerResponse(409, "The User data entered conflicts with User data already registered.")]
+        [SwaggerResponse(500, "Internal server error.")]
         public async Task<ActionResult<CreateResponse>> Create(CreateRequest request)
         {
             try
@@ -68,6 +75,12 @@ namespace Sat.Recruitment.Api.Controllers
 
 
         [HttpGet]
+        [SwaggerOperation(
+            Summary = "Lists all the registered Users.",
+            Description = "Lists all the registered Users.",
+            OperationId = "Users.List")]
+        [SwaggerResponse(200, "Users successfully found.")]
+        [SwaggerResponse(500, "Internal server error.")]
         public async Task<ActionResult<List<CreateResponse>>> List()
         {
             try
@@ -93,7 +106,18 @@ namespace Sat.Recruitment.Api.Controllers
 
 
         [HttpGet("{id:Guid}", Name = "GetById")]
-        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        [SwaggerOperation(
+            Summary = "Gets a User by its id",
+            Description = "Gets a User by its id",
+            OperationId = "Users.GetById")]
+        [SwaggerResponse(200, "User successfully found.")]
+        [SwaggerResponse(404, "Requested User not found.")]
+        [SwaggerResponse(500, "Internal server error.")]
+        public async Task<ActionResult<GetByIdResponse>> GetById(
+            [FromRoute]
+            [Required]
+            [SwaggerParameter(Description = "Id of the User to be found", Required = true)]
+            Guid id)
         {
             try
             {
@@ -122,7 +146,18 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpDelete("{id:Guid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        [SwaggerOperation(
+            Summary = "Deletes an existing User entity by its Id",
+            Description = "Deletes an existing User entity by its Id",
+            OperationId = "Users.Delete")]
+        [SwaggerResponse(204, "User successfully deleted.")]
+        [SwaggerResponse(404, "Requested User not found.")]
+        [SwaggerResponse(500, "Internal server error.")]
+        public async Task<IActionResult> Delete(
+            [FromRoute]
+            [Required]
+            [SwaggerParameter(Description = "Id of the User to be deleted", Required = true)]
+            Guid id)
         {
             try
             {
@@ -150,9 +185,17 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpPut("{id:Guid}")]
+        [SwaggerOperation(
+            Summary = "Updates an existing User entity by its Id, and the provided payload.",
+            Description = "Updates an existing User entity by its Id, and the provided payload.",
+            OperationId = "Users.Update")]
+        [SwaggerResponse(200, "User successfully updated")]
+        [SwaggerResponse(404, "Requested User not found.")]
+        [SwaggerResponse(500, "Internal server error.")]
         public async Task<ActionResult<UpdateResponse>> Update(
-            [Required]
             [FromRoute]
+            [Required]
+            [SwaggerParameter(Description = "Id of the User to be Updated", Required = true)]
             Guid id,
 
             [FromBody] UpdateRequest request)
