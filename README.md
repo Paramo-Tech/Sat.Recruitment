@@ -1,11 +1,4 @@
-# SAT Recruitment
-
-El objetivo de esta prueba es refactorizar el código de este proyecto.
-Se puede realizar cualquier cambio que considere necesario en el código y en los test.
-
-
-## Requisitos 
-
-- Todos los test deben pasar.
-- El código debe seguir los principios de la programación orientada a objetos (SOLID, DRY, etc...).
-- El código resultante debe ser mantenible y extensible.
+Se dividió la solución en capas para darle una responsabilidad única por clase o programa a si facilitar las pruebas sobre este y su mantenimiento.
+Se identifico una clase padre y varias hijas con un comportamiento determinado cada uno para esto se realizo una sustitución en su método de asignación. 
+Para los métodos se generaron interfaces para poder desacoplar la dependencia entre las capas.
+Se agregaron pruebas unitarias con las diferentes validaciones y control de errores que con el que debería contar el sistema.
