@@ -14,7 +14,9 @@ namespace Sat.Recruitment.Api.Constants
 
         public const string PasswordErrorRequired = "The password is required";
 
-        public const string GenericError = "An error has occured. Please check the log for more details";        
+        public const string GenericError = "An error has occured. Please check the log for more details";
+
+        public const string WrongUserPassowrd = "Wrong user or password";
 
         public const string DuplicationError = "The user is duplicated";
 
