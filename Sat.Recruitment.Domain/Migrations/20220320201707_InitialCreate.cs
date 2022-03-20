@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sat.Recruitment.Domain.Migrations
 {
@@ -18,7 +19,8 @@ namespace Sat.Recruitment.Domain.Migrations
                     Phone = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false),
                     UserType = table.Column<int>(type: "INTEGER", nullable: false),
                     Money = table.Column<decimal>(type: "TEXT", nullable: false),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Password = table.Column<byte[]>(type: "BLOB", nullable: false)
                 },
                 constraints: table =>
                 {

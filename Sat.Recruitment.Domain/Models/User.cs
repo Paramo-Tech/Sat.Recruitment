@@ -14,5 +14,6 @@ namespace Sat.Recruitment.Domain.Models
         public UserTypeEnum UserType { get; set; }
         public decimal Money { get; set; }
         public bool IsActive { get; set; }
+        public byte[] Password { get; set; }
     }
 }

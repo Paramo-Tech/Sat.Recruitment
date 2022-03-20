@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Models;
+using Sat.Recruitment.Services.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,31 +16,25 @@ namespace Sat.Recruitment.Services.Users.Commands
         public CreateUserHandler(UsersContext context) => _context = context;
         public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            request.Money = CreateUserHelper.HandleMoneyStrategy(request.UserType, request.Money);
+            request.Email = CreateUserHelper.NormalizeMail(request.Email);
 
-        }
-
-        private decimal GetPercentage(UserTypeEnum userType, decimal money)
-        {
-            decimal percentage = 0;
-            switch ((int)userType)
+            var user = new User
             {
-                case 1:
-                    if (money > 100)
-                    {
-                        percentage = Convert.ToDecimal(0.12);
-                    }
-                    else if (money < 100 && money > 10)
-                    {
-                        percentage = Convert.ToDecimal(0.8);
-                    }
-                    break;
-                case 2:
-                    percentage = Convert.ToDecimal(0.20);
-                    break;
-                default:
-                    break;
-            }
-            return percentage;
+                Name = request.Name,
+                Email = request.Email,
+                Money = request.Money,
+                Address = request.Address,
+                IsActive = true,
+                Phone = request.Phone,
+                UserType = request.UserType,
+                Password = Encoding.ASCII.GetBytes(request.Password)
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return user;
         }
     }
 }

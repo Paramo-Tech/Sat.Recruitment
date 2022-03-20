@@ -1,17 +1,22 @@
 ﻿using FluentValidation;
 using Sat.Recruitment.Api.Constants;
 using Sat.Recruitment.Domain.Dtos;
+using Sat.Recruitment.Domain.Forms;
 using Sat.Recruitment.Domain.Models;
 
 namespace Sat.Recruitment.Api.Validators
 {
-    public class UsersValidator : AbstractValidator<UserDto>
+    public class UsersValidator : AbstractValidator<UserCreationForm>
     {
         public UsersValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
                 .WithMessage(Messages.NameErrorRequired);
+
+            RuleFor(x => x.Password)
+                .NotEmpty()
+                .WithMessage(Messages.PasswordErrorRequired);
 
             RuleFor(x => x.Email)
                 .NotEmpty()

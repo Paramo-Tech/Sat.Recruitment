@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Sat.Recruitment.Domain.Dtos;
+using Sat.Recruitment.Domain.Forms;
 using Sat.Recruitment.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace Sat.Recruitment.Services.Users.Commands
         public string Phone { get; set; }
         public UserTypeEnum UserType { get; set; }
         public decimal Money { get; set; }
-        public CreateUserCommand(UserDto user)
+        public string Password { get; set; }
+        public CreateUserCommand(UserCreationForm user)
         {
             Name = user.Name;
             Email = user.Email;
@@ -23,6 +25,7 @@ namespace Sat.Recruitment.Services.Users.Commands
             Phone = user.Phone;
             UserType = (UserTypeEnum) user.UserType;
             Money = Convert.ToDecimal(user.Money);
+            Password = user.Password;
         }
     }
 }

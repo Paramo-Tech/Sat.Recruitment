@@ -25,6 +25,10 @@ namespace Sat.Recruitment.Domain
                .IsRequired();
 
             modelBuilder.Entity<User>()
+               .Property(x => x.Password)
+               .IsRequired();
+
+            modelBuilder.Entity<User>()
               .Property(x => x.Email)
               .HasMaxLength(25)
               .IsRequired();

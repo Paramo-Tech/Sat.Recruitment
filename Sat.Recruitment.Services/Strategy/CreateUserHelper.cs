@@ -7,44 +7,45 @@ namespace Sat.Recruitment.Services.Strategy
 {
     public static class CreateUserHelper
     {
-        public static decimal HandlePercentage(UserTypeEnum userType, decimal money)
+        public static decimal HandleMoneyStrategy(UserTypeEnum userType, decimal money)
         {
-            decimal percentage = 0;
+            decimal processedMoney = 0;
+            BaseStrategy strategy = null;
+
             switch (userType)
             {
                 case UserTypeEnum.NORMAL:
-                    if (money > 100)
-                    {
-                        percentage = Convert.ToDecimal(0.12);
-                    }
-                    else if (money < 100 && money > 10)
-                    {
-                        percentage = Convert.ToDecimal(0.8);
-                    }
-                    money = SetMoney(money, percentage);
+                    strategy = new NormalUserStrategy(money);
+                    processedMoney = strategy.ProcessMoney();
                     break;
                 case UserTypeEnum.SUPERUSER:
-                    if(money > 100)
-                    {
-                        percentage = Convert.ToDecimal(0.2);
-                    }
-                    money = SetMoney(money, percentage);
+                    strategy = new SuperUserStrategy(money);
+                    processedMoney = strategy.ProcessMoney();
+                    break;
+                case UserTypeEnum.PREMIUM:
+                    strategy = new PremiumUserStrategy(money);
+                    processedMoney = strategy.ProcessMoney();
                     break;
                 default:
                     break;
             }
-            if(userType == UserTypeEnum.PREMIUM)
-            {
-                var gif = money * 2;
-                money += gif;
-            }
+
             return money;
         }
 
-        private static decimal SetMoney(decimal money, decimal percentage)
+        public static string NormalizeMail(string mail)
         {
-            var gif = money * percentage;
-            return money + gif;
+            string normalizedMail;
+            var aux = mail.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+
+            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+
+            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+
+            normalizedMail = string.Join("@", new string[] { aux[0], aux[1] });
+
+            return normalizedMail;
         }
+
     }
 }

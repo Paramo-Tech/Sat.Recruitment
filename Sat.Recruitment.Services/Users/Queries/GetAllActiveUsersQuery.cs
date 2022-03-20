@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Sat.Recruitment.Services.Users.Queries
 {
-    public class GetAllUsersQuery : IRequest<List<User>>
+    public class GetAllActiveUsersQuery : IRequest<List<User>>
     {
     }
 }

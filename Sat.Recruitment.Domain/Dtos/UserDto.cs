@@ -3,19 +3,20 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Sat.Recruitment.Domain.Forms;
 
 namespace Sat.Recruitment.Domain.Dtos
 {
-    public class UserDto
+    public class UserDto 
     {
         public long Id { get; set; }
+        public bool IsActive { get; set; }
         public string Name { get; set; }
+        public string Money { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
         public int UserType { get; set; }
-        public string Money { get; set; }
-        public bool IsActive { get; set; }
         public string UserTypeString
         {
             get

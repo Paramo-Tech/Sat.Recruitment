@@ -24,11 +24,5 @@
     <ProjectReference Include="..\Sat.Recruitment.Services\Sat.Recruitment.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Files\Users.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 
 </Project>
