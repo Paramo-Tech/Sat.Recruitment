@@ -56,5 +56,10 @@ namespace Sat.Recruitment.Services.Authentication.Commands
                 token = writtenToken
             };
         }
+
+        public Task Handle(LoginCommand request, object none)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

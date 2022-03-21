@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="FakeItEasy" Version="5.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.11" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -21,6 +25,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Api\Sat.Recruitment.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Integration Testing\" />
   </ItemGroup>
 
 </Project>
