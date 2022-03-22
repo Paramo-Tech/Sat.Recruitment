@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Sat.Recruitment.Domain;
+using Sat.Recruitment.Domain.Repository;
+using Sat.Recruitment.Domain.Repository.Users;
 using Sat.Recruitment.Services.Users.Commands;
 using System;
 using System.Collections.Generic;
@@ -31,7 +33,7 @@ namespace Sat.Recruitment.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddFluentValidation(fv =>
             {
@@ -39,21 +41,6 @@ namespace Sat.Recruitment.Api
                 fv.RegisterValidatorsFromAssemblyContaining<Startup>();   
             });
             services.AddSwaggerGen();
-
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
-            //{
-            //    x.RequireHttpsMetadata = false;
-            //    x.SaveToken = true;
-            //    x.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuerSigningKey = true,
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes((string)Configuration.GetValue(typeof(string), "Key")))
-            //        //ValidateIssuer = Environment.GetEnvironmentVariable("JwtIssuer") ?? this.Configuration.GetValue<string>("Jwt:Issuer"),
-            //        //ValidateAudience = Environment.GetEnvironmentVariable("JwtIssuer") ?? this.Configuration.GetValue<string>("Jwt:Issuer"),
-            //    };
-            //});
 
             services.AddSwaggerGen(c =>
             {
@@ -83,11 +70,12 @@ namespace Sat.Recruitment.Api
 
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<UsersContext>(opt => opt.UseSqlite("filename=BaseDeDatos.db"));
+            services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddMediatR(typeof(CreateUserHandler).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger();
 

@@ -10,18 +10,21 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Sat.Recruitment.Domain.Models;
 using System.Text;
+using Sat.Recruitment.Domain.Repository.Users;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Sat.Recruitment.Test
 {
     public class ScenarioBase
     {
-        protected readonly UsersContext _context;
+        protected readonly IUsersRepository _repository;
 
         public ScenarioBase()
         {
-            _context = this.CreateInMemoryContext();
-            InitializeContext();
-        }
+            var context = InitializeInMemoryContext();
+            _repository = new UsersRepository(context);
+        } 
 
         public TestServer CreateServer()
         {
@@ -43,27 +46,21 @@ namespace Sat.Recruitment.Test
              .Build();
 
             host.Start();
-            return host.GetTestServer();
+            var serv = host.GetTestServer();
+            return serv;
         }
 
-        private UsersContext CreateInMemoryContext()
+        private UsersContext InitializeInMemoryContext()
         {
-            var options = new DbContextOptionsBuilder<UsersContext>()
-                .UseInMemoryDatabase(databaseName: "MockDB")
-                .Options;
-
-            return new UsersContext(options);
-        }
-
-        private void InitializeContext()
-        {
+            var context = TestHelper.GenerateInMemoryContext();
             var users = new List<User>
             {
-                {new User{ Id = 1, Name = "test1", Email = "test1@mail.com", Address = "testAddress1", Money = 1234, Password = Encoding.ASCII.GetBytes("Pwd1"), Phone = "1234567", UserType = UserTypeEnum.NORMAL, IsActive = true} },
-                {new User{ Id = 2, Name = "test2", Email = "test2@mail.com", Address = "testAddress2", Money = 5678, Password = Encoding.ASCII.GetBytes("Pwd2"), Phone = "4357898", UserType = UserTypeEnum.PREMIUM, IsActive = true} }
+                {new User{ Name = "test1", Email = "test1@mail.com", Address = "testAddress1", Money = 1234, Password = Encoding.ASCII.GetBytes("Pwd1"), Phone = "1234567", UserType = UserTypeEnum.NORMAL, IsActive = true} },
+                {new User{ Name = "test2", Email = "test2@mail.com", Address = "testAddress2", Money = 5678, Password = Encoding.ASCII.GetBytes("Pwd2"), Phone = "4357898", UserType = UserTypeEnum.PREMIUM, IsActive = true} }
             };
-            _context.AddRange(users);
-            _context.SaveChangesAsync();
+            context.AddRange(users);
+            context.SaveChangesAsync();
+            return context;
         }
     }
 }

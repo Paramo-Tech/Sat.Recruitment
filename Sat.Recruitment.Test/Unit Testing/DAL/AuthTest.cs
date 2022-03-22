@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sat.Recruitment.Test.Unit_Testing.DAO
+namespace Sat.Recruitment.Test.Unit_Testing.DAL
 {
     public class AuthTest : ScenarioBase
     {
@@ -19,7 +19,7 @@ namespace Sat.Recruitment.Test.Unit_Testing.DAO
             
             var request = new LoginCommand("test1@mail.com", "Pwd1", "pintusharmaqqlhfdcvbnrelokqqohrdcqqqqqqqqqqqqweqwe");
 
-            var handler = new LoginHandler(_context);
+            var handler = new LoginHandler(_repository);
 
             var result = await handler.Handle(request, CancellationToken.None);
 
@@ -32,7 +32,7 @@ namespace Sat.Recruitment.Test.Unit_Testing.DAO
 
             var request = new LoginCommand("test2@mail.com", "Pwd1", "pintusharmaqqlhfdcvbnrelokqqohrdcqqqqqqqqqqqqweqwe");
 
-            var handler = new LoginHandler(_context);
+            var handler = new LoginHandler(_repository);
 
             var result = await handler.Handle(request, CancellationToken.None);
 

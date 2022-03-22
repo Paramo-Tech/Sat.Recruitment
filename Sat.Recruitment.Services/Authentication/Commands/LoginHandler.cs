@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Models;
+using Sat.Recruitment.Domain.Repository.Users;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,14 +16,14 @@ namespace Sat.Recruitment.Services.Authentication.Commands
 {
     public class LoginHandler : IRequestHandler<LoginCommand, AuthenticatedUser>
     {
-        private readonly UsersContext _context;
-        public LoginHandler(UsersContext context) => _context = context;
+        private readonly IUsersRepository _repository;
+        public LoginHandler(IUsersRepository repository) => _repository = repository;
 
         public async Task<AuthenticatedUser> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var cryptedKey = Encoding.ASCII.GetBytes(request.Key);
             var cryptedPassword = Encoding.ASCII.GetBytes(request.Password);
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email && x.Password == cryptedPassword);
+            var user = await _repository.Authenticate(request.Email, cryptedPassword);
 
             if (user == null)
             {
@@ -35,7 +36,7 @@ namespace Sat.Recruitment.Services.Authentication.Commands
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.Role, nameof(user.UserType)),
+                    new Claim(ClaimTypes.Role, user.UserType.ToString()),
                     new Claim(ClaimTypes.GivenName, user.Email),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 }),
@@ -52,14 +53,9 @@ namespace Sat.Recruitment.Services.Authentication.Commands
             {
                 UserId = user.Id,
                 UserName = user.Email,
-                UserRol = nameof(user.UserType),
+                UserRol = user.UserType.ToString(),
                 token = writtenToken
             };
-        }
-
-        public Task Handle(LoginCommand request, object none)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Sat.Recruitment.Domain.Models
 {
-    public class User
+    public class User : Entity
     {
-        public ulong Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }

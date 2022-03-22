@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Models;
+using Sat.Recruitment.Domain.Repository.Users;
 using Sat.Recruitment.Services.Strategy;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace Sat.Recruitment.Services.Users.Commands
 {
     public class CreateUserHandler : IRequestHandler<CreateUserCommand, User>
     {
-        private readonly UsersContext _context;
-        public CreateUserHandler(UsersContext context) => _context = context;
+        private readonly IUsersRepository _repository;
+        public CreateUserHandler(IUsersRepository repository) => _repository = repository;
         public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             request.Money = CreateUserHelper.HandleMoneyStrategy(request.UserType, request.Money);
@@ -31,8 +32,7 @@ namespace Sat.Recruitment.Services.Users.Commands
                 Password = Encoding.ASCII.GetBytes(request.Password)
             };
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync(cancellationToken);
+            await _repository.AddAsync(user, cancellationToken);
 
             return user;
         }

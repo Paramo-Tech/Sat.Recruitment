@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Models;
+using Sat.Recruitment.Domain.Repository.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,19 +13,12 @@ namespace Sat.Recruitment.Services.Users.Commands
 {
     public class DeleteUserHandler : IRequestHandler<DeleteUserCommand, User>
     {
-        private readonly UsersContext _context;
-        public DeleteUserHandler(UsersContext context) => _context = context;
+        private readonly IUsersRepository _repository;
+        public DeleteUserHandler(IUsersRepository repository) => _repository = repository;
 
         public async Task<User> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.Id);
-
-            if (user == null)
-                return null;
-
-            user.IsActive = false;
-
-            await _context.SaveChangesAsync(cancellationToken);
+            var user = await _repository.Remove(request.Id, cancellationToken);
 
             return user;
         }
