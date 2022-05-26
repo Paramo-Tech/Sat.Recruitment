@@ -1,4 +1,7 @@
 <a name="0.0.1"></a>
+# 0.0.4 (2022-05-26)
+## Se elimino partial class. No es responsabilidad del controller leer un source data.
+
 # 0.0.3 (2022-05-25)
 ## Se cambio seteo de project
 
