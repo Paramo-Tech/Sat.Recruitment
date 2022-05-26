@@ -23,6 +23,12 @@ namespace Sat.Recruitment.Api.Controllers
             _storeServices = storeServices;
         }
 
+        [HttpGet]
+        [Route("/test")]
+        public async Task<string> Test()
+        {
+            return await Task.Run(()=>"Hi");
+        }
         [HttpPost]
         [Route("/create-user")]
         public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
