@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Sat.Recruitment.Api.ApiModels;
+using Sat.Recruitment.Api.Services.Contracts;
 
 namespace Sat.Recruitment.Api.Controllers
 {
@@ -13,10 +14,13 @@ namespace Sat.Recruitment.Api.Controllers
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
     {
+        private readonly IStoreServices _storeServices;
+
 
         private readonly List<User> _users = new List<User>();
-        public UsersController()
+        public UsersController(IStoreServices storeServices)
         {
+            _storeServices = storeServices;
         }
 
         [HttpPost]
@@ -82,7 +86,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
 
 
-            var reader = ReadUsersFromFile();
+            var reader = this._storeServices.ReadUsersFromFile();
 
             //Normalize email
             var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);

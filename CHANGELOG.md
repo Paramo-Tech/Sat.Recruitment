@@ -1,4 +1,7 @@
 <a name="0.0.1"></a>
+# 0.0.2 (2022-05-25)
+## Se agrego inyeccion de dependencias
+
 # 0.0.1 (2022-05-25)
 ## Cambios estructurales
 ### Carpetas

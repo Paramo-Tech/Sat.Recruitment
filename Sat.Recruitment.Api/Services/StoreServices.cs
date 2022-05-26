@@ -1,11 +1,11 @@
-﻿using System;
 using System.IO;
+using Sat.Recruitment.Api.Services.Contracts;
 
-namespace Sat.Recruitment.Api.Controllers
+namespace Sat.Recruitment.Api.Services
 {
-    public partial class UsersController
+    public  class StoreServices : IStoreServices
     {
-        private StreamReader ReadUsersFromFile()
+        public StreamReader ReadUsersFromFile()
         {
             const string filesUsersTxt = "/Files/Users.txt";
             var path = $"{Directory.GetCurrentDirectory()}{filesUsersTxt}";
