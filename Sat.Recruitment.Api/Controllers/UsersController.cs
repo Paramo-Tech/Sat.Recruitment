@@ -54,7 +54,7 @@ namespace Sat.Recruitment.Api.Controllers
                 Money = model.money
             };
 
-            if (newUser.UserType == "Normal")
+            if (newUser.UserType == UserType.Normal)
             {
                 if (model.money > 100)
                 {
@@ -73,7 +73,7 @@ namespace Sat.Recruitment.Api.Controllers
                     }
                 }
             }
-            if (newUser.UserType == "SuperUser")
+            if (newUser.UserType == UserType.SuperUser)
             {
                 if (model.money > 100)
                 {
@@ -82,7 +82,7 @@ namespace Sat.Recruitment.Api.Controllers
                     newUser.Money = newUser.Money + gif;
                 }
             }
-            if (newUser.UserType == "Premium")
+            if (newUser.UserType == UserType.Premium)
             {
                 if (model.money > 100)
                 {
@@ -106,13 +106,14 @@ namespace Sat.Recruitment.Api.Controllers
             while (reader.Peek() >= 0)
             {
                 var line = reader.ReadLineAsync().Result;
+                var currentUserType = (UserType)Enum.Parse(typeof(UserType), line.Split(',')[4].ToString());
                 var user = new User
                 {
                     Name = line.Split(',')[0].ToString(),
                     Email = line.Split(',')[1].ToString(),
                     Phone = line.Split(',')[2].ToString(),
                     Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
+                    UserType = currentUserType,
                     Money = decimal.Parse(line.Split(',')[5].ToString()),
                 };
                 _users.Add(user);

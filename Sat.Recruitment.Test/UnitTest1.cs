@@ -22,7 +22,7 @@ namespace Sat.Recruitment.Test
                 email = "mike@gmail.com", 
                 address = "Av. Juan G", 
                 phone = "+349 1122354215",
-                userType = "Normal",
+                userType =  UserType.Normal,
                 money = 124
             };
 
@@ -45,7 +45,7 @@ namespace Sat.Recruitment.Test
                 email = "Agustina@gmail.com", 
                 address = "Av. Juan G", 
                 phone = "+349 1122354215",
-                userType = "Normal",
+                userType = UserType.Normal,
                 money = 124
             };
 
