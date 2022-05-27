@@ -1,4 +1,6 @@
-namespace Sat.Recruitment.Api.ApiModels
+﻿using Sat.Recruitment.Api.ApiModels;
+
+namespace Sat.Recruitment.Api.Domain
 {
     public class User
     {
@@ -8,12 +10,5 @@ namespace Sat.Recruitment.Api.ApiModels
         public string Phone { get; set; }
         public UserType UserType { get; set; }
         public decimal Money { get; set; }
-    }
-
-    public enum UserType
-    {
-        Normal,
-        SuperUser,
-        Premium
     }
 }

@@ -1,12 +1,21 @@
-﻿namespace Sat.Recruitment.Api.ApiModels
+﻿using System.ComponentModel.DataAnnotations;
+using Sat.Recruitment.Api.Domain;
+
+namespace Sat.Recruitment.Api.ApiModels
 {
     public class CreateUserRequest
     {
-        public string name { get; set; }
-        public string email { get; set; }
-        public string address { get; set; }
-        public string phone { get; set; }
-        public UserType userType { get; set; }
-        public decimal money { get; set; }
+        [Required(ErrorMessage = "The name is required")]
+        public string Name { get; set; }
+        [Required(ErrorMessage = "The email is required")]
+        public string Email { get; set; }
+        
+        [Required(ErrorMessage = "The address is required")]
+        public string Address { get; set; }
+        
+        [Required(ErrorMessage = "The phone is required")]
+        public string Phone { get; set; }
+        public UserType UserType { get; set; }
+        public decimal Money { get; set; }
     }
 }
