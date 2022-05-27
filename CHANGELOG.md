@@ -1,4 +1,8 @@
 <a name="0.0.1"></a>
+# 0.0.6 (2022-05-26)
+## Se refactorean parametros
+### Se agruparon parametros sueltos en una misma class.
+
 # 0.0.5 (2022-05-26)
 ## cambios en configuracion
 ### Swagger

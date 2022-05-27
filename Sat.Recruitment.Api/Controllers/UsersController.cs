@@ -24,18 +24,18 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/test")]
+        [Route("/ping")]
         public async Task<string> Test()
         {
-            return await Task.Run(()=>"Hi");
+            return await Task.Run(()=>"pong");
         }
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public async Task<Result> CreateUser(CreateUserRequest model)
         {
             var errors = "";
 
-            ValidateErrors(name, email, address, phone, ref errors);
+            ValidateErrors(model.name, model.email, model.address, model.phone, ref errors);
 
             if (errors != null && errors != "")
                 return new Result()
@@ -46,47 +46,47 @@ namespace Sat.Recruitment.Api.Controllers
 
             var newUser = new User
             {
-                Name = name,
-                Email = email,
-                Address = address,
-                Phone = phone,
-                UserType = userType,
-                Money = decimal.Parse(money)
+                Name = model.name,
+                Email = model.email,
+                Address = model.address,
+                Phone = model.phone,
+                UserType = model.userType,
+                Money = model.money
             };
 
             if (newUser.UserType == "Normal")
             {
-                if (decimal.Parse(money) > 100)
+                if (model.money > 100)
                 {
                     var percentage = Convert.ToDecimal(0.12);
                     //If new user is normal and has more than USD100
-                    var gif = decimal.Parse(money) * percentage;
+                    var gif =model.money * percentage;
                     newUser.Money = newUser.Money + gif;
                 }
-                if (decimal.Parse(money) < 100)
+                if (model.money < 100)
                 {
-                    if (decimal.Parse(money) > 10)
+                    if (model.money > 10)
                     {
                         var percentage = Convert.ToDecimal(0.8);
-                        var gif = decimal.Parse(money) * percentage;
+                        var gif = model.money * percentage;
                         newUser.Money = newUser.Money + gif;
                     }
                 }
             }
             if (newUser.UserType == "SuperUser")
             {
-                if (decimal.Parse(money) > 100)
+                if (model.money > 100)
                 {
                     var percentage = Convert.ToDecimal(0.20);
-                    var gif = decimal.Parse(money) * percentage;
+                    var gif = model.money * percentage;
                     newUser.Money = newUser.Money + gif;
                 }
             }
             if (newUser.UserType == "Premium")
             {
-                if (decimal.Parse(money) > 100)
+                if (model.money > 100)
                 {
-                    var gif = decimal.Parse(money) * 2;
+                    var gif =model.money * 2;
                     newUser.Money = newUser.Money + gif;
                 }
             }
