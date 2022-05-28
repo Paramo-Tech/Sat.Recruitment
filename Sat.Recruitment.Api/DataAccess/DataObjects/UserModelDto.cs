@@ -1,9 +1,10 @@
 ﻿using Sat.Recruitment.Api.Domain;
+using Sat.Recruitment.Api.Domain.Contracts;
 
-namespace Sat.Recruitment.Api.Services.DataObjects
+namespace Sat.Recruitment.Api.DataAccess.DataObjects
 {
-    
-    public sealed class CreateUserDto
+ 
+    public sealed class UserModelDto: IUserModel
     {
         public string Name { get; set; }
         public string Email { get; set; }

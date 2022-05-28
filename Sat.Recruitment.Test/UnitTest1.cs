@@ -1,9 +1,9 @@
-using System;
-using System.Dynamic;
-using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Sat.Recruitment.Api.ApiModels;
 using Sat.Recruitment.Api.Controllers;
+using Sat.Recruitment.Api.DataAccess.Implementation;
 using Sat.Recruitment.Api.Domain;
+using Sat.Recruitment.Api.Domain.Services;
 using Sat.Recruitment.Api.Services;
 using Xunit;
 
@@ -13,9 +13,9 @@ namespace Sat.Recruitment.Test
     public class UnitTest1
     {
         [Fact]
-        public void Test1()
+        public async  Task Test1()
         {
-            var userController = new UsersController(new UserService(new StoreServices()));
+            var userController = new UsersController(new UserService(new UserRepository(), new UserBuilderDirectorDefaultService()));
 
             var newUser = new CreateUserRequest()
             {
@@ -27,8 +27,8 @@ namespace Sat.Recruitment.Test
                 Money = 124
             };
 
-            var result = userController
-                .CreateUser(newUser).Result;
+            var result = await userController
+                .CreateUser(newUser);
 
 
             Assert.True(result.IsSuccess);
@@ -36,9 +36,9 @@ namespace Sat.Recruitment.Test
         }
 
         [Fact]
-        public void Test2()
+        public async  Task Test2()
         {
-            var userController = new UsersController(new UserService(new StoreServices()));
+            var userController = new UsersController(new UserService(new UserRepository(), new UserBuilderDirectorDefaultService()));
             
             var newUser = new CreateUserRequest()
             {
@@ -51,7 +51,7 @@ namespace Sat.Recruitment.Test
             };
 
 
-            var result = userController.CreateUser(newUser).Result;
+            var result = await userController.CreateUser(newUser);
             Assert.False(result.IsSuccess);
             Assert.Equal("The user is duplicated", result.Errors);
         }

@@ -1,4 +1,10 @@
 <a name="0.0.1"></a>
+# 0.0.7 (2022-05-27)
+## Refactoreo masivo y general.
+### Cambiaron de nombres muchas clases
+### Se crearon conjuntos de objetos para atender responsabilidades unicas.
+### Se hizo una division inicial en layers. Pero a nivel carpetas.
+
 # 0.0.6 (2022-05-26)
 ## Se refactorean parametros
 ### Se agruparon parametros sueltos en una misma class.

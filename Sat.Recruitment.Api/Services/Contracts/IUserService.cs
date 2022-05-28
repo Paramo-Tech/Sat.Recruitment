@@ -1,9 +1,10 @@
-﻿using Sat.Recruitment.Api.Services.DataObjects;
+﻿using System.Threading.Tasks;
+using Sat.Recruitment.Api.Services.DataObjects;
 
 namespace Sat.Recruitment.Api.Services.Contracts
 {
     public interface IUserService
     {
-        (bool isDuplicated, string resultMessage) CreateUser(CreateUserDto dto);
+        Task<(bool duplicated,  string resultMessage)> CreateUser(CreateUserModelDto modelDto);
     }
 }

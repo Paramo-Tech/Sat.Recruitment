@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Omu.ValueInjecter;
 using Sat.Recruitment.Api.ApiModels;
 using Sat.Recruitment.Api.Services.Contracts;
@@ -12,7 +13,7 @@ namespace Sat.Recruitment.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -34,42 +35,21 @@ namespace Sat.Recruitment.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var errors = ModelState.Values
-                    .SelectMany(r => r.Errors)
-                    .Select(r => r.ErrorMessage)
-                    .Aggregate(string.Empty, (p, s) => $"{p} {s}");
-
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
+                return CreateErrorParameters(ModelState.Values);
             }
 
-            //  var errors = "";
-
-            // ValidateErrors(model.Name, model.Email, model.Address, model.Phone, ref errors);
-            //
-            // if (errors != null && errors != "")
-            //     return new Result()
-            //     {
-            //         IsSuccess = false,
-            //         Errors = errors
-            //     };
-
-
-            var dto = new CreateUserDto();
+            var dto = new CreateUserModelDto();
             dto.InjectFrom(model);
 
             try
             {
-                var (isDuplicated, errorMessage) = _userService.CreateUser(dto);
-                Debug.WriteLine(errorMessage);
+                var (isDuplicated, resultMessage) = await _userService.CreateUser(dto);
+                Debug.WriteLine(resultMessage);
 
                 return new Result()
                 {
                     IsSuccess = !isDuplicated,
-                    Errors = errorMessage
+                    Errors = resultMessage
                 };
             }
             catch (Exception err)
@@ -83,21 +63,18 @@ namespace Sat.Recruitment.Api.Controllers
             }
         }
 
-        //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
+        private Result CreateErrorParameters(ModelStateDictionary.ValueEnumerable modelStateValues)
         {
-            if (name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            if (address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            if (phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
+           var errors = modelStateValues
+                .SelectMany(r => r.Errors)
+                .Select(r => r.ErrorMessage)
+                .Aggregate(string.Empty, (p, s) => $"{p} {s}");
+
+            return new Result()
+            {
+                IsSuccess = false,
+                Errors = errors
+            };
         }
     }
 }
