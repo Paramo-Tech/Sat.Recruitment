@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sat.Recruitment.Api.Domain.Services;
 using Sat.Recruitment.Api.Domain.Services.Contracts;
-using Sat.Recruitment.Api.Services;
-using Sat.Recruitment.Api.Services.Contracts;
 using Sat.Recruitment.DataAccess.Implementation;
 using Sat.Recruitment.Domain.Contracts;
+using Sat.Recruitment.Services;
+using Sat.Recruitment.Services.Contracts;
 
 namespace Sat.Recruitment.Api
 {
@@ -24,7 +24,7 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, FileUserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserBuilderDirectorService, UserBuilderDirectorDefaultService>();
             

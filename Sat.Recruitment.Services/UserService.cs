@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Sat.Recruitment.Api.Domain.Services.Contracts;
-using Sat.Recruitment.Api.Services.Contracts;
-using Sat.Recruitment.Api.Services.DataObjects;
 using Sat.Recruitment.Domain.Contracts;
+using Sat.Recruitment.Services.Contracts;
+using Sat.Recruitment.Services.DataObjects;
 
-namespace Sat.Recruitment.Api.Services
+namespace Sat.Recruitment.Services
 {
     public class UserService : IUserService
     {

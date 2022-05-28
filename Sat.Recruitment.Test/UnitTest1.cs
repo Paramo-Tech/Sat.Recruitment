@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using Sat.Recruitment.Api.ApiModels;
 using Sat.Recruitment.Api.Controllers;
 using Sat.Recruitment.Api.Domain.Services;
-using Sat.Recruitment.Api.Services;
 using Sat.Recruitment.DataAccess.Implementation;
 using Sat.Recruitment.Domain;
+using Sat.Recruitment.Services;
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -15,7 +15,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public async  Task Test1()
         {
-            var userController = new UsersController(new UserService(new UserRepository(), new UserBuilderDirectorDefaultService()));
+            var userController = new UsersController(new UserService(new FileUserRepository(), new UserBuilderDirectorDefaultService()));
 
             var newUser = new CreateUserRequest()
             {
@@ -38,7 +38,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public async  Task Test2()
         {
-            var userController = new UsersController(new UserService(new UserRepository(), new UserBuilderDirectorDefaultService()));
+            var userController = new UsersController(new UserService(new FileUserRepository(), new UserBuilderDirectorDefaultService()));
             
             var newUser = new CreateUserRequest()
             {

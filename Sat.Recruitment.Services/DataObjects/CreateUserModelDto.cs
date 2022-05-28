@@ -1,8 +1,7 @@
-﻿using Sat.Recruitment.Api.Domain;
-using Sat.Recruitment.Domain;
+﻿using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Contracts;
 
-namespace Sat.Recruitment.Api.Services.DataObjects
+namespace Sat.Recruitment.Services.DataObjects
 {
     
     public sealed class CreateUserModelDto: IUserModel

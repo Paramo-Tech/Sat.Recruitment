@@ -7,10 +7,8 @@ using Sat.Recruitment.Domain.Contracts;
 
 namespace Sat.Recruitment.DataAccess.Implementation
 {
-    public  class UserRepository : IUserRepository
+    public  class FileUserRepository : IUserRepository
     {
-     
-
         public async Task<IList<UserModel>> GetAllAsync()
         {
             const char fieldSeparator = ',';
@@ -42,9 +40,9 @@ namespace Sat.Recruitment.DataAccess.Implementation
             const string filesUsersTxt = "/Files/Users.txt";
             var path = $"{Directory.GetCurrentDirectory()}{filesUsersTxt}";
 
-            FileStream fileStream = new FileStream(path, FileMode.Open);
+            var fileStream = new FileStream(path, FileMode.Open);
 
-            StreamReader reader = new StreamReader(fileStream);
+            var reader = new StreamReader(fileStream);
             return reader;
         }
     }
