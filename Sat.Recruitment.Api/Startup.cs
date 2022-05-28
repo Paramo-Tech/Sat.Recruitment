@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,15 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, FileUserRepository>();
+            services.AddScoped<IUserRepository>(x =>
+            {
+                return new FileUserRepository(() =>
+                {
+                    const string filesUsersTxt = "/Files/Users.txt";
+                    var path = $"{Directory.GetCurrentDirectory()}{filesUsersTxt}";
+                    return path;
+                });
+            });
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserBuilderDirectorService, UserBuilderDirectorDefaultService>();
             

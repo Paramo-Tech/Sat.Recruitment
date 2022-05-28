@@ -9,6 +9,12 @@ namespace Sat.Recruitment.DataAccess.Implementation
 {
     public  class FileUserRepository : IUserRepository
     {
+        private readonly Func<string> _getFullPath;
+
+        public FileUserRepository(Func<string> getFullPath)
+        {
+            _getFullPath = getFullPath;
+        }
         public async Task<IList<UserModel>> GetAllAsync()
         {
             const char fieldSeparator = ',';
@@ -37,10 +43,10 @@ namespace Sat.Recruitment.DataAccess.Implementation
         
         private StreamReader ReadUsersFromFile()
         {
-            const string filesUsersTxt = "/Files/Users.txt";
-            var path = $"{Directory.GetCurrentDirectory()}{filesUsersTxt}";
+            // const string filesUsersTxt = "/Files/Users.txt";
+            // var path = $"{Directory.GetCurrentDirectory()}{filesUsersTxt}";
 
-            var fileStream = new FileStream(path, FileMode.Open);
+            var fileStream = new FileStream(_getFullPath(), FileMode.Open);
 
             var reader = new StreamReader(fileStream);
             return reader;
