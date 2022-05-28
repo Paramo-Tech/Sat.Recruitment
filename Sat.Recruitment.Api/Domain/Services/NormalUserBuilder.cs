@@ -1,7 +1,7 @@
 ﻿using System;
 using Sat.Recruitment.Api.Domain.Contracts;
 
-namespace Sat.Recruitment.Api.Domain.Services.Contracts
+namespace Sat.Recruitment.Api.Domain.Services
 {
     public sealed class NormalUserBuilder : UserBaseBuilder
     {
