@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Sat.Recruitment.Api.DataAccess.DataObjects;
 using Sat.Recruitment.Api.Domain;
-using Sat.Recruitment.Api.Domain.Contracts;
-using Sat.Recruitment.Api.Services.Contracts;
+using Sat.Recruitment.Domain;
+using Sat.Recruitment.Domain.Contracts;
 
 namespace Sat.Recruitment.Api.DataAccess.Implementation
 {
@@ -13,10 +12,10 @@ namespace Sat.Recruitment.Api.DataAccess.Implementation
     {
      
 
-        public async Task<IList<UserModelDto>> GetAllAsync()
+        public async Task<IList<UserModel>> GetAllAsync()
         {
             const char fieldSeparator = ',';
-            var users = new List<UserModelDto>();
+            var users = new List<UserModel>();
             using var reader = ReadUsersFromFile();
             while (reader.Peek() >= 0)
             {
@@ -24,7 +23,7 @@ namespace Sat.Recruitment.Api.DataAccess.Implementation
                 if (line == null) continue;
                 var currentUserType = (UserType) Enum.Parse(typeof(UserType), line.Split(',')[4].ToString());
                 var fields = line.Split(fieldSeparator);
-                var user = new UserModelDto
+                var user = new UserModel
                 {
                     Name = fields[0],
                     Email = fields[1],
