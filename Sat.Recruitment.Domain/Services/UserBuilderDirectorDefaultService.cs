@@ -1,9 +1,9 @@
 ﻿using System;
+using Sat.Recruitment.Api.Domain.Services;
 using Sat.Recruitment.Api.Domain.Services.Contracts;
-using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Contracts;
 
-namespace Sat.Recruitment.Api.Domain.Services
+namespace Sat.Recruitment.Domain.Services
 {
     public sealed class UserBuilderDirectorDefaultService : IUserBuilderDirectorService
     {

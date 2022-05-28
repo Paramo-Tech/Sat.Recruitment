@@ -6,6 +6,7 @@ using Sat.Recruitment.Api.Domain.Services;
 using Sat.Recruitment.ApplicationServices;
 using Sat.Recruitment.DataAccess.Implementation;
 using Sat.Recruitment.Domain;
+using Sat.Recruitment.Domain.Services;
 using Xunit;
 
 namespace Sat.Recruitment.Test

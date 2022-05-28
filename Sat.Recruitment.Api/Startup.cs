@@ -12,6 +12,7 @@ using Sat.Recruitment.ApplicationServices.Contracts;
 using Sat.Recruitment.DataAccess.Contracts;
 using Sat.Recruitment.DataAccess.Implementation;
 using Sat.Recruitment.Domain.Contracts;
+using Sat.Recruitment.Domain.Services;
 
 namespace Sat.Recruitment.Api
 {
