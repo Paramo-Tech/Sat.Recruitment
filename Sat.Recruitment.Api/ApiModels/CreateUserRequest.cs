@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Sat.Recruitment.Api.Domain;
 using Sat.Recruitment.Domain;
 

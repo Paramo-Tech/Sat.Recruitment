@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Domain", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.DataAccess", "Sat.Recruitment.DataAccess\Sat.Recruitment.DataAccess.csproj", "{7A92F883-88A9-42D1-BD09-AC9B97A09336}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Services", "Sat.Recruitment.Services\Sat.Recruitment.Services.csproj", "{D7A1ADD7-7B66-4CCB-83CF-E59A2EBED646}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.ApplicationServices", "Sat.Recruitment.ApplicationServices\Sat.Recruitment.ApplicationServices.csproj", "{D7A1ADD7-7B66-4CCB-83CF-E59A2EBED646}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

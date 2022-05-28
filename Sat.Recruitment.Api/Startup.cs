@@ -1,4 +1,5 @@
 using System.IO;
+using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,11 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sat.Recruitment.Api.Domain.Services;
 using Sat.Recruitment.Api.Domain.Services.Contracts;
+using Sat.Recruitment.ApplicationServices;
+using Sat.Recruitment.ApplicationServices.Contracts;
 using Sat.Recruitment.DataAccess.Contracts;
 using Sat.Recruitment.DataAccess.Implementation;
 using Sat.Recruitment.Domain.Contracts;
-using Sat.Recruitment.Services;
-using Sat.Recruitment.Services.Contracts;
 
 namespace Sat.Recruitment.Api
 {
@@ -50,10 +51,15 @@ namespace Sat.Recruitment.Api
             }
 
             app.UseSwagger();
-
+            
+            
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+            
             app.UseRouting();
 
             app.UseAuthorization();

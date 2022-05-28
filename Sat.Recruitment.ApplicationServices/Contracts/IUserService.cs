@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Sat.Recruitment.Services.DataObjects;
+using Sat.Recruitment.ApplicationServices.DataObjects;
 
-namespace Sat.Recruitment.Services.Contracts
+namespace Sat.Recruitment.ApplicationServices.Contracts
 {
     public interface IUserService
     {
