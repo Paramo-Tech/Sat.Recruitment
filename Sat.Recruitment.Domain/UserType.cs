@@ -1,4 +1,4 @@
-﻿namespace Sat.Recruitment.Api.Domain
+﻿namespace Sat.Recruitment.Domain
 {
     public enum UserType
     {

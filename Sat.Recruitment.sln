@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Test", "Sat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Domain", "Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj", "{AB6A4A59-00D4-44D7-8BCB-9331D1D94421}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.DataAccess", "Sat.Recruitment.DataAccess\Sat.Recruitment.DataAccess.csproj", "{7A92F883-88A9-42D1-BD09-AC9B97A09336}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AB6A4A59-00D4-44D7-8BCB-9331D1D94421}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB6A4A59-00D4-44D7-8BCB-9331D1D94421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB6A4A59-00D4-44D7-8BCB-9331D1D94421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A92F883-88A9-42D1-BD09-AC9B97A09336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A92F883-88A9-42D1-BD09-AC9B97A09336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A92F883-88A9-42D1-BD09-AC9B97A09336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A92F883-88A9-42D1-BD09-AC9B97A09336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

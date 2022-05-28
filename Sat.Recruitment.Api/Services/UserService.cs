@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Sat.Recruitment.Api.Domain.Contracts;
 using Sat.Recruitment.Api.Domain.Services.Contracts;
 using Sat.Recruitment.Api.Services.Contracts;
 using Sat.Recruitment.Api.Services.DataObjects;

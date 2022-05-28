@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Sat.Recruitment.Api.Domain;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Contracts;
 
-namespace Sat.Recruitment.Api.DataAccess.Implementation
+namespace Sat.Recruitment.DataAccess.Implementation
 {
     public  class UserRepository : IUserRepository
     {

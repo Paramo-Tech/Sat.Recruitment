@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.DataAccess\Sat.Recruitment.DataAccess.csproj" />
     <ProjectReference Include="..\Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj" />
   </ItemGroup>
 

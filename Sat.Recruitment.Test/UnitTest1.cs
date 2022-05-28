@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Sat.Recruitment.Api.ApiModels;
 using Sat.Recruitment.Api.Controllers;
-using Sat.Recruitment.Api.DataAccess.Implementation;
-using Sat.Recruitment.Api.Domain;
 using Sat.Recruitment.Api.Domain.Services;
 using Sat.Recruitment.Api.Services;
+using Sat.Recruitment.DataAccess.Implementation;
+using Sat.Recruitment.Domain;
 using Xunit;
 
 namespace Sat.Recruitment.Test

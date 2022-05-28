@@ -1,4 +1,6 @@
-﻿namespace Sat.Recruitment.Api.Domain.Contracts
+﻿using Sat.Recruitment.Api.Domain;
+
+namespace Sat.Recruitment.Domain.Contracts
 {
     public interface IUserModel
     {

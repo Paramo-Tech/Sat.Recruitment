@@ -1,7 +1,7 @@
 ﻿using System;
-using Sat.Recruitment.Api.Domain.Contracts;
 using Sat.Recruitment.Api.Domain.Services.Contracts;
 using Sat.Recruitment.Domain;
+using Sat.Recruitment.Domain.Contracts;
 
 namespace Sat.Recruitment.Api.Domain.Services
 {

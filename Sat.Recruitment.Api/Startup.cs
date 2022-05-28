@@ -1,21 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Sat.Recruitment.Api.DataAccess.Implementation;
-using Sat.Recruitment.Api.Domain.Contracts;
 using Sat.Recruitment.Api.Domain.Services;
 using Sat.Recruitment.Api.Domain.Services.Contracts;
 using Sat.Recruitment.Api.Services;
 using Sat.Recruitment.Api.Services.Contracts;
+using Sat.Recruitment.DataAccess.Implementation;
 using Sat.Recruitment.Domain.Contracts;
 
 namespace Sat.Recruitment.Api
