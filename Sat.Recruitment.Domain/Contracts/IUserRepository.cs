@@ -5,6 +5,6 @@ namespace Sat.Recruitment.Domain.Contracts
 {
     public interface IUserRepository
     {
-        Task<IList<UserModel>> GetAllAsync();
+        Task<IList<User>> GetAllAsync();
     }
 }

@@ -17,8 +17,10 @@ namespace Sat.Recruitment.Test
 
         public IntegrationTests()
         {
-            _usersController = new UsersController(new UserService(new FileUserRepository(GetFullPath),
-                new UserBuilderDirectorDefaultService()));
+            var usersFromFile = new UsersFromFile(GetFullPath);
+            var streamUserRepository = new StreamUserRepository(usersFromFile, new UserTextLineValidator());
+            var userService = new UserService(streamUserRepository,new UserBuilderDirectorDefaultService());
+            _usersController = new UsersController(userService);
         }
 
         [Fact]

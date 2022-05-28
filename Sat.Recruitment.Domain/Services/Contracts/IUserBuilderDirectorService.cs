@@ -5,7 +5,7 @@ namespace Sat.Recruitment.Api.Domain.Services.Contracts
 {
     public interface IUserBuilderDirectorService
     {
-        UserModel GetResult();
+        User GetResult();
         void PrepareBuilder(IUserModel dto);
     }
 }

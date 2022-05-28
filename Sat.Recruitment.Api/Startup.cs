@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sat.Recruitment.Api.Domain.Services;
 using Sat.Recruitment.Api.Domain.Services.Contracts;
+using Sat.Recruitment.DataAccess.Contracts;
 using Sat.Recruitment.DataAccess.Implementation;
 using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Services;
@@ -25,18 +26,17 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUserRepository>(x =>
+            services.AddScoped<IUserTextLineValidator, UserTextLineValidator>();
+            services.AddScoped<IUsersSourceStream, UsersFromFile>(x =>
             {
-                return new FileUserRepository(() =>
-                {
-                    const string filesUsersTxt = "/Files/Users.txt";
-                    var path = $"{Directory.GetCurrentDirectory()}{filesUsersTxt}";
-                    return path;
-                });
+                const string filesUsersTxt = "/Files/Users.txt";
+                return new UsersFromFile(() => $"{Directory.GetCurrentDirectory()}{filesUsersTxt}");
             });
+            
+            services.AddScoped<IUserRepository,StreamUserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserBuilderDirectorService, UserBuilderDirectorDefaultService>();
-            
+
             services.AddControllers();
             services.AddSwaggerGen();
         }
@@ -48,22 +48,17 @@ namespace Sat.Recruitment.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

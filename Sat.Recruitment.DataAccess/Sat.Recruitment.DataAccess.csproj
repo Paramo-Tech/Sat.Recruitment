@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <Folder Include="DataObjects" />
+      <Folder Include="Validators" />
     </ItemGroup>
 
 </Project>

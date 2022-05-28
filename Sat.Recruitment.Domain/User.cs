@@ -3,7 +3,7 @@ using Sat.Recruitment.Domain.Contracts;
 
 namespace Sat.Recruitment.Domain
 {
-    public class UserModel : IUserModel
+    public class User : IUserModel
     {
         public string Name { get; set; }
         public string Email { get; set; }

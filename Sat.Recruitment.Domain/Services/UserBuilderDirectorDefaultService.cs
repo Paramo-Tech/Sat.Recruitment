@@ -9,7 +9,7 @@ namespace Sat.Recruitment.Api.Domain.Services
     {
         private IUserModel _userModelBase;
 
-        public UserModel GetResult()
+        public User GetResult()
         {
             switch (_userModelBase.UserType)
             {

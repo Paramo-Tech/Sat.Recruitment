@@ -24,9 +24,9 @@ namespace Sat.Recruitment.Api.Domain.Services
             return string.Join("@", aux[0], aux[1]);
         }
 
-        public UserModel Build()
+        public User Build()
         {
-            return new UserModel
+            return new User
             {
                 Name = ModelUserModel.Name,
                 Email = NormalizeEmail(ModelUserModel.Email),

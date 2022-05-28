@@ -1,4 +1,9 @@
 <a name="0.0.1"></a>
+# 0.0.8 (2022-05-28)
+## Se  dio extensibilidad al origen de datos de usuarios.
+### Se implemento la lectura desde un archivo
+### Pero es escalable a cualquier tipo de origen de datos (db por ejemplo)
+
 # 0.0.7 (2022-05-27)
 ## Refactoreo masivo y general.
 ### Cambiaron de nombres muchas clases
