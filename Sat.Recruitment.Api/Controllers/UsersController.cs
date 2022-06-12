@@ -19,32 +19,20 @@ namespace Sat.Recruitment.Api.Controllers
 
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public async Task<Result> CreateUser(CreateUserDto createUserDto)
         {
-            var errors = "";
-
-            ValidateErrors(name, email, address, phone, ref errors);
-
-            if (errors != null && errors != "")
-            {
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
-            }
 
             var newUser = new User
             {
-                Name = name,
-                Email = email,
-                Address = address,
-                Phone = phone,
-                UserType = userType,
-                Money = decimal.Parse(money)
+                Name = createUserDto.Name,
+                Email = createUserDto.Email,
+                Address = createUserDto.Address,
+                Phone = createUserDto.Phone,
+                UserType = createUserDto.UserType,
+                Money = createUserDto.Money
             };
 
-            newUser.Money += CalculateUserGif(newUser.UserType, decimal.Parse(money));
+            newUser.Money += CalculateUserGif(newUser.UserType, newUser.Money);
             newUser.Email = NormalizeEmail(newUser.Email);
 
             try
@@ -67,23 +55,6 @@ namespace Sat.Recruitment.Api.Controllers
                 IsSuccess = true,
                 Errors = "User Created"
             };
-        }
-
-        //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
-        {
-            if (name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            if (address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            if (phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
         }
 
         private string NormalizeEmail (string email)
