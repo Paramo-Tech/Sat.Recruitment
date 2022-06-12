@@ -1,4 +1,12 @@
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Sat.Recruitment.Api.Controllers;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using Users.Application.Commands.Create;
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -6,45 +14,42 @@ namespace Sat.Recruitment.Test
     [CollectionDefinition("Tests", DisableParallelization = true)]
     public class UsersControllerTest
     {
-        [Fact]
-        public void Create_WhenRequestIsValidAndUserNotExists_UserCreated()
+        private readonly Mock<ILogger<UsersController>> loggerMock = new ();
+        private readonly Mock<IMediator> mediatorMock = new ();
+        private UsersController usersController;
+
+        public UsersControllerTest()
         {
-            var userController = new UsersController();
-            var createUserDto = new CreateUserDto()
-            {
-                Name = "Mike",
-                Email = "mike@gmail.com",
-                Address = "Av. Juan G",
-                Phone = "+349 1122354215",
-                UserType = "Normal",
-                Money = 124
-            };
-
-            var result = userController.CreateUser(createUserDto).Result;
-
-            Assert.True(result.IsSuccess);
-            Assert.Equal("User Created", result.Errors);
+            this.usersController = new (
+                this.loggerMock.Object,
+                this.mediatorMock.Object);
         }
 
         [Fact]
-        public void Create_WhenRequestIsValidAndUserExists_UserNotCreated()
+        public async Task Create_WhenRequestIsValid_CommandIsSent()
         {
-            var userController = new UsersController();
-            var createUserDto = new CreateUserDto()
-            {
-                Name = "Agustina",
-                Email = "Agustina@gmail.com",
-                Address = "Av. Juan G",
-                Phone = "+349 1122354215",
-                UserType = "Normal",
-                Money = 124
-            };
+            this.mediatorMock
+                .Setup(m => m.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()))
+            .Verifiable();
 
-            var result = userController.CreateUser(createUserDto).Result;
+            var createUserDto = DataProvider.ValidRequest();
 
+            var result = await this.usersController.CreateUserAsync(createUserDto);
 
-            Assert.False(result.IsSuccess);
-            Assert.Equal("The user is duplicated", result.Errors);
+            this.mediatorMock
+                .Verify(x => x
+                    .Send(
+                    It.Is<CreateUserCommand>(command =>
+                        command.Name.Equals(createUserDto.Name) && 
+                        command.Email.Value.Equals(createUserDto.Email) && 
+                        command.Phone.Value.Equals(createUserDto.Phone) && 
+                        command.Address.Equals(createUserDto.Address) && 
+                        command.UserType.Value.Equals(createUserDto.UserType) && 
+                        command.Money.Equals(createUserDto.Money) 
+                    ), It.IsAny<CancellationToken>()), Times.Once());
+
+            var okRequestResult = Assert.IsType<OkResult>(result);
+            Assert.Equal((int)HttpStatusCode.OK, okRequestResult.StatusCode);
         }
     }
 }
