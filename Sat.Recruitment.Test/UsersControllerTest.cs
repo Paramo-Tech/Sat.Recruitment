@@ -32,7 +32,7 @@ namespace Sat.Recruitment.Test
                 .Setup(m => m.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()))
             .Verifiable();
 
-            var createUserDto = DataProvider.ValidRequest();
+            var createUserDto = DataProvider.ValidCreateUserRequest();
 
             var result = await this.usersController.CreateUserAsync(createUserDto);
 

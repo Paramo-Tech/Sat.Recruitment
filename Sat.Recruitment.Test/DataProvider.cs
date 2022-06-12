@@ -4,7 +4,7 @@ namespace Sat.Recruitment.Test
 {
     public static class DataProvider
     {
-        public static CreateUserDto ValidRequest() => new ()
+        public static CreateUserDto ValidCreateUserRequest() => new ()
         {
             Name = "Mike",
             Email = "mike@gmail.com",
