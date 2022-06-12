@@ -1,8 +1,13 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Users.Application.Commands.Create;
+using Users.Domain;
+using Users.Domain.UserGif;
+using Users.infrastructure.Persistence;
 
 namespace Sat.Recruitment.Api
 {
@@ -20,6 +25,11 @@ namespace Sat.Recruitment.Api
         {
             services.AddControllers();
             services.AddSwaggerGen();
+
+            services.AddMediatR(typeof(CreateUserCommand).Assembly);
+
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ICalculateUserGif, CalculateUserGif>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

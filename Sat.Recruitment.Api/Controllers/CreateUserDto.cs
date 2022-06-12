@@ -20,6 +20,7 @@ namespace Sat.Recruitment.Api.Controllers
 
         [BindProperty(Name = "phone")]
         [Required(ErrorMessage = "The phone is required")]
+        [Phone]
         public string Phone { get; set; }
 
         [BindProperty(Name = "userType")]
