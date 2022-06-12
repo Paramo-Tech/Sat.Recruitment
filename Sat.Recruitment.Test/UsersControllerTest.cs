@@ -4,10 +4,10 @@ using Xunit;
 namespace Sat.Recruitment.Test
 {
     [CollectionDefinition("Tests", DisableParallelization = true)]
-    public class UnitTest1
+    public class UsersControllerTest
     {
         [Fact]
-        public void Test1()
+        public void Create_WhenRequestIsValidAndUserNotExists_UserCreated()
         {
             var userController = new UsersController();
 
@@ -19,7 +19,7 @@ namespace Sat.Recruitment.Test
         }
 
         [Fact]
-        public void Test2()
+        public void Create_WhenRequestIsValidAndUserExists_UserNotCreated()
         {
             var userController = new UsersController();
 
