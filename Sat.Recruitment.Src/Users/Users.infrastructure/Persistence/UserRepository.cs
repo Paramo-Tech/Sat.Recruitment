@@ -10,7 +10,7 @@ namespace Users.infrastructure.Persistence
 
         public async Task Save(User user)
         {
-            using (StreamWriter usersFile = new(GetFilePath()))
+            using (StreamWriter usersFile = new(GetFilePath(), append: true))
             {
                 await usersFile.WriteLineAsync(UserFileMapper.ToLine(user));
             }
@@ -34,7 +34,6 @@ namespace Users.infrastructure.Persistence
         {
             try
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), SavedUsersFilePath);
                 FileStream fileStream = new (GetFilePath(), FileMode.Open);
                 StreamReader reader = new (fileStream);
 
@@ -56,6 +55,6 @@ namespace Users.infrastructure.Persistence
             }
         }
 
-        private static string GetFilePath() => Path.Combine(Directory.GetCurrentDirectory(), SavedUsersFilePath);
+        private static string GetFilePath() => Directory.GetCurrentDirectory() + SavedUsersFilePath;
     }
 }

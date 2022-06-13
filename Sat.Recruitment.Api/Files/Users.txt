@@ -1,0 +1,1 @@
+cuba,user@example.com,+543446348690,my house,SuperUser,147,6

@@ -16,5 +16,11 @@
     <ProjectReference Include="..\Sat.Recruitment.Src\Users\Users.infrastructure\Users.infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Files\Users.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>
