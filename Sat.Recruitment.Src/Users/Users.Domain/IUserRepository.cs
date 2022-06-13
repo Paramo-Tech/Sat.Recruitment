@@ -4,7 +4,7 @@ namespace Users.Domain
 {
     public interface IUserRepository
     {
-        void save(User user);
+        Task Save(User user);
 
         Task<User?> Search(ISpecification<User> specification);
     }

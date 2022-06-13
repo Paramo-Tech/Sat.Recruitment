@@ -36,6 +36,8 @@ namespace Users.Application.Commands.Create
             newUser.Money += this.gifCalculateGetter
                 .GetCalculator(newUser.UserType).Execute(newUser.Money);
 
+            await this.userRepository.Save(newUser);
+
             return Unit.Value;
         }
     }

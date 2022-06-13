@@ -1,18 +1,24 @@
 ﻿using Shared.Domain;
+using Shared.Domain.Exceptions;
 using Users.Domain;
 
 namespace Users.infrastructure.Persistence
 {
     public class UserRepository : IUserRepository
     {
-        public void save(User user)
+        private const string SavedUsersFilePath = "/Files/Users.txt";
+
+        public async Task Save(User user)
         {
-            throw new NotImplementedException();
+            using (StreamWriter usersFile = new(GetFilePath()))
+            {
+                await usersFile.WriteLineAsync(UserFileMapper.ToLine(user));
+            }
         }
 
         public async Task<User?> Search(ISpecification<User> specification)
         {
-            var users = await this.GetAllAsync();
+            var users = await this.GetAll();
             foreach (var savedUser in users)
             {
                 if (specification.IsSatisfied(savedUser))
@@ -24,23 +30,32 @@ namespace Users.infrastructure.Persistence
             return null;
         }
 
-        private async Task<List<User>> GetAllAsync()
+        private async Task<List<User>> GetAll()
         {
-            var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
-            FileStream fileStream = new(path, FileMode.Open);
-            StreamReader reader = new(fileStream);
-
-            List<User> users = new ();
-
-            while (reader.Peek() >= 0)
+            try
             {
-                var line = await reader.ReadLineAsync();
-                var user = UserFileMapper.Execute(line);
-                users.Add(user);
-            }
-            reader.Close();
+                var path = Path.Combine(Directory.GetCurrentDirectory(), SavedUsersFilePath);
+                FileStream fileStream = new (GetFilePath(), FileMode.Open);
+                StreamReader reader = new (fileStream);
 
-            return users;
+                List<User> users = new();
+
+                while (reader.Peek() >= 0)
+                {
+                    var line = await reader.ReadLineAsync();
+                    var user = UserFileMapper.ToUser(line);
+                    users.Add(user);
+                }
+                reader.Close();
+
+                return users;
+            }
+            catch(Exception ex)
+            {
+                throw new RepositoryException("An error ocurred trying to get users", ex);
+            }
         }
+
+        private static string GetFilePath() => Path.Combine(Directory.GetCurrentDirectory(), SavedUsersFilePath);
     }
 }

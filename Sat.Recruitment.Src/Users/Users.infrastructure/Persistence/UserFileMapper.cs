@@ -4,7 +4,7 @@ namespace Users.infrastructure.Persistence
 {
     public static class UserFileMapper
     {
-        public static User Execute(string line) => new()
+        public static User ToUser(string line) => new()
         {
             Name = line.Split(',')[0].ToString(),
             Email = new(line.Split(',')[1].ToString()),
@@ -13,5 +13,8 @@ namespace Users.infrastructure.Persistence
             UserType = UserType.FromValue(line.Split(',')[4].ToString()),
             Money = decimal.Parse(line.Split(',')[5].ToString()),
         };
+
+        public static string ToLine(User user) => 
+            $"{user.Name},{user.Email.Value},{user.Phone.Value},{user.Address},{user.UserType.Value},{user.Money}";
     }
 }

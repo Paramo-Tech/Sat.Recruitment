@@ -56,22 +56,36 @@ namespace Users.UnitTest.Users.Application.Commands.Create
         [Fact]
         public async Task Handle_WhenCommandIsValidAndUserNotExists_Success()
         {
+            var validCommand = DataProvider.ValidCommand();
+            var calculator = new CalculateNormalUserGif();
+            var expectedMoney = validCommand.Money + calculator.Execute(validCommand.Money);
+
             this.gifCalculateGetterMock
                 .Setup(x => x.GetCalculator(It.IsAny<UserType>()))
-                .Returns(new CalculateNormalUserGif());
+                .Returns(calculator);
 
             this.userRepositoryMock
                 .Setup(x => x.Search(It.IsAny<ISpecification<User>>()))
                 .ReturnsAsync(() => null);
 
-            var validCommand = DataProvider.ValidCommand();
-
             await this.createUserCoammndHandler.Handle(validCommand, CancellationToken.None);
 
             this.gifCalculateGetterMock
                 .Verify(x => x.GetCalculator(It.IsAny<UserType>()), Times.Once());
+
             this.userRepositoryMock
                 .Verify(x => x.Search(It.IsAny<ISpecification<User>>()), Times.Once());
+
+            this.userRepositoryMock
+                .Verify(x => x.Save(
+                    It.Is<User>(user =>
+                        user.Name.Equals(validCommand.Name) &&
+                        user.Email.Equals(validCommand.Email) &&
+                        user.Phone.Equals(validCommand.Phone) &&
+                        user.Address.Equals(validCommand.Address) &&
+                        user.UserType.Equals(validCommand.UserType) &&
+                        user.Money.Equals(expectedMoney))
+                    ), Times.Once());
         }
     }
 }
