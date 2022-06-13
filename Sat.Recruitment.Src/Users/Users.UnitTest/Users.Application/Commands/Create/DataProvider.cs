@@ -1,7 +1,7 @@
 ﻿using Users.Application.Commands.Create;
 using Users.Domain;
 
-namespace Users.UnitTest.Application.Commands.Create
+namespace Users.UnitTest.Users.Application.Commands.Create
 {
     public static class DataProvider
     {

@@ -6,7 +6,7 @@ using Users.Domain.UserGif.Calculators;
 using Users.Domain.UserGif.Getter;
 using Xunit;
 
-namespace Users.UnitTest.Application.Commands.Create
+namespace Users.UnitTest.Users.Application.Commands.Create
 {
     public class CreateUserCoammndHandlerTest
     {
