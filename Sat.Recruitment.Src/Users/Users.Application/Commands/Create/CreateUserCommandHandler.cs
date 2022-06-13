@@ -18,11 +18,11 @@ namespace Users.Application.Commands.Create
             this.userRepository = userRepository;
         }
 
-        public Task<Unit> Handle(CreateUserCommand createUserCommand, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateUserCommand createUserCommand, CancellationToken cancellationToken)
         {
             var newUser = CreateUserCommandMapper.Execute(createUserCommand);
 
-            var existingUser = this.userRepository.Search(new ExistingUserSpecification(
+            var existingUser = await this.userRepository.Search(new ExistingUserSpecification(
                 newUser.Name,
                 newUser.Email,
                 newUser.Address,
@@ -36,7 +36,7 @@ namespace Users.Application.Commands.Create
             newUser.Money += this.gifCalculateGetter
                 .GetCalculator(newUser.UserType).Execute(newUser.Money);
 
-            return Task.FromResult(Unit.Value);
+            return Unit.Value;
         }
     }
 }
