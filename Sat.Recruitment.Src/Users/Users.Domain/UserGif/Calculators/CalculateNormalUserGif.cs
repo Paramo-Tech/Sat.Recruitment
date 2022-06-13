@@ -2,20 +2,21 @@
 {
     public class CalculateNormalUserGif : ICalculateUserGif
     {
+        private const decimal MaxLimit = 100;
+        private const decimal MinLimit = 10;
+        private const double PercentageMaxLimit = 0.12;
+        private const double PercentageMinLimit = 0.8;
+
         public decimal Execute(decimal currentMoney)
         {
-            if (currentMoney > 100)
+            if (currentMoney > MaxLimit)
             {
-                var percentage = Convert.ToDecimal(0.12);
-                //If new user is normal and has more than USD100
-                return currentMoney * percentage;
+                return currentMoney * Convert.ToDecimal(PercentageMaxLimit);
             }
 
-            if (currentMoney < 100 && currentMoney > 10)
+            if (currentMoney < MaxLimit && currentMoney > MinLimit)
             {
-                var percentage = Convert.ToDecimal(0.8);
-
-                return currentMoney * percentage;
+                return currentMoney * Convert.ToDecimal(PercentageMinLimit);
             }
 
             return decimal.Zero;

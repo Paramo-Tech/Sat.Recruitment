@@ -2,11 +2,14 @@
 {
     public class CalculatePremiunUserGif : ICalculateUserGif
     {
+        private const decimal MaxLimit = 100;
+        private const double PercentageMaxLimit = 2;
+
         public decimal Execute(decimal currentMoney)
         {
-            if (currentMoney > 100)
+            if (currentMoney > MaxLimit)
             {
-                return currentMoney * 2;
+                return currentMoney * Convert.ToDecimal(PercentageMaxLimit);
             }
 
             return decimal.Zero;
