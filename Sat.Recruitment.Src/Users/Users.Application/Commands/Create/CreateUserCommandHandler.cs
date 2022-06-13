@@ -34,8 +34,8 @@ namespace Users.Application.Commands.Create
                 throw new ApplicationException("The user is duplicated");
             }
 
-            newUser.Money += this.gifCalculateGetter
-                .GetCalculator(newUser.UserType).Execute(newUser.Money);
+            newUser.AddMoney(this.gifCalculateGetter
+                .GetCalculator(newUser.UserType).Execute(newUser.Money));
 
             await this.userRepository.Save(newUser);
 

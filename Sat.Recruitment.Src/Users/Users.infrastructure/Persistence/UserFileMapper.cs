@@ -8,15 +8,14 @@ namespace Users.infrastructure.Persistence
         {
             var userProperties = line.Split(',');
 
-            return new User ()
-            {
-                Name = userProperties[0].ToString(),
-                Email = new(userProperties[1].ToString()),
-                Phone = new(userProperties[2].ToString()),
-                Address = userProperties[3].ToString(),
-                UserType = UserType.FromValue(userProperties[4].ToString()),
-                Money = decimal.Parse(userProperties[5].ToString()),
-            };
+            return new User (
+                userProperties[0].ToString(),
+                new(userProperties[1].ToString()),
+                userProperties[3].ToString(),
+                new(userProperties[2].ToString()),
+                UserType.FromValue(userProperties[4].ToString()),
+                decimal.Parse(userProperties[5].ToString())
+            );
         }
 
 

@@ -18,25 +18,23 @@ namespace Users.UnitTest.Users.Domain.Specifications
             yield return new object[] { BaseUser(), OnlySameAddressThanBase(), false };
         }
 
-        private static User BaseUser() => new()
-        {
-            Name = "Mike",
-            Email = new("mike@gmail.com"),
-            Address = "Av. Juan G",
-            Phone = new("+349 1122354215"),
-            UserType = UserType.Normal,
-            Money = 124
-        };
+        private static User BaseUser() => new (
+            "Mike",
+            new("mike@gmail.com"),
+            "Av. Juan G",
+            new("+349 1122354215"),
+            UserType.Normal,
+            124
+        );
 
-        private static User DifferentThanBase() => new()
-        {
-            Name = "Cuba",
-            Email = new("cuba@gmail.com"),
-            Address = "Other street",
-            Phone = new("+349 1122354216"),
-            UserType = UserType.Normal,
-            Money = 124
-        };
+        private static User DifferentThanBase() => new(
+            "Cuba",
+            new("cuba@gmail.com"),
+            "Other street",
+            new("+349 1122354216"),
+            UserType.Normal,
+            124
+        );
 
         private static User OtherNameThanBase()
         {

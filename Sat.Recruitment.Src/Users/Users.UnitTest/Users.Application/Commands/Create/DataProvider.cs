@@ -15,6 +15,15 @@ namespace Users.UnitTest.Users.Application.Commands.Create
             Money = 124
         };
 
+        public static User BaseUser() => new(
+            "Mike",
+            new("mike@gmail.com"),
+            "Av. Juan G",
+            new("+349 1122354215"),
+            UserType.Normal,
+            124
+        );
+
         public static IEnumerable<object[]> InvalidCommands()
         {
             yield return new object[] { EmptyCommand() };

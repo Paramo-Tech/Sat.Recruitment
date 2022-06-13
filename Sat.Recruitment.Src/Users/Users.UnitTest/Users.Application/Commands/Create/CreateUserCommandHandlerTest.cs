@@ -42,7 +42,7 @@ namespace Users.UnitTest.Users.Application.Commands.Create
         {
             this.userRepositoryMock
                 .Setup(x => x.Search(It.IsAny<ISpecification<User>>()))
-                .ReturnsAsync(new User());
+                .ReturnsAsync(DataProvider.BaseUser());
 
             var validCommand = DataProvider.ValidCommand();
 
