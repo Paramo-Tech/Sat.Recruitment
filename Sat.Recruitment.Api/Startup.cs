@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sat.Recruitment.Api.Middlewares;
 using Users.Application.Commands.Create;
 using Users.Domain;
 using Users.Domain.UserGif.Getter;
@@ -47,6 +48,9 @@ namespace Sat.Recruitment.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Users Api V1");
             });
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -55,6 +59,7 @@ namespace Sat.Recruitment.Api
             {
                 endpoints.MapControllers();
             });
+            
         }
     }
 }
