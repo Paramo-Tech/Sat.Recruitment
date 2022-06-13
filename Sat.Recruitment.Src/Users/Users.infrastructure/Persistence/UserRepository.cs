@@ -1,4 +1,5 @@
-﻿using Users.Domain;
+﻿using Shared.Domain;
+using Users.Domain;
 
 namespace Users.infrastructure.Persistence
 {
@@ -9,18 +10,14 @@ namespace Users.infrastructure.Persistence
             throw new NotImplementedException();
         }
 
-        public async Task<User?> Search(User user)
+        public async Task<User?> Search(ISpecification<User> specification)
         {
             var users = await this.GetAllAsync();
-            foreach (var saveUser in users)
+            foreach (var savedUser in users)
             {
-                if (saveUser.Email.Equals(user.Email) || saveUser.Phone.Equals(user.Phone))
+                if (specification.IsSatisfied(savedUser))
                 {
-                    return saveUser;
-                }
-                else if (saveUser.Name.Equals(user.Name) && saveUser.Address.Equals(user.Address))
-                {
-                    return saveUser;
+                    return savedUser;
                 }
             }
 
