@@ -2,6 +2,7 @@
 using Users.Domain;
 using Users.Domain.Specifications;
 using Users.Domain.UserGif.Getter;
+using ApplicationException = Shared.Domain.Exceptions.ApplicationException;
 
 namespace Users.Application.Commands.Create
 {
