@@ -23,10 +23,9 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/create-user")]
-        public async Task<ActionResult> CreateUserAsync(CreateUserDto createUserDto)
+        public async Task<ActionResult> Post(CreateUserDto createUserDto)
         {
-            this.logger.LogDebug("UsersController - create user", createUserDto);
+            this.logger.LogDebug("UsersController - post", createUserDto);
 
             await this.mediator.Send(new CreateUserCommand
             {
