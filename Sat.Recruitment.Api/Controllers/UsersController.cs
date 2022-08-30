@@ -18,11 +18,13 @@ namespace Sat.Recruitment.Api.Controllers
     {
         private readonly IReadUsersFromFile _readUsersFromFile;
         private readonly IUtil _util;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IReadUsersFromFile readUsersFromFile, IUtil util)
+        public UsersController(IReadUsersFromFile readUsersFromFile, IUtil util, ILogger<UsersController> logger)
         {
             this._readUsersFromFile = readUsersFromFile;
             this._util = util;
+            this._logger = logger;
         }
 
         [HttpPost]
@@ -47,6 +49,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
             catch(Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return StatusCode(500);
             }
 
