@@ -40,21 +40,17 @@ namespace Sat.Recruitment.Api.Controllers
 
                 user.Email = _util.NormaliceEmail(user.Email);
 
-                if (!_readUsersFromFile.Exist(user))
+                if (_readUsersFromFile.Exist(user))
                 {
-                    Debug.WriteLine("User Created");
-                }
-                else
-                {
-                    Debug.WriteLine("The user is duplicated");
+                    return Conflict(user);
                 }
             }
             catch(Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                return StatusCode(500);
             }
 
-            return user;
+            return Ok(user);
         }
     }
 }
