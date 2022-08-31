@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.DTO;
-using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Repository;
 using Sat.Recruitment.Api.Utilities;
 using System;
@@ -16,13 +15,13 @@ namespace Sat.Recruitment.Api.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly IReadUsersFromFile _readUsersFromFile;
+        private readonly IData _data;
         private readonly IUtil _util;
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IReadUsersFromFile readUsersFromFile, IUtil util, ILogger<UsersController> logger)
+        public UsersController(IData data, IUtil util, ILogger<UsersController> logger)
         {
-            this._readUsersFromFile = readUsersFromFile;
+            this._data = data;
             this._util = util;
             this._logger = logger;
         }
@@ -33,19 +32,19 @@ namespace Sat.Recruitment.Api.Controllers
         {
             try
             {
-                if (user.UserType == UserType.Type.Normal)
+                if (user.UserType == 1)
                     user.Money = _util.MoneyTypeNormal(user.Money);
-                if(user.UserType == UserType.Type.Premium)
+                if(user.UserType == 3)
                     user.Money = _util.MoneyTypePremium(user.Money);
-                if(user.UserType == UserType.Type.SuperUser)
+                if(user.UserType == 2)
                     user.Money = _util.MoneyTypeSuperUser(user.Money);
 
                 user.Email = _util.NormaliceEmail(user.Email);
 
-                if (_readUsersFromFile.Exist(user))
-                {
+                if (_data.Exist(user))
                     return Conflict(user);
-                }
+                else
+                    _data.Save(user);
             }
             catch(Exception ex)
             {

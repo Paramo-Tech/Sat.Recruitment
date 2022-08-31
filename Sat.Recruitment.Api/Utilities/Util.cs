@@ -4,8 +4,9 @@ namespace Sat.Recruitment.Api.Utilities
 {
     public class Util : IUtil
     {
-        public decimal MoneyTypeNormal(decimal money)
+        public decimal? MoneyTypeNormal(decimal? money)
         {
+            ValidateDecimal(ref money);
             decimal percentage = 0;
             if (money > 100)
                 percentage = Convert.ToDecimal(0.12);
@@ -16,17 +17,19 @@ namespace Sat.Recruitment.Api.Utilities
             return money + (money * percentage);
         }
 
-        public decimal MoneyTypePremium(decimal money)
+        public decimal? MoneyTypePremium(decimal? money)
         {
-            decimal gif = 0;
+            ValidateDecimal(ref money);
+            decimal? gif = 0;
             if (money > 100)
                 gif = money * 2;
             
             return money + gif;
         }
 
-        public decimal MoneyTypeSuperUser(decimal money)
+        public decimal? MoneyTypeSuperUser(decimal? money)
         {
+            ValidateDecimal(ref money);
             decimal percentage = 0;
             if (money > 100)
                 percentage = Convert.ToDecimal(0.20);
@@ -40,6 +43,12 @@ namespace Sat.Recruitment.Api.Utilities
             var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
             aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
             return string.Join("@", new string[] { aux[0], aux[1] });
+        }
+
+        private void ValidateDecimal(ref decimal? money)
+        {
+            if (money == null)
+                money = 0;
         }
     }
 }

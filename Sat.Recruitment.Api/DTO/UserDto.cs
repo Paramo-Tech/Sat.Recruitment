@@ -1,5 +1,4 @@
-﻿using Sat.Recruitment.Api.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Sat.Recruitment.Api.DTO
 {
@@ -26,8 +25,10 @@ namespace Sat.Recruitment.Api.DTO
         [Phone]
         [StringLength(15)]
         public string Phone { get; set; }
-        public UserType.Type UserType { get; set; }
+        
+        [Range(1,3)]
+        public int? UserType { get; set; }
 
-        public decimal Money { get; set; }
+        public decimal? Money { get; set; }
     }
 }

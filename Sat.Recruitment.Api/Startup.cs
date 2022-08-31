@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Repository;
 using Sat.Recruitment.Api.Utilities;
 using System;
@@ -26,7 +28,8 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IReadUsersFromFile, ReadUsersFromFile>();
+            //services.AddDbContext<AppTestContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AppTestDatabase")));
+            services.AddSingleton<IData, Data>();
             services.AddSingleton<IUtil, Util>();
             services.AddControllers();
             services.AddSwaggerGen();
