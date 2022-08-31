@@ -6,5 +6,7 @@
         decimal? MoneyTypeNormal(decimal? money);
         decimal? MoneyTypeSuperUser(decimal? money);
         decimal? MoneyTypePremium(decimal? money);
+        string Md5_hash(string value);
+        string TokenJWT(string email);
     }
 }

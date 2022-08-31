@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.DTO;
 using Sat.Recruitment.Api.Repository;
@@ -13,6 +15,7 @@ namespace Sat.Recruitment.Api.Controllers
 
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsersController : ControllerBase
     {
         private readonly IData _data;
@@ -27,8 +30,9 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("/create-user")]
-        public ActionResult<UserDto> CreateUser(UserDto user)
+        public async Task<ActionResult<UserDto>> CreateUser(UserDto user)
         {
             try
             {
@@ -44,7 +48,7 @@ namespace Sat.Recruitment.Api.Controllers
                 if (_data.Exist(user))
                     return Conflict(user);
                 else
-                    _data.Save(user);
+                    await _data.Save(user);
             }
             catch(Exception ex)
             {

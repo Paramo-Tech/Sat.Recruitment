@@ -7,5 +7,6 @@ namespace Sat.Recruitment.Api.Repository
     {
         bool Exist(UserDto user);
         Task Save(UserDto user);
+        ApiDto ValidateUser(LoginDto login);
     }
 }

@@ -62,5 +62,26 @@ namespace Sat.Recruitment.Api.Repository
                 throw;
             }
         }
+
+        public ApiDto ValidateUser(LoginDto login)
+        {
+            ApiDto apiDto = new ApiDto();
+            try
+            {
+                using (var context = new AppTestContext())
+                {
+                    apiDto.Email = context.Api.Where(x => x.Apiuser == login.User && x.Password == login.Password).Select(x => x.EmailUser).FirstOrDefault();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                throw;
+            }
+
+            return apiDto;
+
+        }
     }
 }
