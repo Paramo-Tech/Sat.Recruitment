@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sat.Recruitment.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Sat.Recruitment.Api.Controllers
     public class UsersForTestController:UsersController
     {
         ICollection<User> _mockedUsers;
-        public UsersForTestController(ICollection<User> mockedUsers)
+        public UsersForTestController(ICollection<User> mockedUsers):base(null)
         {
             _mockedUsers = mockedUsers;
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
+using Sat.Recruitment.Infrastructure.Interfaces.Bussiness;
+using Sat.Recruitment.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,143 +19,46 @@ namespace Sat.Recruitment.Api.Controllers
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
     {
-
+        private IUserBussiness _userBussiness;
         protected readonly List<User> _users = new List<User>();
-        public UsersController()
+
+        public UsersController(IUserBussiness userBussiness)
         {
+            _userBussiness = userBussiness;
         }
 
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public Result CreateUser(string name, string email, string address, string phone, string userType, string money)
         {
-            var errors = "";
-
-            ValidateErrors(name, email, address, phone, ref errors);
-
-            if (errors != null && errors != "")
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
-
-            var newUser = new User
-            {
-                Name = name,
-                Email = email,
-                Address = address,
-                Phone = phone,
-                UserType = userType,
-                Money = decimal.Parse(money)
-            };
-
-            if (newUser.UserType == "Normal")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.12);
-                    //If new user is normal and has more than USD100
-                    var gif = decimal.Parse(money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-                if (decimal.Parse(money) < 100)
-                {
-                    if (decimal.Parse(money) > 10)
-                    {
-                        var percentage = Convert.ToDecimal(0.8);
-                        var gif = decimal.Parse(money) * percentage;
-                        newUser.Money = newUser.Money + gif;
-                    }
-                }
-            }
-            if (newUser.UserType == "SuperUser")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.20);
-                    var gif = decimal.Parse(money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
-            if (newUser.UserType == "Premium")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var gif = decimal.Parse(money) * 2;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
-
-            var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-
-            newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
-
-            LoadUsers();
-
             try
             {
-                var isDuplicated = false;
-                foreach (var user in _users)
+                var newUser = new User
                 {
-                    if (user.Email == newUser.Email
-                        ||
-                        user.Phone == newUser.Phone)
-                    {
-                        isDuplicated = true;
-                    }
-                    else if (user.Name == newUser.Name)
-                    {
-                        if (user.Address == newUser.Address)
-                        {
-                            isDuplicated = true;
-                            throw new Exception("User is duplicated");
-                        }
+                    Name = name,
+                    Email = email,
+                    Address = address,
+                    Phone = phone,
+                    UserType = userType,
+                    Money = decimal.Parse(money)
+                };
+                _userBussiness.CreateUser(newUser);
 
-                    }
-                }
-
-                if (!isDuplicated)
+                return new Result
                 {
-                    _users.Add(newUser);
-                    Debug.WriteLine("User Created");
+                    Errors = "User Created",
+                    IsSuccess = true
+                };
 
-                    return new Result()
-                    {
-                        IsSuccess = true,
-                        Errors = "User Created"
-                    };
-                }
-                else
-                {
-                    Debug.WriteLine("The user is duplicated");
-
-                    return new Result()
-                    {
-                        IsSuccess = false,
-                        Errors = "The user is duplicated"
-                    };
-                }
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.WriteLine("The user is duplicated");
-                return new Result()
+                return new Result
                 {
-                    IsSuccess = false,
-                    Errors = "The user is duplicated"
+                    Errors = ex.Message,
+                    IsSuccess=false
                 };
             }
-            _users.Add(newUser);
-            return new Result()
-            {
-                IsSuccess = true,
-                Errors = "User Created"
-            };
         }
 
         protected virtual void LoadUsers()
@@ -196,14 +100,5 @@ namespace Sat.Recruitment.Api.Controllers
                 //Validate if Phone is null
                 errors = errors + " The phone is required";
         }
-    }
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
     }
 }
