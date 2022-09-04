@@ -19,7 +19,7 @@ namespace Sat.Recruitment.Api.Controllers
     public partial class UsersController : ControllerBase
     {
 
-        private readonly List<User> _users = new List<User>();
+        protected readonly List<User> _users = new List<User>();
         public UsersController()
         {
         }
@@ -86,10 +86,6 @@ namespace Sat.Recruitment.Api.Controllers
                 }
             }
 
-
-            var reader = ReadUsersFromFile();
-
-            //Normalize email
             var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
             var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
@@ -98,21 +94,8 @@ namespace Sat.Recruitment.Api.Controllers
 
             newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
 
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var user = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(user);
-            }
-            reader.Close();
+            LoadUsers();
+
             try
             {
                 var isDuplicated = false;
@@ -137,6 +120,7 @@ namespace Sat.Recruitment.Api.Controllers
 
                 if (!isDuplicated)
                 {
+                    _users.Add(newUser);
                     Debug.WriteLine("User Created");
 
                     return new Result()
@@ -165,12 +149,35 @@ namespace Sat.Recruitment.Api.Controllers
                     Errors = "The user is duplicated"
                 };
             }
-
+            _users.Add(newUser);
             return new Result()
             {
                 IsSuccess = true,
                 Errors = "User Created"
             };
+        }
+
+        protected virtual void LoadUsers()
+        {
+            var reader = ReadUsersFromFile();
+
+            //Normalize email
+
+            while (reader.Peek() >= 0)
+            {
+                var line = reader.ReadLineAsync().Result;
+                var user = new User
+                {
+                    Name = line.Split(',')[0].ToString(),
+                    Email = line.Split(',')[1].ToString(),
+                    Phone = line.Split(',')[2].ToString(),
+                    Address = line.Split(',')[3].ToString(),
+                    UserType = line.Split(',')[4].ToString(),
+                    Money = decimal.Parse(line.Split(',')[5].ToString()),
+                };
+                _users.Add(user);
+            }
+            reader.Close();
         }
 
         //Validate errors
