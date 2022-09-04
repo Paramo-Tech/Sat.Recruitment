@@ -17,14 +17,14 @@ namespace Sat.Recruitment.Api.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private IUserBussiness _userBussiness;
-        protected readonly List<User> _users = new List<User>();
 
         public UsersController(IUserBussiness userBussiness)
         {
             _userBussiness = userBussiness;
+            Console.WriteLine("is being initializaded");
         }
 
         [HttpPost]
@@ -40,7 +40,7 @@ namespace Sat.Recruitment.Api.Controllers
                     Address = address,
                     Phone = phone,
                     UserType = userType,
-                    Money = decimal.Parse(money)
+                    OriginalMoney = decimal.Parse(money)
                 };
                 _userBussiness.CreateUser(newUser);
 
@@ -61,44 +61,6 @@ namespace Sat.Recruitment.Api.Controllers
             }
         }
 
-        protected virtual void LoadUsers()
-        {
-            var reader = ReadUsersFromFile();
 
-            //Normalize email
-
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var user = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(user);
-            }
-            reader.Close();
-        }
-
-        //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
-        {
-            if (name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            if (address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            if (phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
-        }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Sat.Recruitment.Infrastructure.Interfaces.DataAccess
 {
-    public interface IUserDataAccess: IEntityBase<User>
+    public interface IUserDataAccess : IEntityBase<User>
     {
     }
 }

@@ -1,24 +1,34 @@
 ﻿using Sat.Recruitment.Infrastructure.Interfaces.Bussiness;
+using Sat.Recruitment.Infrastructure.Interfaces.DataAccess;
 using Sat.Recruitment.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Sat.Recruitment.Bussiness
 {
     public class UserBussiness : IUserBussiness
     {
-        public ICollection<User> Users { get; set; }
+        private readonly IUserDataAccess _userDataAccess;
 
-        public UserBussiness(ICollection<User> users)
+        public UserBussiness(IUserDataAccess userDataAccess)
         {
-            Users = users;
+            _userDataAccess = userDataAccess;
         }
         public void CreateUser(User newUser)
         {
             ValidateUser(newUser);
             NormalizeEmail(newUser);
-            Users.Add(newUser);
+            CheckUserDuplication(newUser);
+            _userDataAccess.CreateEntity(newUser);
+        }
+
+        private void CheckUserDuplication(User user)
+        {
+            var userFind = _userDataAccess.GetSingleBy((usr) => usr.Email == user.Email || (user.Name == usr.Name && user.Address == usr.Address));
+            if(userFind!=null)
+            throw new Exception("The user is duplicated");
         }
 
 

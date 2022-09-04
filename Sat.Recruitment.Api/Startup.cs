@@ -30,7 +30,7 @@ namespace Sat.Recruitment.Api
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddTransient<IUserDataAccess, UserDataAccess>();
+            services.AddSingleton<IUserDataAccess, UserDataAccess>();
             services.AddTransient<IUserBussiness, UserBussiness>();
         }
 
