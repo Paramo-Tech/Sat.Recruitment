@@ -1,9 +1,7 @@
 ﻿using Sat.Recruitment.Infrastructure.Interfaces.DataAccess;
 using Sat.Recruitment.Model;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Sat.Recruitment.DataAccess
 {

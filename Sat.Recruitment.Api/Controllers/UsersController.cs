@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Infrastructure.Interfaces.Bussiness;
 using Sat.Recruitment.Model;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {

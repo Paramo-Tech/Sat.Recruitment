@@ -3,9 +3,6 @@ using Sat.Recruitment.Bussiness;
 using Sat.Recruitment.Infrastructure.Interfaces.DataAccess;
 using Sat.Recruitment.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Sat.Recruitment.Test
