@@ -57,5 +57,22 @@ namespace Sat.Recruitment.Test
             Assert.NotNull(exception);
             Assert.Equal(expectedErrorMessage, exception.Message);
         }
+
+
+
+        [Fact]
+        public void GivenUserCreation_WhenUserEmailHasPlusChar_ThenUserEmailShouldBeStoredNormalize()
+        {
+            var userBussiness = new UserBussiness(new List<User>
+            {
+            });
+
+            userBussiness.CreateUser(new User { Name = "Mike", Email = "mike+1@gmail.com", Address = "Av. Juan G", Phone = "+3491122354215", UserType = "Normal", Money = 124 });
+
+            var lastUser = userBussiness.Users.LastOrDefault();
+            var expectedEmail = "mike@gmail.com";
+
+            Assert.Equal(expectedEmail, lastUser.Email);
+        }
     }
 }

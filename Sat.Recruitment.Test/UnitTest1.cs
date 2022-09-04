@@ -35,21 +35,6 @@ namespace Sat.Recruitment.Test
         
 
 
-       
-        [Fact]
-        public void GivenUserCreation_WhenUserEmailHasPlusChar_ThenUserEmailShouldBeStoredNormalize()
-        {
-            var userController = new UsersForTestController(new List<User> {
-            });
-
-            var result =userController.CreateUser("Mike", "mike+1@gmail.com", "Av. Juan G", "+3491122354215", "Normal", "124");
-
-            var lastUser = userController.Users.LastOrDefault();
-            var expectedEmail = "mike@gmail.com";
-
-            Assert.Equal(expectedEmail, lastUser.Email);
-            Assert.True(result.IsSuccess);
-        }
 
 
 

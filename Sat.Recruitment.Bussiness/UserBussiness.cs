@@ -17,7 +17,20 @@ namespace Sat.Recruitment.Bussiness
         public void CreateUser(User newUser)
         {
             ValidateUser(newUser);
+            NormalizeEmail(newUser);
             Users.Add(newUser);
+        }
+
+
+        private void NormalizeEmail(User user)
+        {
+            var emailSplit = user.Email.Split('@', StringSplitOptions.RemoveEmptyEntries);
+
+            var atIndex = emailSplit[0].IndexOf('+', StringComparison.Ordinal);
+
+            emailSplit[0] = atIndex < 0 ? emailSplit[0] : emailSplit[0].Remove(atIndex);
+
+            user.Email = $"{emailSplit[0].Replace(".", "")}@{emailSplit[1]}";
         }
 
         private void ValidateUser(User user)
