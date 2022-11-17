@@ -15,7 +15,7 @@ namespace Sat.Recruitment.Test
         }
 
         [Fact]
-        public void Test1()
+        public void AddUser()
         {
             var newUser = new User
             {
@@ -35,7 +35,7 @@ namespace Sat.Recruitment.Test
         }
 
         [Fact]
-        public void Test2()
+        public void AddUserDuplicated()
         {
             var newUser = new User
             {
@@ -52,5 +52,42 @@ namespace Sat.Recruitment.Test
             Assert.Equal("The user is duplicated", result.Errors);
 
         }
+
+        [Fact]
+        public void CalGiftSuperUser()
+        {
+            GiftContext giftContext = new GiftContext();
+            decimal result = giftContext.GetPercentaje("SuperUser", decimal.Parse("124"));
+            Assert.Equal(result, (decimal)24.8);
+
+        }
+
+        [Fact]
+        public void CalGiftPremiumUser()
+        {
+            GiftContext giftContext = new GiftContext();
+            decimal result = giftContext.GetPercentaje("Premium", decimal.Parse("124"));
+            Assert.Equal(result, (decimal)248);
+
+        }
+
+        [Fact]
+        public void CalGiftNormalUserHigh()
+        {
+            GiftContext giftContext = new GiftContext();
+            decimal result = giftContext.GetPercentaje("Normal", decimal.Parse("124"));
+            Assert.Equal(result, (decimal)14.88);
+
+        }
+
+        [Fact]
+        public void CalGiftNormalUserlow()
+        {
+            GiftContext giftContext = new GiftContext();
+            decimal result = giftContext.GetPercentaje("Normal", decimal.Parse("24"));
+            Assert.Equal(result, (decimal)19.2);
+
+        }
+
     }
 }

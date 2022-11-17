@@ -18,6 +18,7 @@ namespace Sat.Recruitment.Api.Services
             if (errors.Equals(""))
             {
                 newUser.Money += giftContext.GetPercentaje(newUser.UserType, newUser.Money);
+                
                 newUser.Email = NormaliceEmail.Normalice(newUser.Email);//Normalize email
                 try
                 {
