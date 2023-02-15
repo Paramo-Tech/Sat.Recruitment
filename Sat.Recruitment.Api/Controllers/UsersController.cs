@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
+using Sat.Recruitment.Api.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,11 +26,11 @@ namespace Sat.Recruitment.Api.Controllers
 
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public async Task<Result> CreateUser(UserDTO dto)
         {
             var errors = "";
 
-            ValidateErrors(name, email, address, phone, ref errors);
+            ValidateErrors(dto, ref errors);
 
             if (errors != null && errors != "")
                 return new Result()
@@ -41,47 +41,47 @@ namespace Sat.Recruitment.Api.Controllers
 
             var newUser = new User
             {
-                Name = name,
-                Email = email,
-                Address = address,
-                Phone = phone,
-                UserType = userType,
-                Money = decimal.Parse(money)
+                Name = dto.Name,
+                Email = dto.Email,
+                Address = dto.Address,
+                Phone = dto.Phone,
+                UserType = dto.UserType,
+                Money = dto.Money
             };
 
             if (newUser.UserType == "Normal")
             {
-                if (decimal.Parse(money) > 100)
+                if (dto.Money > 100)
                 {
                     var percentage = Convert.ToDecimal(0.12);
                     //If new user is normal and has more than USD100
-                    var gif = decimal.Parse(money) * percentage;
+                    var gif = dto.Money * percentage;
                     newUser.Money = newUser.Money + gif;
                 }
-                if (decimal.Parse(money) < 100)
+                if (dto.Money < 100)
                 {
-                    if (decimal.Parse(money) > 10)
+                    if (dto.Money > 10)
                     {
                         var percentage = Convert.ToDecimal(0.8);
-                        var gif = decimal.Parse(money) * percentage;
+                        var gif = dto.Money * percentage;
                         newUser.Money = newUser.Money + gif;
                     }
                 }
             }
             if (newUser.UserType == "SuperUser")
             {
-                if (decimal.Parse(money) > 100)
+                if (dto.Money > 100)
                 {
                     var percentage = Convert.ToDecimal(0.20);
-                    var gif = decimal.Parse(money) * percentage;
+                    var gif = dto.Money * percentage;
                     newUser.Money = newUser.Money + gif;
                 }
             }
             if (newUser.UserType == "Premium")
             {
-                if (decimal.Parse(money) > 100)
+                if (dto.Money > 100)
                 {
-                    var gif = decimal.Parse(money) * 2;
+                    var gif = dto.Money * 2;
                     newUser.Money = newUser.Money + gif;
                 }
             }
@@ -101,14 +101,15 @@ namespace Sat.Recruitment.Api.Controllers
             while (reader.Peek() >= 0)
             {
                 var line = reader.ReadLineAsync().Result;
+                var datos = line.Split(',');
                 var user = new User
                 {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
+                    Name = datos[0].ToString(),
+                    Email = datos[1].ToString(),
+                    Phone = datos[2].ToString(),
+                    Address = datos[3].ToString(),
+                    UserType = datos[4].ToString(),
+                    Money = decimal.Parse(datos[5].ToString()),
                 };
                 _users.Add(user);
             }
@@ -174,18 +175,18 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
+        private void ValidateErrors(UserDTO dto, ref string errors)
         {
-            if (name == null)
+            if (dto.Name == null)
                 //Validate if Name is null
                 errors = "The name is required";
-            if (email == null)
+            if (dto.Email == null)
                 //Validate if Email is null
                 errors = errors + " The email is required";
-            if (address == null)
+            if (dto.Address == null)
                 //Validate if Address is null
                 errors = errors + " The address is required";
-            if (phone == null)
+            if (dto.Phone == null)
                 //Validate if Phone is null
                 errors = errors + " The phone is required";
         }

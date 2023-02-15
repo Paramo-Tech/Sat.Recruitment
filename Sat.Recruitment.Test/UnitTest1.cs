@@ -4,7 +4,7 @@ using System.Dynamic;
 using Microsoft.AspNetCore.Mvc;
 
 using Sat.Recruitment.Api.Controllers;
-
+using Sat.Recruitment.Api.Models.DTO;
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -16,8 +16,16 @@ namespace Sat.Recruitment.Test
         public void Test1()
         {
             var userController = new UsersController();
-
-            var result = userController.CreateUser("Mike", "mike@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
+            UserDTO dto = new UserDTO()
+            {
+                Name = "Mike",
+                Email= "mike@gmail.com",
+                Address= "Av. Juan G",
+                Phone= "+349 1122354215",
+                UserType="Normal",
+                Money=124
+            };
+            var result = userController.CreateUser(dto).Result;
 
 
             Assert.Equal(true, result.IsSuccess);
@@ -28,8 +36,16 @@ namespace Sat.Recruitment.Test
         public void Test2()
         {
             var userController = new UsersController();
-
-            var result = userController.CreateUser("Agustina", "Agustina@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
+            UserDTO dto = new UserDTO()
+            {
+                Name = "Agustina",
+                Email = "Agustina@gmail.com",
+                Address = "Av. Juan G",
+                Phone = "+349 1122354215",
+                UserType = "Normal",
+                Money = 124
+            };
+            var result = userController.CreateUser(dto).Result;
 
 
             Assert.Equal(false, result.IsSuccess);
