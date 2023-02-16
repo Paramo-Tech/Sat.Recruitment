@@ -25,11 +25,10 @@ namespace Sat.Recruitment.Test
                 UserType="Normal",
                 Money=124
             };
-            var result = userController.CreateUser(dto).Result;
+            var result = userController.CreateUser(dto).Result as OkObjectResult;
 
-
-            Assert.Equal(true, result.IsSuccess);
-            Assert.Equal("User Created", result.Errors);
+            Assert.NotNull(result);
+            Assert.Equal("User Created", result.Value.ToString());
         }
 
         [Fact]
@@ -45,11 +44,10 @@ namespace Sat.Recruitment.Test
                 UserType = "Normal",
                 Money = 124
             };
-            var result = userController.CreateUser(dto).Result;
+            var result = userController.CreateUser(dto).Result as ConflictObjectResult;
 
-
-            Assert.Equal(false, result.IsSuccess);
-            Assert.Equal("The user is duplicated", result.Errors);
+            Assert.NotNull(result);
+            Assert.Equal("The user is duplicated", result.Value.ToString());
         }
     }
 }

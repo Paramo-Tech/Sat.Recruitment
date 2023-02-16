@@ -1,15 +1,12 @@
+using FluentValidation;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
+using Microsoft.OpenApi.Models;
 
 namespace Sat.Recruitment.Api
 {
@@ -25,8 +22,23 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
             services.AddControllers();
-            services.AddSwaggerGen();
+
+            // Register FV validators
+            services.AddValidatorsFromAssemblyContaining<Startup>(lifetime: ServiceLifetime.Transient);
+            // Add FV to Asp.net
+            services.AddFluentValidationAutoValidation();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo() { Title = "My API", Version = "v1" });
+                c.EnableAnnotations(enableAnnotationsForInheritance: true, enableAnnotationsForPolymorphism: true);
+            });
+
+            services.AddFluentValidationRulesToSwagger();
+            //services.AddTransient<IValidator<UserDTO>, UserValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,10 +60,12 @@ namespace Sat.Recruitment.Api
 
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

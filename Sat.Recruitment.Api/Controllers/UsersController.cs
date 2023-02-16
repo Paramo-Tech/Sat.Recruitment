@@ -8,11 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
-    public class Result
-    {
-        public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
-    }
+
 
     [ApiController]
     [Route("[controller]")]
@@ -26,19 +22,12 @@ namespace Sat.Recruitment.Api.Controllers
 
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(UserDTO dto)
+        public async Task<ActionResult> CreateUser(UserDTO dto)
         {
-            var errors = "";
-
-            ValidateErrors(dto, ref errors);
-
-            if (errors != null && errors != "")
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
-
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var newUser = new User
             {
                 Name = dto.Name,
@@ -140,56 +129,23 @@ namespace Sat.Recruitment.Api.Controllers
                 {
                     Debug.WriteLine("User Created");
 
-                    return new Result()
-                    {
-                        IsSuccess = true,
-                        Errors = "User Created"
-                    };
+                    return Ok("User Created");
                 }
                 else
                 {
                     Debug.WriteLine("The user is duplicated");
 
-                    return new Result()
-                    {
-                        IsSuccess = false,
-                        Errors = "The user is duplicated"
-                    };
+                    return Conflict("The user is duplicated");
                 }
             }
             catch
             {
                 Debug.WriteLine("The user is duplicated");
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = "The user is duplicated"
-                };
+                return Conflict("The user is duplicated");
             }
 
-            return new Result()
-            {
-                IsSuccess = true,
-                Errors = "User Created"
-            };
         }
 
-        //Validate errors
-        private void ValidateErrors(UserDTO dto, ref string errors)
-        {
-            if (dto.Name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (dto.Email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            if (dto.Address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            if (dto.Phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
-        }
     }
     public class User
     {
