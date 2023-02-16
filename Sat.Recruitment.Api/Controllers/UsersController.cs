@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Models.DTO;
+using Sat.Recruitment.Api.Models.Interfaces;
+using Sat.Recruitment.Api.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,54 +31,44 @@ namespace Sat.Recruitment.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var newUser = new User
-            {
-                Name = dto.Name,
-                Email = dto.Email,
-                Address = dto.Address,
-                Phone = dto.Phone,
-                UserType = dto.UserType,
-                Money = dto.Money
-            };
+            IUser newUser=null;
 
-            if (newUser.UserType == "Normal")
+            if (dto.UserType == "Normal")
             {
-                if (dto.Money > 100)
+                newUser = new NormalUser
                 {
-                    var percentage = Convert.ToDecimal(0.12);
-                    //If new user is normal and has more than USD100
-                    var gif = dto.Money * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-                if (dto.Money < 100)
-                {
-                    if (dto.Money > 10)
-                    {
-                        var percentage = Convert.ToDecimal(0.8);
-                        var gif = dto.Money * percentage;
-                        newUser.Money = newUser.Money + gif;
-                    }
-                }
+                    Name = dto.Name,
+                    Email = dto.Email,
+                    Address = dto.Address,
+                    Phone = dto.Phone,
+                    Money = dto.Money
+                };
             }
-            if (newUser.UserType == "SuperUser")
+            else if (dto.UserType == "SuperUser")
             {
-                if (dto.Money > 100)
+                newUser = new SuperUser
                 {
-                    var percentage = Convert.ToDecimal(0.20);
-                    var gif = dto.Money * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
+                    Name = dto.Name,
+                    Email = dto.Email,
+                    Address = dto.Address,
+                    Phone = dto.Phone,
+                    Money = dto.Money
+                };
             }
-            if (newUser.UserType == "Premium")
+            else if (dto.UserType == "Premium")
             {
-                if (dto.Money > 100)
+                newUser = new PremiumUser
                 {
-                    var gif = dto.Money * 2;
-                    newUser.Money = newUser.Money + gif;
-                }
+                    Name = dto.Name,
+                    Email = dto.Email,
+                    Address = dto.Address,
+                    Phone = dto.Phone,
+                    Money = dto.Money
+                };
             }
 
 
+            newUser.Money = newUser.Money + newUser.Gift;
             var reader = ReadUsersFromFile();
 
             //Normalize email

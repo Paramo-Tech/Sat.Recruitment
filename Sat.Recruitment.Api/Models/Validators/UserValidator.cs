@@ -9,13 +9,13 @@ namespace Sat.Recruitment.Api.Models.Validators
         public UserValidator()
         {
             RuleFor(x => x.Name)
-                .NotNull().WithMessage("Name is required");
+                .NotNull().NotEmpty().WithMessage("Name is required");
             RuleFor(x => x.Phone)
-                .NotNull().WithMessage("Phone is required");
+                .NotNull().NotEmpty().WithMessage("Phone is required");
             RuleFor(x => x.Email)
-                .NotNull().WithMessage("Email is required");
+                .NotNull().NotEmpty().WithMessage("Email is required");
             RuleFor(x => x.Address)
-                .NotNull().WithMessage("Address is required");
+                .NotNull().NotEmpty().WithMessage("Address is required");
         }
     }
 }
