@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
+using Sat.Recruitment.Api.Models.Factory;
+using Sat.Recruitment.Api.Models.Interfaces;
 
 namespace Sat.Recruitment.Api
 {
@@ -38,7 +40,8 @@ namespace Sat.Recruitment.Api
             });
 
             services.AddFluentValidationRulesToSwagger();
-            //services.AddTransient<IValidator<UserDTO>, UserValidator>();
+
+            services.AddTransient<IUserFactory, UserFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

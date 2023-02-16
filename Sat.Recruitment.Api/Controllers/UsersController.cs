@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Models.DTO;
+using Sat.Recruitment.Api.Models.Factory;
 using Sat.Recruitment.Api.Models.Interfaces;
 using Sat.Recruitment.Api.Models.Users;
 using System;
@@ -19,8 +20,11 @@ namespace Sat.Recruitment.Api.Controllers
     {
 
         private readonly List<User> _users = new List<User>();
-        public UsersController()
+        private readonly IUserFactory _userFactory;
+
+        public UsersController(IUserFactory userFactory)
         {
+            this._userFactory = userFactory;
         }
 
         [HttpPost]
@@ -31,44 +35,11 @@ namespace Sat.Recruitment.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            IUser newUser=null;
 
-            if (dto.UserType == "Normal")
-            {
-                newUser = new NormalUser
-                {
-                    Name = dto.Name,
-                    Email = dto.Email,
-                    Address = dto.Address,
-                    Phone = dto.Phone,
-                    Money = dto.Money
-                };
-            }
-            else if (dto.UserType == "SuperUser")
-            {
-                newUser = new SuperUser
-                {
-                    Name = dto.Name,
-                    Email = dto.Email,
-                    Address = dto.Address,
-                    Phone = dto.Phone,
-                    Money = dto.Money
-                };
-            }
-            else if (dto.UserType == "Premium")
-            {
-                newUser = new PremiumUser
-                {
-                    Name = dto.Name,
-                    Email = dto.Email,
-                    Address = dto.Address,
-                    Phone = dto.Phone,
-                    Money = dto.Money
-                };
-            }
-
+            IUser newUser = _userFactory.CreateUser(dto);
 
             newUser.Money = newUser.Money + newUser.Gift;
+
             var reader = ReadUsersFromFile();
 
             //Normalize email

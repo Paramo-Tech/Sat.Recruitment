@@ -17,7 +17,7 @@ namespace Sat.Recruitment.Api.Models.DTO
         public string Phone { get; set; }
 
         [JsonPropertyName("userType")]
-        public string UserType { get; set; }
+        public UserTypes UserType { get; set; }
 
         [JsonPropertyName("money")]
         public decimal Money { get; set; }

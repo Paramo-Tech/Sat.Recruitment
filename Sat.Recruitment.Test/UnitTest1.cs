@@ -4,7 +4,10 @@ using System.Dynamic;
 using Microsoft.AspNetCore.Mvc;
 
 using Sat.Recruitment.Api.Controllers;
+using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Models.DTO;
+using Sat.Recruitment.Api.Models.Factory;
+using Sat.Recruitment.Api.Models.Interfaces;
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -15,14 +18,15 @@ namespace Sat.Recruitment.Test
         [Fact]
         public void Test1()
         {
-            var userController = new UsersController();
+            IUserFactory factory = new UserFactory();
+            var userController = new UsersController(factory);
             UserDTO dto = new UserDTO()
             {
                 Name = "Mike",
                 Email= "mike@gmail.com",
                 Address= "Av. Juan G",
                 Phone= "+349 1122354215",
-                UserType="Normal",
+                UserType=UserTypes.NORMAL,
                 Money=124
             };
             var result = userController.CreateUser(dto).Result as OkObjectResult;
@@ -34,14 +38,15 @@ namespace Sat.Recruitment.Test
         [Fact]
         public void Test2()
         {
-            var userController = new UsersController();
+            IUserFactory factory = new UserFactory();
+            var userController = new UsersController(factory);
             UserDTO dto = new UserDTO()
             {
                 Name = "Agustina",
                 Email = "Agustina@gmail.com",
                 Address = "Av. Juan G",
                 Phone = "+349 1122354215",
-                UserType = "Normal",
+                UserType = UserTypes.NORMAL,
                 Money = 124
             };
             var result = userController.CreateUser(dto).Result as ConflictObjectResult;
