@@ -1,4 +1,4 @@
-# Backend.TechChallenge
+# Sat.Recruitment
 
 A developer went on vacation and several issues arose in the project that needed to be resolved.
 
