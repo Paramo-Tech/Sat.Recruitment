@@ -20,10 +20,11 @@ namespace Sat.Recruitment.Api.Models.Validators
             RuleFor(x => x.Phone)
                 .NotNull().NotEmpty().WithMessage("Phone is required");
             RuleFor(x => x.Email)
-                .NotNull().NotEmpty().WithMessage("Email is required")
-                .Custom((email, context) =>
+                .NotNull().NotEmpty().WithMessage("Email is required");
+            RuleFor(x=>x)
+                .Custom((user, context) =>
                 {
-                    email = NormalizeEmail(email);
+                    user.Email = NormalizeEmail(user.Email);
                 }); 
             RuleFor(x=>x.Email)
                 .EmailAddress().WithMessage("Invalid email format");

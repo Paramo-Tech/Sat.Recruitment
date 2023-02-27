@@ -23,7 +23,6 @@ namespace Sat.Recruitment.Api.Controllers
     public partial class UsersController : ControllerBase
     {
 
-        private readonly List<User> _users = new List<User>();
         private readonly IUserService service;
         private readonly IValidator<UserDTO> validator;
 
@@ -43,13 +42,5 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
     }
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
-    }
+
 }
