@@ -1,6 +1,6 @@
 ﻿namespace Sat.Recruitment.Api.Models.Interfaces
 {
-    public interface IUser
+    public interface IUser : IIdentifiable
     {
         string Name { get; set; }
         string Email { get; set; }

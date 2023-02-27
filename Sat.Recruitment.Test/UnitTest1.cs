@@ -19,7 +19,7 @@ namespace Sat.Recruitment.Test
         public void Test1()
         {
             IUserFactory factory = new UserFactory();
-            var userController = new UsersController(factory);
+            var userController = new UsersController(null,null);
             UserDTO dto = new UserDTO()
             {
                 Name = "Mike",
@@ -39,7 +39,7 @@ namespace Sat.Recruitment.Test
         public void Test2()
         {
             IUserFactory factory = new UserFactory();
-            var userController = new UsersController(factory);
+            var userController = new UsersController(null,null);
             UserDTO dto = new UserDTO()
             {
                 Name = "Agustina",
