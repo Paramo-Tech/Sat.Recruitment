@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.30709.64
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api", "Sat.Recruitment.Api\Sat.Recruitment.Api.csproj", "{1F342EA2-E7B1-4E53-AB93-9C62288D3FB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Application", "Sat.Recruitment.Application\Sat.Recruitment.Application.csproj", "{E9F01C6B-20CC-44F9-A973-D3D19E86A18A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Domain", "Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj", "{92FD01D7-8E48-401C-892F-48D47570C199}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Data", "Sat.Recruitment.Data\Sat.Recruitment.Data.csproj", "{14BF1527-3F7A-4EAD-A9CD-3F098D800A21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9F01C6B-20CC-44F9-A973-D3D19E86A18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9F01C6B-20CC-44F9-A973-D3D19E86A18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9F01C6B-20CC-44F9-A973-D3D19E86A18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9F01C6B-20CC-44F9-A973-D3D19E86A18A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92FD01D7-8E48-401C-892F-48D47570C199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92FD01D7-8E48-401C-892F-48D47570C199}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92FD01D7-8E48-401C-892F-48D47570C199}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92FD01D7-8E48-401C-892F-48D47570C199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14BF1527-3F7A-4EAD-A9CD-3F098D800A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14BF1527-3F7A-4EAD-A9CD-3F098D800A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14BF1527-3F7A-4EAD-A9CD-3F098D800A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14BF1527-3F7A-4EAD-A9CD-3F098D800A21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
