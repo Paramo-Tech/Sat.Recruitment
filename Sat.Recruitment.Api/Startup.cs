@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Sat.Recruitment.Bussiness;
+using Sat.Recruitment.DataAccess;
+using Sat.Recruitment.Infrastructure.Interfaces.Bussiness;
+using Sat.Recruitment.Infrastructure.Interfaces.DataAccess;
 
 namespace Sat.Recruitment.Api
 {
@@ -27,6 +24,8 @@ namespace Sat.Recruitment.Api
         {
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddSingleton<IUserDataAccess, UserDataAccess>();
+            services.AddTransient<IUserBussiness, UserBussiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
