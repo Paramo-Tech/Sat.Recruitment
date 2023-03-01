@@ -1,132 +1,69 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
+using Sat.Recruitment.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
-    public class Result
-    {
-        public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
-    }
-
     [ApiController]
     [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    public class UsersController : ControllerBase
     {
 
         private readonly List<User> _users = new List<User>();
+        public UsersExtension usersExtension;
         public UsersController()
         {
+            usersExtension = new UsersExtension();
         }
 
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public async Task<Result> CreateUser(UserRequestData requestData)
         {
-            var errors = "";
-
-            ValidateErrors(name, email, address, phone, ref errors);
-
-            if (errors != null && errors != "")
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                        .SelectMany(x => x.Errors)
+                        .Select(x => x.ErrorMessage)
+                        .FirstOrDefault();
                 return new Result()
                 {
                     IsSuccess = false,
                     Errors = errors
                 };
-
-            var newUser = new User
-            {
-                Name = name,
-                Email = email,
-                Address = address,
-                Phone = phone,
-                UserType = userType,
-                Money = decimal.Parse(money)
-            };
-
-            if (newUser.UserType == "Normal")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.12);
-                    //If new user is normal and has more than USD100
-                    var gif = decimal.Parse(money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-                if (decimal.Parse(money) < 100)
-                {
-                    if (decimal.Parse(money) > 10)
-                    {
-                        var percentage = Convert.ToDecimal(0.8);
-                        var gif = decimal.Parse(money) * percentage;
-                        newUser.Money = newUser.Money + gif;
-                    }
-                }
-            }
-            if (newUser.UserType == "SuperUser")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.20);
-                    var gif = decimal.Parse(money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
-            if (newUser.UserType == "Premium")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var gif = decimal.Parse(money) * 2;
-                    newUser.Money = newUser.Money + gif;
-                }
             }
 
-
-            var reader = ReadUsersFromFile();
-
-            //Normalize email
-            var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-
-            newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
-
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var user = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(user);
-            }
-            reader.Close();
             try
             {
-                var isDuplicated = false;
-                foreach (var user in _users)
+                var newUser = new User
                 {
-                    if (user.Email == newUser.Email
-                        ||
-                        user.Phone == newUser.Phone)
+                    name = requestData.name,
+                    email = usersExtension.normalizeUserEmail(requestData.email.Trim()),
+                    address = requestData.address,
+                    phone = requestData.phone,
+                    userType = requestData.userType,
+                    money = usersExtension.calculateUserMoneyPercentaje(requestData.userType, decimal.Parse(requestData.money))
+                };
+
+                //Fill _users from the data
+                getUserFromFile(ReadUsersFromFile());
+
+                var isDuplicated = false;
+                foreach (User user in _users)
+                {
+                    if (user.email.Trim().ToLower() == newUser.email.Trim().ToLower() || user.phone == newUser.phone)
                     {
                         isDuplicated = true;
                     }
-                    else if (user.Name == newUser.Name)
+                    else if (user.name.Trim().ToLower() == newUser.name.Trim().ToLower())
                     {
-                        if (user.Address == newUser.Address)
+                        if (user.address.Trim().ToLower() == newUser.address.Trim().ToLower())
                         {
                             isDuplicated = true;
                             throw new Exception("User is duplicated");
@@ -156,47 +93,53 @@ namespace Sat.Recruitment.Api.Controllers
                     };
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.WriteLine("The user is duplicated");
+                Debug.WriteLine($"Error when creating User: {ex.Message}");
                 return new Result()
                 {
                     IsSuccess = false,
-                    Errors = "The user is duplicated"
+                    Errors = $"Error when creating User: {ex.Message}"
                 };
             }
 
-            return new Result()
-            {
-                IsSuccess = true,
-                Errors = "User Created"
-            };
         }
-
-        //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
+        private StreamReader ReadUsersFromFile()
         {
-            if (name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            if (address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            if (phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
+            var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
+
+            FileStream fileStream = new FileStream(path, FileMode.Open);
+
+            StreamReader reader = new StreamReader(fileStream);
+            return reader;
         }
-    }
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
+        private void getUserFromFile(StreamReader reader)
+        {
+            try
+            {
+                while (reader.Peek() >= 0)
+                {
+                    string[] line = reader.ReadLineAsync()?.Result?.Split(',');
+                    if (line != null)
+                    {
+                        var user = new User
+                        {
+                            name = line[0].ToString(),
+                            email = line[1].ToString(),
+                            phone = line[2].ToString(),
+                            address = line[3].ToString(),
+                            userType = (UserType)Enum.Parse(typeof(UserType), line[4].ToString()),
+                            money = decimal.Parse(line[5].ToString()),
+                        };
+                        _users.Add(user);
+                    }
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
