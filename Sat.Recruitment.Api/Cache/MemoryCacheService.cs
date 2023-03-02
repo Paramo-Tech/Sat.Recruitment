@@ -26,8 +26,8 @@ namespace Sat.Recruitment.Api.Cache
         }
         public bool TryGet<T>(string cacheKey, out T value)
         {
-            _memoryCache.TryGetValue(cacheKey, out value);
-            if (value == null) return false;
+            
+            if (!_memoryCache.TryGetValue(cacheKey, out value)) return false;
             else return true;
         }
         public T Set<T>(string cacheKey, T value)

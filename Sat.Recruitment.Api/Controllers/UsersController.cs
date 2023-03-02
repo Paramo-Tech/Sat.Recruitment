@@ -35,10 +35,14 @@ namespace Sat.Recruitment.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateUser(UserDTO dto)
         {
+            var result=validator.Validate(dto);
+            if (result.IsValid)
+            {
 
-            service.CreateUser(dto);
-
-            return Ok("User created");
+                service.CreateUser(dto);
+                return Ok("User Created");
+            }
+            else return BadRequest(string.Join(",",result.Errors));
         }
 
     }

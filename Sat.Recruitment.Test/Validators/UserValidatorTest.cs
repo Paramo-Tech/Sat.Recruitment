@@ -11,7 +11,7 @@ using Sat.Recruitment.Api.Models;
 
 namespace Sat.Recruitment.Test.Validators
 {
-    [CollectionDefinition("Tests", DisableParallelization = true)]
+    [CollectionDefinition("ValidatorTests", DisableParallelization = true)]
     public class UserValidatorTest
     {
         private Mock<IUserRepository> userRepositoryMock;

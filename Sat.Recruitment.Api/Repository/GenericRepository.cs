@@ -25,9 +25,12 @@ namespace Sat.Recruitment.Api.Repository
             {
                 throw new Exception($"Unable to find {_cacheKey} collection in memory");
             }
-            var updatedEntity= cachedList.FirstOrDefault(x => x.Id == entity.Id);
-            if (updatedEntity != null)
-            updatedEntity = entity;
+
+            var list = cachedList as List<T>;
+            var index= list.FindIndex(x => x.Id == entity.Id);
+
+            if (index > -1)
+                ((List<T>)cachedList)[index] = entity;
         }
 
 
@@ -57,7 +60,7 @@ namespace Sat.Recruitment.Api.Repository
                 cachedList = new List<T>();
                 _cacheService.Set(_cacheKey, cachedList);
             }
-            return cachedList;
+            return cachedList.Where(func);
         }
 
         public void Add(T entity)
