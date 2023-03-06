@@ -1,27 +1,36 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Sat.Recruitment.Application;
+using Sat.Recruitment.Infrastructure;
+using Sat.Recruitment.Infrastructure.Persistence;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+var builder = WebApplication.CreateBuilder(args);
 
-namespace Sat.Recruitment.Api
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
 {
-    public class Program
+    using (var scope = app.Services.CreateScope())
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+        await initialiser.InitialiseAsync();
+        await initialiser.SeedAsync();
     }
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Paramo test API V1");
+    });
 }
+
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();
+
+public partial class Program { }

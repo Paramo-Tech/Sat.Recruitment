@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.Application\Sat.Recruitment.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Persistence\Migrations\" />
+  </ItemGroup>
+
+</Project>
