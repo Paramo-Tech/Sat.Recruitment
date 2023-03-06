@@ -12,8 +12,7 @@ public class TestHelper
         builder.UseInMemoryDatabase(databaseName: "TestUsersDbInMemory");
 
         var dbContextOptions = builder.Options;
-        applicationDbContext = new ApplicationDbContext(dbContextOptions);
-        // Delete existing db before creating a new one
+        applicationDbContext = new ApplicationDbContext(dbContextOptions);        
         applicationDbContext.Database.EnsureDeleted();
         applicationDbContext.Database.EnsureCreated();
     }

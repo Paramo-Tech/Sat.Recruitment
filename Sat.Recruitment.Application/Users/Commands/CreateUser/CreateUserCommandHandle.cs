@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Sat.Recruitment.Application.Base.Interfaces;
 using Sat.Recruitment.Domain.Entities;
-using Sat.Recruitment.Domain.Enums;
 using Sat.Recruitment.Domain.Rules.CalculateGif;
 
 namespace Sat.Recruitment.Application.Users.Commands.CreateUser;
