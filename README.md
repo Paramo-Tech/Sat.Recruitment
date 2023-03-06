@@ -1,48 +1,38 @@
-# Sat.Recruitment
+# Paramo Challenge
+This is a solution for Paramo Challenge using ASP.NET Core following the principles of Clean Architecture.
 
-A developer went on vacation and several issues arose in the project that needed to be resolved.
+## Technologies
+- ASP.NET Core 7
+- Entity Framework Core 7
+- MediatR
+- AutoMapper
+- FluentValidation
+- NUnit, FluentAssertions, Moq & Respawn
 
-The webAPI works, but it has many flaws in architecture, code quality, testing and etc.
+## Getting Started
 
-We need you to refactor the code of this project.
+### Database configuration
 
-Remember to treat it as a refactoring of a final code, which will go to production and has to be as good as possible.
+For demonstration purposes, the solution is configured to use an in-memory database by default. However, if you would like to utilize SQL Server, you need to update the "appsettings.json" file in the "Sat.Recruitment.Api" directory:
 
-## What we expect to find in the Challenge
+`"UseInMemoryDatabase": false,`
+Verify that the `DefaultConnection` connection string within appsettings.json points to a valid SQL Server instance.
 
-In the result of the refactoring we would like to find:
+When you run the application the database will be automatically created (if necessary) and the latest migrations will be applied.
 
-- Object-oriented programming.
+### Arquitecture Overview
 
-- An architectural model. The one that you consider most applicable or that you have more experience.
+Sat.Recruitment.Domain
+The domain layer will contain entities, enums, exceptions, interfaces, types, and logic that are specific to the domain layer.
 
-- The Clean Code concepts that you consider important.
+Sat.Recruitment.Application
+The application logic layer contains the core functionality of the system, relies on the domain layer, and is independent of other layers and projects. This layer defines interfaces that external layers can implement, enabling flexible and modular design.
 
-- The best unit tests you can do and with the code coverage you consider important.
+Sat.Recruitment.Application.Integration.Test
+The Application Integration Test layer includes tests that validate the functionality of the Application layer.
 
-- A polymorphic system or some design pattern. The one that fits the most or that you like the most.
+Sat.Recruitment.Infrastructure
+This layer contains classes for accessing external resources such as databases, services, and so on. These classes should be based on interfaces defined within the application layer.
 
-- Transversal/crosscutting concepts that you consider important to a webAPI in production such as logging, validation, exception handling...
-
-- REST concepts, SOLID principles and good practices applied.
-
-- And you want to take more time in the challenge you can change the type of persistence (currently TXT file), but consider that your new implementation should be working.
-
-Do the best you can.
-
-
-## How much time do you have for the challenge
-
-It is a small WebAPI and normally a good refactoring can be done in about 2 hours.
-
-But we know that each one has its speed and in general we prefer to prioritize the quality of delivery, so there is no time limit.
-
-
-## As you must deliver the challenge once finished
-
-For you to do the challenge you must create a branch or a fork from this one (main).
-
-And once you have finished the refactoring you can send us:
-
-* The link of your branch on Github
-* The link of a PR from your branch to the original repo
+Sat.Recruitment.Api
+This layer is a ASP.NET Core 7 web API. This layer depends on both the Application and Infrastructure layers.
