@@ -8,7 +8,7 @@ namespace Sat.Recruitment.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
         private readonly IMediator _mediator;
