@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Sat.Recruitment.Global.WebContracts;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Sat.Recruitment.Global.WebContracts;
+using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Global.Interfaces
 {
     public interface IUsersService
     {
-        List<User> UpdateUserList(User newUser);
+        Task<List<User>> GetUserList();
+
+        User ProcessUser(User newUser);
     }
 }

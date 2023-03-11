@@ -1,6 +1,6 @@
+using Sat.Recruitment.Global.WebContracts;
 using System;
 using System.IO;
-using Sat.Recruitment.Global.WebContracts;
 
 namespace Sat.Recruitment.Services
 {
@@ -11,21 +11,20 @@ namespace Sat.Recruitment.Services
             //Normalize email
             var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-            if (atIndex == -1)
+            if (aux.Length < 2)
             {
                 throw new AggregateException("Not valid Email");
             }
 
+            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
 
             aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-            return string.Join("@", aux[0], aux[1]);;
+            return string.Join("@", aux[0], aux[1]); ;
         }
 
         internal static StreamReader ReadUsersFromFile()
         {
-            var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
+            var path = $"{AppDomain.CurrentDomain.BaseDirectory}Files\\Users.txt";
 
             var fileStream = new FileStream(path, FileMode.Open);
 

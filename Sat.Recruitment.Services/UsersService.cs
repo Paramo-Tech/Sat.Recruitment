@@ -1,11 +1,9 @@
 ﻿using Sat.Recruitment.Global.Interfaces;
+using Sat.Recruitment.Global.WebContracts;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using Sat.Recruitment.Global.WebContracts;
+using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Services
 {
@@ -13,19 +11,15 @@ namespace Sat.Recruitment.Services
     {
         private readonly List<User> _users = new List<User>();
 
-        public List<User> UpdateUserList(User newUser)
+        public async Task<List<User>> GetUserList()
         {
             try
             {
-                newUser.Money = CalculateAdditional(newUser);
-
-                newUser.Email = Helper.NormalizeEmail(newUser);
-
                 var reader = Helper.ReadUsersFromFile();
 
                 while (reader.Peek() >= 0)
                 {
-                    var line = reader.ReadLineAsync().Result;
+                    var line = await reader.ReadLineAsync();
                     var user = new User(line.Split(',')[0].ToString(), line.Split(',')[1].ToString(),
                         line.Split(',')[2].ToString(), line.Split(',')[3].ToString(), line.Split(',')[4].ToString(),
                         line.Split(',')[5].ToString());
@@ -35,6 +29,23 @@ namespace Sat.Recruitment.Services
                 reader.Close();
 
                 return _users;
+            }
+            catch (AggregateException e)
+            {
+                Debug.WriteLine(e.Message);
+                throw e;
+            }
+        }
+
+        public User ProcessUser(User newUser)
+        {
+            try
+            {
+                newUser.Money = CalculateAdditional(newUser);
+
+                newUser.Email = Helper.NormalizeEmail(newUser);
+
+                return newUser;
             }
             catch (AggregateException e)
             {
