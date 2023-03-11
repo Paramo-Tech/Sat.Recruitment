@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Sat.Recruitment.Services;
+using Sat.Recruitment.Services.Interfaces;
 
 namespace Sat.Recruitment.Api.Controllers
 {
@@ -19,14 +19,17 @@ namespace Sat.Recruitment.Api.Controllers
     public partial class UsersController : ControllerBase
     {
 
+        private readonly IUsersService _usersService;
+
         private readonly List<User> _users = new List<User>();
-        public UsersController()
+        public UsersController(IUsersService usersService)
         {
+            _usersService = usersService;
         }
 
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public Result CreateUser(string name, string email, string address, string phone, string userType, string money)
         {
             var errors = "";
 
@@ -87,7 +90,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
 
 
-            var reader = ReadUsersFromFile();
+            var reader = _usersService.ReadUsersFromFile();
 
             //Normalize email
             var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
@@ -165,12 +168,6 @@ namespace Sat.Recruitment.Api.Controllers
                     Errors = "The user is duplicated"
                 };
             }
-
-            return new Result()
-            {
-                IsSuccess = true,
-                Errors = "User Created"
-            };
         }
 
         //Validate errors
