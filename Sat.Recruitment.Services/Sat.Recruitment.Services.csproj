@@ -10,4 +10,7 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.Global\Sat.Recruitment.Global.csproj" />
+  </ItemGroup>
 </Project>

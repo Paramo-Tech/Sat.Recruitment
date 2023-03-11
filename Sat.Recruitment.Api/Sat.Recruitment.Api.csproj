@@ -11,6 +11,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Services\Sat.Recruitment.Services.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Global\Sat.Recruitment.Global.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
 

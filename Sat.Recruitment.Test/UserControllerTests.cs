@@ -1,11 +1,7 @@
-using System;
-using System.Dynamic;
-
-using Microsoft.AspNetCore.Mvc;
-
 using Sat.Recruitment.Api.Controllers;
+using Sat.Recruitment.Global.Interfaces;
+using Sat.Recruitment.Global.WebContracts;
 using Sat.Recruitment.Services;
-using Sat.Recruitment.Services.Interfaces;
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -25,22 +21,37 @@ namespace Sat.Recruitment.Test
         {
             var userController = new UsersController(_usersService);
 
-            var result = userController.CreateUser("Mike", "mike@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124");
+            var newUser = new User("Mike", "mike@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124");
 
+            var result = userController.CreateUser(newUser);
 
-            Assert.Equal(true, result.IsSuccess);
+            Assert.True(result.IsSuccess);
             Assert.Equal("User Created", result.Errors);
         }
 
         [Fact]
-        public void CreateUser_Duplicated_Unsucceed()
+        public void CreateUser_InvalidEmail_Error()
         {
             var userController = new UsersController(_usersService);
 
-            var result = userController.CreateUser("Agustina", "Agustina@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124");
+            var newUser = new User("Mike", "wrongemail", "Av. Juan G", "+349 1122354215", "Normal", "124");
 
+            var result = userController.CreateUser(newUser);
 
-            Assert.Equal(false, result.IsSuccess);
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Not valid Email", result.Errors);
+        }
+
+        [Fact]
+        public void CreateUser_Duplicated_Error()
+        {
+            var userController = new UsersController(_usersService);
+
+            var newUser = new User("Agustina", "Agustina@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124");
+
+            var result = userController.CreateUser(newUser);
+
+            Assert.False(result.IsSuccess);
             Assert.Equal("The user is duplicated", result.Errors);
         }
     }

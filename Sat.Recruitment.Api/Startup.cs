@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Sat.Recruitment.Services;
-using Sat.Recruitment.Services.Interfaces;
+using Sat.Recruitment.Global.Interfaces;
 
 namespace Sat.Recruitment.Api
 {

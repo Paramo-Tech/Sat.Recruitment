@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Test", "Sat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Services", "Sat.Recruitment.Services\Sat.Recruitment.Services.csproj", "{E06DC240-0B24-4F8C-9472-1205C6DA5273}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Global", "Sat.Recruitment.Global\Sat.Recruitment.Global.csproj", "{35476B9A-692C-47F1-9EFE-DCC146AB94F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E06DC240-0B24-4F8C-9472-1205C6DA5273}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E06DC240-0B24-4F8C-9472-1205C6DA5273}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E06DC240-0B24-4F8C-9472-1205C6DA5273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35476B9A-692C-47F1-9EFE-DCC146AB94F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35476B9A-692C-47F1-9EFE-DCC146AB94F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35476B9A-692C-47F1-9EFE-DCC146AB94F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35476B9A-692C-47F1-9EFE-DCC146AB94F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
