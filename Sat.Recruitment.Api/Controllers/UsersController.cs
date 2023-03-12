@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sat.Recruitment.Global.Interfaces;
+using Sat.Recruitment.Global.WebContracts;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Sat.Recruitment.Services;
-using Sat.Recruitment.Global.Interfaces;
-using Sat.Recruitment.Global.WebContracts;
-using System.Data;
 
 namespace Sat.Recruitment.Api.Controllers
 {

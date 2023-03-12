@@ -1,34 +1,58 @@
-﻿using Sat.Recruitment.Global.Interfaces;
+﻿using Newtonsoft.Json;
+using Sat.Recruitment.Global.Interfaces;
 using Sat.Recruitment.Global.WebContracts;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Services
 {
     public class UsersService : IUsersService
     {
-        private readonly List<User> _users = new List<User>();
+        private readonly IConnectionMultiplexer _redis;
+
+        public UsersService(IConnectionMultiplexer redis)
+        {
+            _redis = redis;
+        }
 
         public async Task<List<User>> GetUserList()
         {
             try
             {
-                var reader = Helper.ReadUsersFromFile();
+                var db = _redis.GetDatabase();
 
-                while (reader.Peek() >= 0)
+                // Implemented Cache to avoid reading the file every time
+                HashEntry[] usersHash = await db.HashGetAllAsync("users");
+
+                if (usersHash.Length == 0)
                 {
-                    var line = await reader.ReadLineAsync();
-                    var user = new User(line.Split(',')[0].ToString(), line.Split(',')[1].ToString(),
-                        line.Split(',')[2].ToString(), line.Split(',')[3].ToString(), line.Split(',')[4].ToString(),
-                        line.Split(',')[5].ToString());
-                    _users.Add(user);
+                    var users = new List<User>();
+
+                    var reader = Helper.ReadUsersFromFile();
+
+                    while (reader.Peek() >= 0)
+                    {
+                        var line = await reader.ReadLineAsync();
+                        var user = new User(line.Split(',')[0].ToString(), line.Split(',')[1].ToString(),
+                            line.Split(',')[2].ToString(), line.Split(',')[3].ToString(), line.Split(',')[4].ToString(),
+                            line.Split(',')[5].ToString());
+                        users.Add(user);
+                    }
+
+                    reader.Close();
+
+                    await db.HashSetAsync("users", users.Select(user => new HashEntry(user.Name, JsonConvert.SerializeObject(user))).ToArray());
+
+                    return users;
                 }
 
-                reader.Close();
+                usersHash = await db.HashGetAllAsync("users");
 
-                return _users;
+                return usersHash.Select(user => JsonConvert.DeserializeObject<User>(user.Value.ToString())).ToList();
             }
             catch (AggregateException e)
             {

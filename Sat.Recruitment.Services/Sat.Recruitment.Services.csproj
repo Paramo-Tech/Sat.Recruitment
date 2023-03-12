@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.96" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Global\Sat.Recruitment.Global.csproj" />
   </ItemGroup>
 </Project>

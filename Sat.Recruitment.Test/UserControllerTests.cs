@@ -2,6 +2,7 @@ using Sat.Recruitment.Api.Controllers;
 using Sat.Recruitment.Global.Interfaces;
 using Sat.Recruitment.Global.WebContracts;
 using Sat.Recruitment.Services;
+using StackExchange.Redis;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,10 +13,12 @@ namespace Sat.Recruitment.Test
     public class UserControllerTests
     {
         private readonly IUsersService _usersService;
+        private readonly IConnectionMultiplexer _redis;
 
         public UserControllerTests()
         {
-            _usersService = new UsersService();
+            _redis = ConnectionMultiplexer.Connect("localhost");
+            _usersService = new UsersService(_redis);
         }
 
         [Fact]

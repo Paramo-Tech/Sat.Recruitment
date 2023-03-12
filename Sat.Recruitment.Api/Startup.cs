@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Sat.Recruitment.Services;
 using Sat.Recruitment.Global.Interfaces;
+using StackExchange.Redis;
 
 namespace Sat.Recruitment.Api
 {
@@ -22,6 +23,9 @@ namespace Sat.Recruitment.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var multiplexer = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis"));
+            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
             services.AddSingleton<IUsersService, UsersService>();
 
