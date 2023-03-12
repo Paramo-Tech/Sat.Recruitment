@@ -19,16 +19,16 @@ namespace Sat.Recruitment.Services
             _redis = redis;
         }
 
-        public async Task<List<User>> GetUserList()
+        public async Task<List<User>> GetUsers()
         {
             try
             {
                 var db = _redis.GetDatabase();
 
                 // Implemented Cache to avoid reading the file every time
-                HashEntry[] usersHash = await db.HashGetAllAsync("users");
+                HashEntry[] hashUsers = await db.HashGetAllAsync("users");
 
-                if (usersHash.Length == 0)
+                if (hashUsers.Length == 0)
                 {
                     var users = new List<User>();
 
@@ -50,9 +50,9 @@ namespace Sat.Recruitment.Services
                     return users;
                 }
 
-                usersHash = await db.HashGetAllAsync("users");
+                hashUsers = await db.HashGetAllAsync("users");
 
-                return usersHash.Select(user => JsonConvert.DeserializeObject<User>(user.Value.ToString())).ToList();
+                return hashUsers.Select(user => JsonConvert.DeserializeObject<User>(user.Value.ToString())).ToList();
             }
             catch (AggregateException e)
             {

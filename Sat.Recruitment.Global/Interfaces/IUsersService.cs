@@ -6,8 +6,17 @@ namespace Sat.Recruitment.Global.Interfaces
 {
     public interface IUsersService
     {
-        Task<List<User>> GetUserList();
+        /// <summary>
+        /// Retrieve users from file or cache if exists
+        /// </summary>
+        /// <returns></returns>
+        Task<List<User>> GetUsers();
 
+        /// <summary>
+        /// Process user email and money based on his type an salary
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
         User ProcessUser(User newUser);
     }
 }

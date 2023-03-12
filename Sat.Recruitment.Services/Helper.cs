@@ -6,6 +6,12 @@ namespace Sat.Recruitment.Services
 {
     public abstract class Helper
     {
+        /// <summary>
+        /// Validate email and remove special character.
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
+        /// <exception cref="AggregateException"></exception>
         internal static string NormalizeEmail(User newUser)
         {
             //Normalize email
@@ -22,6 +28,10 @@ namespace Sat.Recruitment.Services
             return string.Join("@", aux[0], aux[1]); ;
         }
 
+        /// <summary>
+        /// Retrieve users from file.
+        /// </summary>
+        /// <returns></returns>
         internal static StreamReader ReadUsersFromFile()
         {
             var path = $"{AppDomain.CurrentDomain.BaseDirectory}Files\\Users.txt";
