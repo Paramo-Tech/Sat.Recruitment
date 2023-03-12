@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Api\Sat.Recruitment.Api.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Global\Sat.Recruitment.Global.csproj" />
   </ItemGroup>
 
 </Project>
