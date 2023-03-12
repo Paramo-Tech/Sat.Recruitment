@@ -5,6 +5,8 @@ namespace Sat.Recruitment.Global.WebContracts
 {
     public class User
     {
+        public User() { }
+
         public User(string name, string email, string address, string phone, string userType, string money)
         {
             Name = name;
