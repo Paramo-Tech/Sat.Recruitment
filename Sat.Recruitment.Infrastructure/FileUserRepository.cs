@@ -15,7 +15,13 @@ namespace Sat.Recruitment.Infrastructure
 
         public async Task Save(User user)
         {
-            //throw new NotImplementedException();
+            string filePath = Directory.GetCurrentDirectory() + "/Files/Users.txt";
+            var line = $"{user.Name},{user.Email},{user.Phone},{user.Address},{user.Type.Value},{user.Money.Value}";
+            string newContent = "\r\n" + line;
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+                await writer.WriteAsync(newContent);
+            }
         }
 
         public async Task<User?> SearchBy(Func<User, bool> predicate)
