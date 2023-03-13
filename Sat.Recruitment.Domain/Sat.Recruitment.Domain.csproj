@@ -10,10 +10,12 @@
     <None Remove="ValueObjects\" />
     <None Remove="Aggregates\" />
     <None Remove="Events\" />
+    <None Remove="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ValueObjects\" />
     <Folder Include="Aggregates\" />
     <Folder Include="Events\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>
