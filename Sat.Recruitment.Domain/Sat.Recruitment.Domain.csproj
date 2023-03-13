@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="ValueObjects\" />
+    <None Remove="Aggregates\" />
+    <None Remove="Events\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ValueObjects\" />
+    <Folder Include="Aggregates\" />
+    <Folder Include="Events\" />
+  </ItemGroup>
 </Project>
