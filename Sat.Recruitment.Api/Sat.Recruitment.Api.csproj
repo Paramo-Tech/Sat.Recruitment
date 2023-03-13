@@ -13,10 +13,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Extensions\" />
+    <None Remove="Files\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Files\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="Files\Users.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
