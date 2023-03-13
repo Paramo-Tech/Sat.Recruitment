@@ -24,6 +24,7 @@ namespace Sat.Recruitment.Api.Extensions
 
             //services.AddMySql(configuration);
             services.AddScoped<IUserRepository, FileUserRepository>();
+            //services.AddScoped<UserCreator>()
 
             return services;
         }
