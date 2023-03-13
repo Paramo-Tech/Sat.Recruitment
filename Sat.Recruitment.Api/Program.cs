@@ -1,4 +1,6 @@
-﻿using Sat.Recruitment.Api.Extensions;
+﻿using Microsoft.AspNetCore.Mvc;
+using Sat.Recruitment.Api.Extensions;
+using Sat.Recruitment.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +24,15 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+app.MapPost("/users", async ([FromServices] UserCreator creator, [FromBody] UserRequest request) =>
+{
+    var user = await creator.Execute(request);
+    return Results.Created("/users", user);
+});
+
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

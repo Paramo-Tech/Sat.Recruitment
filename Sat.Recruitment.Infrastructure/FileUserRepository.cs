@@ -7,15 +7,15 @@ using Sat.Recruitment.Domain.ValueObjects;
 
 namespace Sat.Recruitment.Infrastructure
 {
-	public class FileUserRepository: IUserRepository
-	{
-		public FileUserRepository()
-		{
-		}
-
-        public Task Save(User user)
+    public class FileUserRepository : IUserRepository
+    {
+        public FileUserRepository()
         {
-            throw new NotImplementedException();
+        }
+
+        public async Task Save(User user)
+        {
+            //throw new NotImplementedException();
         }
 
         public async Task<User?> SearchBy(Func<User, bool> predicate)

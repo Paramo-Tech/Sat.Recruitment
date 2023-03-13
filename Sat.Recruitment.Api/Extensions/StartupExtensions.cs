@@ -1,4 +1,5 @@
 ﻿using System;
+using Sat.Recruitment.Application;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Infrastructure;
 
@@ -24,7 +25,7 @@ namespace Sat.Recruitment.Api.Extensions
 
             //services.AddMySql(configuration);
             services.AddScoped<IUserRepository, FileUserRepository>();
-            //services.AddScoped<UserCreator>()
+            services.AddScoped<UserCreator>();
 
             return services;
         }
