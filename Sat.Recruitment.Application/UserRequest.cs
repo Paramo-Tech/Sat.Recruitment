@@ -9,7 +9,6 @@ namespace Sat.Recruitment.Application
         public string Phone { get; set; }
         public string UserType { get; set; }
         public string Money { get; set; }
-
     }
 }
 

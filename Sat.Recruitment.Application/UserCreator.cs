@@ -7,15 +7,15 @@ using Sat.Recruitment.Domain.ValueObjects;
 
 namespace Sat.Recruitment.Application
 {
-	public class UserCreator
-	{
+    public class UserCreator
+    {
         private readonly IUserRepository repository;
-		public UserCreator(IUserRepository repository)
-		{
+        public UserCreator(IUserRepository repository)
+        {
             this.repository = repository;
-		}
+        }
 
-        public async Task<UserResponse> Execute (UserRequest request)
+        public async Task<UserResponse> Execute(UserRequest request)
         {
             var existingUser = await repository.SearchBy(u => (u.Email.Value == request.Email || u.Phone.Value == request.Phone) || (u.Name.Value == request.Name && u.Address.Value == request.Address));
             if (existingUser != null)
@@ -25,7 +25,7 @@ namespace Sat.Recruitment.Application
             }
             var user = User.Create(new UserName(request.Name), new Email(request.Email), new Address(request.Address), new Phone(request.Phone), new UserType(request.UserType), new Money(request.Money));
             await this.repository.Save(user);
-            return new UserResponse();
+            return new UserResponse() { Address = user.Address.Value, Email = user.Email.Value, Money = user.Money.Value, Name = user.Name.Value, Phone = user.Phone.Value, UserType = user.Type.Value };
         }
     }
 }
