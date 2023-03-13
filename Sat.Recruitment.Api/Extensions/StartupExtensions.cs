@@ -1,7 +1,9 @@
 ﻿using System;
+using MongoDB.Driver;
 using Sat.Recruitment.Application;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Infrastructure;
+using Sat.Recruitment.Infrastructure.MongoDb;
 
 namespace Sat.Recruitment.Api.Extensions
 {
@@ -23,8 +25,14 @@ namespace Sat.Recruitment.Api.Extensions
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            //services.AddMySql(configuration);
-            services.AddScoped<IUserRepository, FileUserRepository>();
+            services.AddSingleton<IMongoDatabase>(options =>
+            {
+                var settings = configuration.GetSection("MongoDBSettings").Get<MongoDBSettings>();
+                var client = new MongoClient(settings?.ConnectionString);
+                return client.GetDatabase(settings?.DatabaseName);
+            });
+            //services.AddScoped<IUserRepository, FileUserRepository>();
+            services.AddScoped<IUserRepository, MongoDbUserRepository>();
             services.AddScoped<UserCreator>();
 
             return services;

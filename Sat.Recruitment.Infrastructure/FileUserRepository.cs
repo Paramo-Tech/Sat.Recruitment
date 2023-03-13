@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Numerics;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Aggregates;
@@ -47,6 +48,18 @@ namespace Sat.Recruitment.Infrastructure
             reader.Close();
             return user;
         }
+
+        public Task<User?> SearchBy(Email email, Phone phone)
+        {
+            return SearchBy(u => u.Email == email || u.Phone == phone);
+        }
+
+        public Task<User?> SearchBy(UserName name, Address address)
+        {
+            return SearchBy(u => u.Name == name && u.Address == address);
+        }
+
+
 
         //public async Task<User?> SearchBy(Email email, Phone phone)
         //{

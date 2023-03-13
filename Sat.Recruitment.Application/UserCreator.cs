@@ -17,7 +17,14 @@ namespace Sat.Recruitment.Application
 
         public async Task<UserResponse> Execute(UserRequest request)
         {
-            var existingUser = await repository.SearchBy(u => (u.Email.Value == request.Email || u.Phone.Value == request.Phone) || (u.Name.Value == request.Name && u.Address.Value == request.Address));
+            //var existingUser = await repository.SearchBy(u => (u.Email.Value == request.Email || u.Phone.Value == request.Phone) || (u.Name.Value == request.Name && u.Address.Value == request.Address));
+            var existingUser = await repository.SearchBy(new Email(request.Email), new Phone(request.Phone));
+            if (existingUser != null)
+            {
+                Debug.WriteLine("The user is duplicated");
+                throw new DuplicateUserException(existingUser.Name, existingUser.Email);
+            }
+            existingUser = await repository.SearchBy(new UserName(request.Name), new Address(request.Address));
             if (existingUser != null)
             {
                 Debug.WriteLine("The user is duplicated");

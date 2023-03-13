@@ -42,7 +42,8 @@ public class UnitTest1
     {
         var request = new UserRequest() { Address = "4th Avenue 5567", Email = "jorge@lasalle.org", Money = "333", Name = "Jorge Paz", Phone = "+59182345678", UserType = "Normal" };
         var expectedUser = new User(new UserName(request.Name), new Email(request.Email), new Address(request.Address), new Phone(request.Phone), new UserType(request.UserType), new Money(request.Money));
-        this.Repository.Setup(r => r.SearchBy(It.IsAny<Func<User, bool>>())).ReturnsAsync(expectedUser); // The user already exists
+        //this.Repository.Setup(r => r.SearchBy(It.IsAny<Func<User, bool>>())).ReturnsAsync(expectedUser); // The user already exists
+        this.Repository.Setup(r => r.SearchBy(It.IsAny<UserName>(), It.IsAny<Address>())).ReturnsAsync(expectedUser); // The user already exists
 
         var ex = await Assert.ThrowsAsync<DuplicateUserException>(async () => await creator.Execute(request));
 

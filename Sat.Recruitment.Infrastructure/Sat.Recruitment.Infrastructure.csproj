@@ -9,4 +9,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="MongoDb\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MongoDb\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+  </ItemGroup>
 </Project>
