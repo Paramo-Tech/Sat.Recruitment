@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using Sat.Recruitment.Api.Filters;
 using Sat.Recruitment.Application;
+using Sat.Recruitment.Domain.Exceptions;
 
 namespace Sat.Recruitment.Api.Controllers;
 
@@ -13,6 +16,9 @@ public class UsersController : ControllerBase
         this.creator = creator;
     }
 
+    [TypeFilter(typeof(DomainExceptionFilter))]
+    [DomainExceptionMapper(ExceptionTypeName = nameof(DuplicateUserException), HttpStatusCode = HttpStatusCode.Conflict)]
+    [DomainExceptionMapper(ExceptionTypeName = nameof(ArgumentException), HttpStatusCode = HttpStatusCode.BadRequest)]
     [HttpPost]
     [Route("/users")]
     //public async Task<ActionResult<UserResponse>> CreateUser(string name, string email, string address, string phone, string userType, string money)

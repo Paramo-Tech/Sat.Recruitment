@@ -13,18 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Extensions\" />
-    <None Remove="Files\" />
-    <None Remove="Filters\" />
-    <None Remove="Controllers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Files\" />
-    <Folder Include="Filters\" />
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="Files\Users.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -15,7 +15,7 @@ namespace Sat.Recruitment.Domain.Exceptions
         }
         public override string Message => $"The user with name={this.name.Value} and email={this.email.Value} already exists";
 
-        public override string ErrorCode => "mfeconfig_already_exists";
+        public override string ErrorCode => "user_already_exists";
 
     }
 }
