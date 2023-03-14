@@ -1,0 +1,16 @@
+﻿CREATE TABLE [dbo].[User]
+(
+	[Id] INT NOT NULL IDENTITY (1,1), 
+    [Name] NCHAR(20) NOT NULL, 
+    [Email] VARCHAR(50) NOT NULL, 
+    [Password] VARCHAR(50) NOT NULL, 
+    [Phone] NCHAR(20) NOT NULL, 
+    [Address] VARCHAR(75) CONSTRAINT [DF_User__EmailAddress]  DEFAULT ('') NOT NULL,
+    [UserType] NCHAR(10) NOT NULL, 
+    [Money] MONEY NOT NULL,
+    CONSTRAINT [PK_Id] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [CK_Name_Unique] UNIQUE NONCLUSTERED ([Name] ASC),
+    CONSTRAINT [CK_Email_Unique] UNIQUE NONCLUSTERED ([Email] ASC),
+    CONSTRAINT [CK_Phone_Unique] UNIQUE NONCLUSTERED ([Phone] ASC),
+    CONSTRAINT [CK_Address_Unique] UNIQUE NONCLUSTERED ([Address] ASC)
+)

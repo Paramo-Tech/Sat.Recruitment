@@ -1,0 +1,9 @@
+{
+  "name": "Mir",
+  "email": "miresquinazi@gmail.com",
+  "address": "string",
+  "phone": "3875204653",
+  "userType": "SuperUser",
+  "money": "1",
+  "password": "string"
+}
