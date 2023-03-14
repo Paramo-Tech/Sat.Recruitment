@@ -5,15 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Sat.Recruitment.Api.utilities;
+using System.Linq;
 
 namespace Sat.Recruitment.Api.Controllers
 {
-    public class Result
-    {
-        public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
-    }
-
     [ApiController]
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
@@ -28,16 +24,20 @@ namespace Sat.Recruitment.Api.Controllers
         [Route("/create-user")]
         public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
         {
-            var errors = "";
+            var errors = new List<string>();
 
-            ValidateErrors(name, email, address, phone, ref errors);
+            Utils.ValidateErrors(name, email, address, phone, ref errors);
 
-            if (errors != null && errors != "")
+            if (!errors.Any())
                 return new Result()
                 {
                     IsSuccess = false,
                     Errors = errors
                 };
+
+            AUserFactory factory = new UserFactory();
+            IUserCreator creator = factory.GetUserCreator(userType);
+            creator.CreateUser(name, email, address, phone, userType, money);
 
             var newUser = new User
             {
@@ -189,14 +189,5 @@ namespace Sat.Recruitment.Api.Controllers
                 //Validate if Phone is null
                 errors = errors + " The phone is required";
         }
-    }
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
     }
 }
