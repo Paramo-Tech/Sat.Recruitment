@@ -11,18 +11,38 @@ using Sat.Recruitment.Api.services;
 
 namespace Sat.Recruitment.Api.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [ApiController]
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
     {
-
-        private readonly List<User> _users = new List<User>();
+        
+        /// <summary>
+        /// The logger
+        /// </summary>
         private readonly ILogger<UserService> _logger;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
         public UsersController(ILogger<UserService> logger)
         {
             _logger = logger;
         }
 
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="address">The address.</param>
+        /// <param name="phone">The phone.</param>
+        /// <param name="userType">Type of the user.</param>
+        /// <param name="money">The money.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("/create-user")]
         public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
