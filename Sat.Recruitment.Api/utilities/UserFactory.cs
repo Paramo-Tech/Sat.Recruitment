@@ -76,7 +76,7 @@ namespace Sat.Recruitment.Api.utilities
                 case "Premium":
                     return new PremiumUserCreator();
                 default:
-                    throw new ArgumentException($"Invalid user type: {userType}");
+                    throw new ArgumentException($"Invalid user type.");
             }
         }
 
@@ -242,6 +242,7 @@ namespace Sat.Recruitment.Api.utilities
         /// <returns></returns>
         private static User CreateUserObject(string name, string email, string address, string phone, string userType, decimal money)
         {
+
             return new User
             {
                 Name = name,

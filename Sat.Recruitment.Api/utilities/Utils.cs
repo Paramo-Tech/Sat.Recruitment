@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System;
 using System.Net.Mail;
+using System.Globalization;
+using static Sat.Recruitment.Api.Controllers.UserTypeEnum;
 
 namespace Sat.Recruitment.Api.utilities
 {
@@ -57,7 +59,7 @@ namespace Sat.Recruitment.Api.utilities
                 Money = decimal.Parse(fields[5])
             };
         }
-        public static void ValidateErrors(string name, string email, string address, string phone, ref List<string> errors)
+        public static void ValidateErrors(string name, string email, string address, string phone,string money ,ref List<string> errors)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -87,11 +89,17 @@ namespace Sat.Recruitment.Api.utilities
                 errors.Add("Phone is required.");
                 Console.WriteLine($"Error: Phone is required.");
             }
+            if (!IsValidMoneyFormat(money))
+            {
+                errors.Add("Invalid money format.");
+                Console.WriteLine($"Error: Invalid money format.");
+            }
             else if (!IsValidPhone(phone))
             {
                 errors.Add("Invalid phone format.");
                 Console.WriteLine($"Error: Invalid phone format.");
             }
+       
         }
         public static bool IsValidEmail(string email)
         {
@@ -104,6 +112,11 @@ namespace Sat.Recruitment.Api.utilities
             {
                 return false;
             }
+        }
+        public static bool IsValidMoneyFormat(string money)
+        {
+            decimal result;
+            return decimal.TryParse(money, NumberStyles.Currency, CultureInfo.CurrentCulture, out result);
         }
 
         public static bool IsValidPhone(string phone)

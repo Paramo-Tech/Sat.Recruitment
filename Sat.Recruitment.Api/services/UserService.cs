@@ -61,7 +61,7 @@ namespace Sat.Recruitment.Api.services
         public Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
         {
             var errors = new List<string>();
-            Utils.ValidateErrors(name, email, address, phone, ref errors);
+            Utils.ValidateErrors(name, email, address, phone,money, ref errors);
 
             if (errors.Any())
             {

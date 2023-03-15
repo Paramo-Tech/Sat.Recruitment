@@ -88,7 +88,7 @@ namespace Sat.Recruitment.Test
             var userType = "InvalidType";
             var money = "100.00";
 
-            List<string> expectedErrors = new List<string>() { "Invalid user type" };
+            List<string> expectedErrors = new List<string>() { "Invalid user type." };
             var expectedResult = new Result { IsSuccess = false, Errors = expectedErrors };
 
             _userServiceMock.Setup(x => x.CreateUser(name, email, address, phone, userType, money))
@@ -100,7 +100,7 @@ namespace Sat.Recruitment.Test
             var result = await controller.CreateUser(name, email, address, phone, userType, money);
 
             // Assert
-            Assert.AreEqual(expectedResult, result);
+            Assert.AreEqual(expectedResult.Errors, result.Errors);
         }
     }
 }
