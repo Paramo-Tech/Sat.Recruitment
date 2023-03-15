@@ -210,12 +210,7 @@ namespace Sat.Recruitment.Api.utilities
                 IsSuccess = true
             };
 
-            // If validation fails, return failure result with error message
-            //return new Result
-            //{
-            //    Success = false,
-            //    Message = "Validation failed"
-            //};
+            
         }
         /// <summary>
         /// Saves the user to file.
