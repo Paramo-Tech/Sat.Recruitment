@@ -207,7 +207,8 @@ namespace Sat.Recruitment.Api.utilities
             _logger.LogInformation("User Created");
             return new Result
             {
-                IsSuccess = true
+                IsSuccess = true,
+                User = user
             };
 
             

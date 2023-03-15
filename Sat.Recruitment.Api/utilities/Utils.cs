@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System;
 using System.Net.Mail;
 using System.Globalization;
-using static Sat.Recruitment.Api.Controllers.UserTypeEnum;
 
 namespace Sat.Recruitment.Api.utilities
 {

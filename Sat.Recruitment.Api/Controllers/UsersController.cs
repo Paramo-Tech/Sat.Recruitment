@@ -57,7 +57,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
             catch(ArgumentException ex)
             {
-               
+                _logger.LogInformation(ex.Message);
                 return new Result()
                 {
                     IsSuccess = false,
@@ -66,7 +66,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogInformation(ex.Message);
                 return new Result()
                 {
                     IsSuccess = false,
