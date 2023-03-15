@@ -9,23 +9,61 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.utilities
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IUserCreator
     {
-        Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money);
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="address">The address.</param>
+        /// <param name="phone">The phone.</param>
+        /// <param name="userType">Type of the user.</param>
+        /// <param name="money">The money.</param>
+        /// <returns></returns>
+        Task<Result> CreateUser(string name, string email, string address, string phone, string userType, decimal money);
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class AUserFactory
     {
+        /// <summary>
+        /// Gets the user creator.
+        /// </summary>
+        /// <param name="userType">Type of the user.</param>
+        /// <returns></returns>
         public abstract IUserCreator GetUserCreator(string userType);
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Sat.Recruitment.Api.utilities.AUserFactory" />
     public class UserFactory : AUserFactory
     {
+        /// <summary>
+        /// The logger
+        /// </summary>
         private static ILogger<UserService> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserFactory"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
         public UserFactory(ILogger<UserService> logger)
         {
             _logger = logger;
         }
+        /// <summary>
+        /// Gets the user creator.
+        /// </summary>
+        /// <param name="userType">Type of the user.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">Invalid user type: {userType}</exception>
         public override IUserCreator GetUserCreator(string userType)
         {
 
@@ -42,25 +80,39 @@ namespace Sat.Recruitment.Api.utilities
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <seealso cref="Sat.Recruitment.Api.utilities.IUserCreator" />
         public class NormalUserCreator : IUserCreator
         {
 
+            /// <summary>
+            /// Creates the user.
+            /// </summary>
+            /// <param name="name">The name.</param>
+            /// <param name="email">The email.</param>
+            /// <param name="address">The address.</param>
+            /// <param name="phone">The phone.</param>
+            /// <param name="userType">Type of the user.</param>
+            /// <param name="money">The money.</param>
+            /// <returns></returns>
             public Task<Result> CreateUser(string name, string email, string address, string phone, string userType,
-                string money)
+                decimal money)
             {
                 var newUser = CreateUserObject(name, email, address, phone, userType, money);
 
-                if (decimal.Parse(money) > 100)
+                if ((money) > 100)
                 {
                     var percentage = Convert.ToDecimal(0.12);
                     //If new user is normal and has more than USD100
-                    var gif = decimal.Parse(money) * percentage;
+                    var gif = (money) * percentage;
                     newUser.Money += gif;
                 }
-                else if (decimal.Parse(money) > 10)
+                else if ((money) > 10)
                 {
                     var percentage = Convert.ToDecimal(0.8);
-                    var gif = decimal.Parse(money) * percentage;
+                    var gif = (money) * percentage;
                     newUser.Money = newUser.Money + gif;
                 }
 
@@ -68,17 +120,31 @@ namespace Sat.Recruitment.Api.utilities
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <seealso cref="Sat.Recruitment.Api.utilities.IUserCreator" />
         public class SuperUserCreator : IUserCreator
         {
+            /// <summary>
+            /// Creates the user.
+            /// </summary>
+            /// <param name="name">The name.</param>
+            /// <param name="email">The email.</param>
+            /// <param name="address">The address.</param>
+            /// <param name="phone">The phone.</param>
+            /// <param name="userType">Type of the user.</param>
+            /// <param name="money">The money.</param>
+            /// <returns></returns>
             public Task<Result> CreateUser(string name, string email, string address, string phone, string userType,
-                string money)
+                decimal money)
             {
                 var newUser = CreateUserObject(name, email, address, phone, userType, money);
 
-                if (decimal.Parse(money) > 100)
+                if ((money) > 100)
                 {
                     var percentage = Convert.ToDecimal(0.20);
-                    var gif = decimal.Parse(money) * percentage;
+                    var gif = (money) * percentage;
                     newUser.Money += gif;
                 }
 
@@ -86,22 +152,41 @@ namespace Sat.Recruitment.Api.utilities
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <seealso cref="Sat.Recruitment.Api.utilities.IUserCreator" />
         public class PremiumUserCreator : IUserCreator
         {
+            /// <summary>
+            /// Creates the user.
+            /// </summary>
+            /// <param name="name">The name.</param>
+            /// <param name="email">The email.</param>
+            /// <param name="address">The address.</param>
+            /// <param name="phone">The phone.</param>
+            /// <param name="userType">Type of the user.</param>
+            /// <param name="money">The money.</param>
+            /// <returns></returns>
             public Task<Result> CreateUser(string name, string email, string address, string phone, string userType,
-                string money)
+                decimal money)
             {
                 var newUser = CreateUserObject(name, email, address, phone, userType, money);
 
-                if (decimal.Parse(money) > 100)
+                if (money > 100)
                 {
-                    var gif = decimal.Parse(money) * 2;
+                    var gif = (money) * 2;
                     newUser.Money += gif;
                 }
 
                 return ValidateAndCreateUser(newUser);
             }
         }
+        /// <summary>
+        /// Validates the and create user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
         private static async Task<Result> ValidateAndCreateUser(User user)
         {
             // Validation code goes here
@@ -119,11 +204,10 @@ namespace Sat.Recruitment.Api.utilities
             }
             SaveUserToFile(user);
             // If validation is successful, create user and return success result
+            _logger.LogInformation("User Created");
             return new Result
             {
-                // Success = true,
-                // Message = "User created successfully",
-                // Data = user
+                IsSuccess = true
             };
 
             // If validation fails, return failure result with error message
@@ -133,6 +217,10 @@ namespace Sat.Recruitment.Api.utilities
             //    Message = "Validation failed"
             //};
         }
+        /// <summary>
+        /// Saves the user to file.
+        /// </summary>
+        /// <param name="user">The user.</param>
         private static void SaveUserToFile(User user)
         {
             // Open the file for writing
@@ -142,7 +230,17 @@ namespace Sat.Recruitment.Api.utilities
                 writer.WriteLine($"{user.Name},{user.Email},{user.Phone},{user.Address},{user.UserType},{user.Money}");
             }
         }
-        private static User CreateUserObject(string name, string email, string address, string phone, string userType, string money)
+        /// <summary>
+        /// Creates the user object.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="address">The address.</param>
+        /// <param name="phone">The phone.</param>
+        /// <param name="userType">Type of the user.</param>
+        /// <param name="money">The money.</param>
+        /// <returns></returns>
+        private static User CreateUserObject(string name, string email, string address, string phone, string userType, decimal money)
         {
             return new User
             {
@@ -151,7 +249,7 @@ namespace Sat.Recruitment.Api.utilities
                 Address = address,
                 Phone = phone,
                 UserType = userType,
-                Money = decimal.Parse(money)
+                Money = money
             };
         }
     }

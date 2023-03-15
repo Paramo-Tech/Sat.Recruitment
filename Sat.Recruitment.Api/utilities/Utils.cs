@@ -108,8 +108,8 @@ namespace Sat.Recruitment.Api.utilities
 
         public static bool IsValidPhone(string phone)
         {
-            var regex = new Regex(@"^\d{10}$");
-            return regex.IsMatch(phone);
+            return Regex.IsMatch(phone, @"^[0-9\-\(\)\s]+$");
+            
         }
 
         public static string NormalizeEmail(string email)
