@@ -46,7 +46,7 @@ namespace Sat.Recruitment.Infrastructure.Persistence
                     context.Users.Add(user);
                 }
                 await context.SaveChangesAsync();
-
+                reader.Close();
             }
 
             //     var administratorRole = new IdentityRole("Administrator");

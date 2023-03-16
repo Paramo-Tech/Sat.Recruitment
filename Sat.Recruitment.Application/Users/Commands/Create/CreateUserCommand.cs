@@ -39,7 +39,7 @@ namespace Sat.Recruitment.Application.Users.Commands.Create
             var entity = new User
             {
                 Name = request.Name,
-                Email = NormalizeEmail(request.Email),
+                Email = request.Email,
                 Address = request.Address,
                 Phone = request.Phone,
                 UserType = _context.UserTypes.FirstOrDefault(x => x.Name == request.UserType),
@@ -53,12 +53,16 @@ namespace Sat.Recruitment.Application.Users.Commands.Create
             return ServiceResult.Success(_mapper.Map<UserDto>(entity));
         }
 
-        private string NormalizeEmail(string email)
-        { 
-            var aux = email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-            return string.Join("@", new string[] { aux[0], aux[1] });
-        }
+
+        //TODO: Is this a client Requirement?
+        //Discuss if we really need to update the email format before to save it. it could cause several issues.
+        //A validation was added
+        //private string NormalizeEmail(string email)
+        //{ 
+        //    var aux = email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+        //    var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+        //    aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+        //    return string.Join("@", new string[] { aux[0], aux[1] });
+        //}
     }
 }

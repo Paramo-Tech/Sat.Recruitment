@@ -19,6 +19,7 @@ namespace Sat.Recruitment.Application.Users.Commands.Create
             _context = context;
 
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name can not be empty.");
+            RuleFor(x => x.Email).EmailAddress();
             RuleFor(x => x)
                .MustAsync(BeUnique)
                .WithMessage("User is duplicated");
