@@ -1,15 +1,13 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
+using Sat.Recruitment.Api.Business;
+using Sat.Recruitment.Api.Repositories;
+using System.IO;
 
 namespace Sat.Recruitment.Api
 {
@@ -26,7 +24,28 @@ namespace Sat.Recruitment.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+            services.AddScoped(provider => new FileStream($"{Directory.GetCurrentDirectory()}{Configuration.GetConnectionString("FilePath")}", FileMode.Open, FileAccess.ReadWrite));
+            services.AddTransient(provider =>
+            {
+                return new StreamReader(provider.GetRequiredService<FileStream>());
+            });
+            services.AddTransient(provider =>
+            {
+                return new StreamWriter(provider.GetRequiredService<FileStream>());
+            });
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserBusiness, UserBusiness>();
+            var mappingConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
