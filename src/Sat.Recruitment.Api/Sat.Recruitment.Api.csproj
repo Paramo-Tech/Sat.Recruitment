@@ -13,14 +13,22 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="MediatR" />
     <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Application\Sat.Recruitment.Application.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

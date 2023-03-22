@@ -1,8 +1,12 @@
 ﻿using System;
-namespace Sat.Recruitment.Domain
+using Sat.Recruitment.Domain.Entities.UserAgregate;
+using Sat.Recruitment.Domain.Entities.UserAgregate.Rules;
+
+namespace Sat.Recruitment.Domain.Entities.UserAggregate
 {
 	public class User
 	{
+        public int Id { get; set; }
         public string Name { get; private set; }
         public string Email { get; private set; }
         public string Address { get; private set; }
@@ -17,7 +21,7 @@ namespace Sat.Recruitment.Domain
             Address = address;
             Phone = phone;
             UserType = userType;
-            Money = money;
+            Money = money + CalculateGif.CreateGif(userType).CalculateGif(money);
         }
     }
 }

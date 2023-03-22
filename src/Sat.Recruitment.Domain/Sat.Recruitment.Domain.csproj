@@ -6,4 +6,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Entities\" />
+    <None Remove="Entities\UserAgregate\Calculator\" />
+    <None Remove="Entities\UserAgregate\Rules\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Interfaces\Data\" />
+    <None Remove="Interfaces\Data\Repositories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Entities\UserAgregate\Rules\" />
+    <Folder Include="Entities\UserAgregate\Rules\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Interfaces\Data\" />
+    <Folder Include="Interfaces\Data\Repositories\" />
+  </ItemGroup>
 </Project>
