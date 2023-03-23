@@ -1,10 +1,11 @@
 ﻿using System;
 using FluentValidation;
+using Sat.Recruitment.Domain.Entities.UserAggregate;
 using Sat.Recruitment.Domain.Interfaces.Data.Repositories;
 
 namespace Sat.Recruitment.Application.Commands.CreateUser
 {
-	public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+	public class CreateUserCommandValidator : AbstractValidator<User>
     {
 		private readonly IUserRepository _userRepository;
 
@@ -23,6 +24,10 @@ namespace Sat.Recruitment.Application.Commands.CreateUser
 			RuleFor(x => x.Email)
 				.NotEmpty()
 				.WithMessage("Email is required");
+
+			RuleFor(x => x.Email)
+				.EmailAddress()
+				.WithMessage("It is necessary a valid email address");
 
 			RuleFor(x => x.Phone)
 				.NotEmpty()

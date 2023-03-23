@@ -5,13 +5,9 @@ using Sat.Recruitment.Domain.Entities.UserAggregate;
 
 namespace Sat.Recruitment.Infrastructure.Data
 {
-	public class SatDbContext : DbContext
-	{
-		public SatDbContext(DbContextOptions<SatDbContext> options): base(options)
-		{            
-        }
-
-        public SatDbContext()
+    public class SatDbContext : DbContext
+    {
+        public SatDbContext(DbContextOptions<SatDbContext> options) : base(options)
         {
         }
 
@@ -27,9 +23,9 @@ namespace Sat.Recruitment.Infrastructure.Data
 
         private static void SeedData(ModelBuilder builder)
         {
-            builder.Entity<User>().HasData(new User("Juan", "Juan@marmol.com", "+5491154762312", "Peru 2464", "Normal", 1234),
-                    new User("Franco", "Franco.Perez@gmail.com", "+534645213542", "Alvear y Colombres", "Premium", 112234),
-                    new User("Agustina", "Agustina@gmail.com", "+534641213542", "Garay y Otra Calle", "SuperUser", 112234)
+            builder.Entity<User>().HasData(new User("Juan", "Juan@marmol.com", "Peru 2464", "+5491154762312", "Normal", 1234, 1),
+                    new User("Franco", "Franco.Perez@gmail.com", "Alvear y Colombres", "+534645213542", "Premium", 112234, 2),
+                    new User("Agustina", "Agustina@gmail.com", "Garay y Otra Calle", "+534641213542", "SuperUser", 112234, 3)
                 );
         }
     }

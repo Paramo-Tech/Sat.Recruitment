@@ -1,17 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30709.64
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9D1B954B-3BF5-4571-AC33-9FFEC6227A8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Api", "src\Sat.Recruitment.Api\Sat.Recruitment.Api.csproj", "{80B6308F-4D17-4DF6-A759-0A4FF149DF40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api", "src\Sat.Recruitment.Api\Sat.Recruitment.Api.csproj", "{80B6308F-4D17-4DF6-A759-0A4FF149DF40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Application", "src\Sat.Recruitment.Application\Sat.Recruitment.Application.csproj", "{A506D9E1-54BE-4818-A5CA-092A3BF10035}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Application", "src\Sat.Recruitment.Application\Sat.Recruitment.Application.csproj", "{A506D9E1-54BE-4818-A5CA-092A3BF10035}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Infrastructure", "src\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj", "{F43E1D3C-DBFF-4E72-AA3B-B66C2D51FCFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Infrastructure", "src\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj", "{F43E1D3C-DBFF-4E72-AA3B-B66C2D51FCFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Domain", "src\Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj", "{85AC5158-C8C9-44CE-B2BF-EE90C0ACDB76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Domain", "src\Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj", "{85AC5158-C8C9-44CE-B2BF-EE90C0ACDB76}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{76DDC245-ED76-4002-B584-BFF9EF8E8661}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.ApplicationTest", "test\Sat.Recruitment.ApplicationTest\Sat.Recruitment.ApplicationTest.csproj", "{7BBF83DD-0106-4393-BD17-94D3AE7CDA2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,17 +39,22 @@ Global
 		{85AC5158-C8C9-44CE-B2BF-EE90C0ACDB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85AC5158-C8C9-44CE-B2BF-EE90C0ACDB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85AC5158-C8C9-44CE-B2BF-EE90C0ACDB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BBF83DD-0106-4393-BD17-94D3AE7CDA2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BBF83DD-0106-4393-BD17-94D3AE7CDA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BBF83DD-0106-4393-BD17-94D3AE7CDA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BBF83DD-0106-4393-BD17-94D3AE7CDA2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A2A05765-05B9-484D-8D3D-506849EB716F}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{80B6308F-4D17-4DF6-A759-0A4FF149DF40} = {9D1B954B-3BF5-4571-AC33-9FFEC6227A8D}
 		{A506D9E1-54BE-4818-A5CA-092A3BF10035} = {9D1B954B-3BF5-4571-AC33-9FFEC6227A8D}
 		{F43E1D3C-DBFF-4E72-AA3B-B66C2D51FCFB} = {9D1B954B-3BF5-4571-AC33-9FFEC6227A8D}
 		{85AC5158-C8C9-44CE-B2BF-EE90C0ACDB76} = {9D1B954B-3BF5-4571-AC33-9FFEC6227A8D}
+		{7BBF83DD-0106-4393-BD17-94D3AE7CDA2A} = {76DDC245-ED76-4002-B584-BFF9EF8E8661}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2A05765-05B9-484D-8D3D-506849EB716F}
 	EndGlobalSection
 EndGlobal

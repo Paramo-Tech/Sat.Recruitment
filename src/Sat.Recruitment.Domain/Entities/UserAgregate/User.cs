@@ -14,7 +14,7 @@ namespace Sat.Recruitment.Domain.Entities.UserAggregate
         public string UserType { get; private set; }
         public decimal Money { get; private set; }
 
-        public User(string name, string email, string address, string phone, string userType, decimal money)
+        public User(string name, string email, string address, string phone, string userType, decimal money, int id = 0)
         {
             Name = name;
             Email = email;
@@ -22,6 +22,12 @@ namespace Sat.Recruitment.Domain.Entities.UserAggregate
             Phone = phone;
             UserType = userType;
             Money = money + CalculateGif.CreateGif(userType).CalculateGif(money);
+            Id = id;
+        }
+
+        public void SetEmail(string email)
+        {
+            Email = email;
         }
     }
 }
