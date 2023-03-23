@@ -15,6 +15,6 @@ namespace Sat.Recruitment.ApplicationTest.Commons
             mock.Setup(x=> x.GetUserByIdAsync(1)).ReturnsAsync(UserMock.DefaultUser);
 
             return mock.Object;
-        }
+        }       
     }
 }

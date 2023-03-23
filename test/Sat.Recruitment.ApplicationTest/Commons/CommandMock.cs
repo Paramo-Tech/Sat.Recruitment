@@ -1,8 +1,9 @@
 ﻿using Sat.Recruitment.Application.Commands.CreateUser;
+using Sat.Recruitment.Application.Queries.GetUser;
 
 namespace Sat.Recruitment.ApplicationTest.Commons
 {
-    public static class UserCommandMock
+    public static class CommandMock
     {
         public static CreateUserCommand SomeUser=> new CreateUserCommand() 
         { 
@@ -13,5 +14,7 @@ namespace Sat.Recruitment.ApplicationTest.Commons
             Phone = "+543884618189",
             UserType = "Normal"
         };
+
+        public static GetUserQuery SomeUserId => new GetUserQuery() { Id = 1 };
     }
 }

@@ -11,13 +11,11 @@ namespace Sat.Recruitment.Application.Queries.GetUser
     {
         private readonly IUserRepository _userRepository;
         private readonly ILogger<GetUserQueryHandler> _logger;
-        private readonly IMapper _mapper;
 
-        public GetUserQueryHandler(IUserRepository userRepository, ILogger<GetUserQueryHandler> logger, IMapper mapper)
+        public GetUserQueryHandler(IUserRepository userRepository, ILogger<GetUserQueryHandler> logger)
         {
             _userRepository = userRepository;
             _logger = logger;
-            _mapper = mapper;
         }        
 
         public async Task<User> Handle(GetUserQuery request, CancellationToken cancellationToken)
@@ -26,11 +24,14 @@ namespace Sat.Recruitment.Application.Queries.GetUser
 
             if (response == null)
             {
+                _logger.LogDebug("User not found");
                 throw new NotFoundException("User not found");
             }
-
+            
             response.SetEmail(NormalizeEmailAddress(response.Email));
+            _logger.LogDebug("Email normalized");
 
+            _logger.LogDebug("Response OK");
             return response;
         }
 

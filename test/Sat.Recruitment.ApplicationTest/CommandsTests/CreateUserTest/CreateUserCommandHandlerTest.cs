@@ -10,7 +10,7 @@ namespace Sat.Recruitment.ApplicationTest.CommandsTests.CreateUserTest
         [Fact]
         public async void createuser_success()
         {
-            var command = UserCommandMock.SomeUser;
+            var command = CommandMock.SomeUser;
             var repository = UserRepositoryMock.GetUserRepositoryMock();
             var logger = LoggerMock.Log();
             var validator = UserValidatorMock.UserValidatorNoError();
@@ -26,7 +26,7 @@ namespace Sat.Recruitment.ApplicationTest.CommandsTests.CreateUserTest
         [Fact]
         public async void createuser_witherros()
         {
-            var command = UserCommandMock.SomeUser;
+            var command = CommandMock.SomeUser;
             var repository = UserRepositoryMock.GetUserRepositoryMock();
             var logger = LoggerMock.Log();
             var validator = UserValidatorMock.UserValidatorWithError();

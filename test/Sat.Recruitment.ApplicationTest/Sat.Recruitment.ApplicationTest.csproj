@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="QueriesTests\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Sat.Recruitment.Application\Sat.Recruitment.Application.csproj" />
     <ProjectReference Include="..\..\src\Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj" />
   </ItemGroup>
