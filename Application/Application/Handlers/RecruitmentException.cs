@@ -8,8 +8,6 @@ namespace Application.Handlers
 {
     public class RecruitmentException: Exception
     {
-        public RecruitmentException(string? message) { 
-            throw new Exception("GeneralError-"+message);
-        }
+        public RecruitmentException(string? message) : base("GeneralError-" + message) { }
     }
 }

@@ -32,6 +32,17 @@ namespace Application.Services
             return await _UserRepository.AddUser(user);
 
         }
+        public async Task<IEnumerable<User>> GetAllUser() => await _UserRepository.GetAllUser();
+        public async Task<User> UpdateUser(User user)
+        {
+            ValidateErrors(user);
+            NormalizeData(user);
+            SetGifUser(user);
+
+           return await _UserRepository.UpdateUser(user);
+        }
+
+        #region privateMethod
         private void ValidateErrors(User user)
         {
             if (string.IsNullOrEmpty(user.Name))
@@ -97,8 +108,6 @@ namespace Application.Services
 
             }
         }
-        public async Task<IEnumerable<User>> GetAllUser() => await _UserRepository.GetAllUser();
-        public async Task<User> UpdateUser(User user) => await _UserRepository.UpdateUser(user);
-
+        #endregion
     }
 }
