@@ -1,10 +1,4 @@
-using System;
-using System.Dynamic;
-
-using Microsoft.AspNetCore.Mvc;
-
 using Sat.Recruitment.Api.Controllers;
-
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -12,28 +6,44 @@ namespace Sat.Recruitment.Test
     [CollectionDefinition("Tests", DisableParallelization = true)]
     public class UnitTest1
     {
+        private UsersController userController = new UsersController();
         [Fact]
         public void Test1()
         {
-            var userController = new UsersController();
+            // Arrange
+            var userName = "Mike";
+            var email = "mike@gmail.com";
+            var address = "Av. Juan G";
+            var phone = "+349 1122354215";
+            var userType = "Normal";
+            var money = "124";
 
-            var result = userController.CreateUser("Mike", "mike@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
+            // Act
+            var result = userController.CreateUser(userName, email, address, phone, userType, money).Result;
 
-
-            Assert.Equal(true, result.IsSuccess);
+            // Assert
+            Assert.True(result.IsSuccess);
             Assert.Equal("User Created", result.Errors);
         }
 
         [Fact]
         public void Test2()
         {
-            var userController = new UsersController();
+            // Arrange
+            var userName = "Agustina";
+            var email = "Agustina@gmail.com";
+            var address = "Av. Juan G";
+            var phone = "+349 1122354215";
+            var userType = "Normal";
+            var money = "124";
 
-            var result = userController.CreateUser("Agustina", "Agustina@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
+            // Act
+            var result1 = userController.CreateUser(userName, email, address, phone, userType, money).Result;
+            var result2 = userController.CreateUser(userName, email, address, phone, userType, money).Result;
 
-
-            Assert.Equal(false, result.IsSuccess);
-            Assert.Equal("The user is duplicated", result.Errors);
+            // Assert
+            Assert.False(result2.IsSuccess);
+            Assert.Equal("The user is duplicated", result2.Errors);
         }
     }
 }

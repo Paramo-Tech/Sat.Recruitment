@@ -4,8 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30709.64
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api", "Sat.Recruitment.Api\Sat.Recruitment.Api.csproj", "{1F342EA2-E7B1-4E53-AB93-9C62288D3FB0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F974E2C7-7162-49FE-B12B-6C11870F3F5C} = {F974E2C7-7162-49FE-B12B-6C11870F3F5C}
+		{73800EFE-5A54-424D-98AA-D2440FEF24AD} = {73800EFE-5A54-424D-98AA-D2440FEF24AD}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.BO", "Sat.Recruitment.BO\Sat.Recruitment.BO.csproj", "{73800EFE-5A54-424D-98AA-D2440FEF24AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.BLL", "Sat.Recruitment.BLL\Sat.Recruitment.BLL.csproj", "{F974E2C7-7162-49FE-B12B-6C11870F3F5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,14 @@ Global
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73800EFE-5A54-424D-98AA-D2440FEF24AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73800EFE-5A54-424D-98AA-D2440FEF24AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73800EFE-5A54-424D-98AA-D2440FEF24AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73800EFE-5A54-424D-98AA-D2440FEF24AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F974E2C7-7162-49FE-B12B-6C11870F3F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F974E2C7-7162-49FE-B12B-6C11870F3F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F974E2C7-7162-49FE-B12B-6C11870F3F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F974E2C7-7162-49FE-B12B-6C11870F3F5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
