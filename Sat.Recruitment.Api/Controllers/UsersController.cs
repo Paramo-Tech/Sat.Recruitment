@@ -1,202 +1,154 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Sat.Recruitment.Api.DTOs;
+using Sat.Recruitment.Api.Models;
+using Sat.Recruitment.Api.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
-    public class Result
-    {
-        public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
-    }
-
     [ApiController]
-    [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    [Route("api/[controller]")]
+    public partial class UserController : ControllerBase
     {
 
-        private readonly List<User> _users = new List<User>();
-        public UsersController()
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
+        public UserController(IMapper mapper, IUserRepository userRepository)
         {
+            _mapper = mapper;
+            _userRepository = userRepository;
+        }
+
+        [HttpGet]
+        [Route("/get-all-users")]
+        public async Task<ActionResult> GetAllUsers()
+        {
+            var users = await _userRepository.GetAllUsers();
+            return Ok(_mapper.Map<IEnumerable<ReadUserDTO>>(users));            
         }
 
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public async Task<Result<ReadUserDTO>> CreateUser(CreateUserDTO createUserDTO)
         {
-            var errors = "";
-
-            ValidateErrors(name, email, address, phone, ref errors);
-
-            if (errors != null && errors != "")
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
-
-            var newUser = new User
-            {
-                Name = name,
-                Email = email,
-                Address = address,
-                Phone = phone,
-                UserType = userType,
-                Money = decimal.Parse(money)
-            };
-
-            if (newUser.UserType == "Normal")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.12);
-                    //If new user is normal and has more than USD100
-                    var gif = decimal.Parse(money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-                if (decimal.Parse(money) < 100)
-                {
-                    if (decimal.Parse(money) > 10)
-                    {
-                        var percentage = Convert.ToDecimal(0.8);
-                        var gif = decimal.Parse(money) * percentage;
-                        newUser.Money = newUser.Money + gif;
-                    }
-                }
-            }
-            if (newUser.UserType == "SuperUser")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.20);
-                    var gif = decimal.Parse(money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
-            if (newUser.UserType == "Premium")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var gif = decimal.Parse(money) * 2;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
-
-
-            var reader = ReadUsersFromFile();
-
-            //Normalize email
-            var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-
-            newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
-
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var user = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(user);
-            }
-            reader.Close();
             try
             {
-                var isDuplicated = false;
-                foreach (var user in _users)
+                var newUser = new User
                 {
-                    if (user.Email == newUser.Email
-                        ||
-                        user.Phone == newUser.Phone)
-                    {
-                        isDuplicated = true;
-                    }
-                    else if (user.Name == newUser.Name)
-                    {
-                        if (user.Address == newUser.Address)
-                        {
-                            isDuplicated = true;
-                            throw new Exception("User is duplicated");
-                        }
-
-                    }
-                }
+                    Name = createUserDTO.Name,
+                    Email = createUserDTO.Email,
+                    Address = createUserDTO.Address,
+                    Phone = createUserDTO.Phone,
+                    UserType = createUserDTO.UserType,
+                    Money = createUserDTO.Money
+                };
+                CalculateGiftByUserType(newUser);
+                NormalizeEmail(newUser);
+                var isDuplicated = await _userRepository.IsUserDuplicated(newUser);
 
                 if (!isDuplicated)
                 {
-                    Debug.WriteLine("User Created");
-
-                    return new Result()
+                    _userRepository.CreateUser(newUser);
+                    var readUserDTO = _mapper.Map<ReadUserDTO>(newUser);
+                    return new Result<ReadUserDTO>()
                     {
+                        Value = readUserDTO,
                         IsSuccess = true,
                         Errors = "User Created"
                     };
                 }
                 else
                 {
-                    Debug.WriteLine("The user is duplicated");
-
-                    return new Result()
+                    var readUserDTO = _mapper.Map<ReadUserDTO>(newUser);
+                    return new Result<ReadUserDTO>()
                     {
+                        Value = readUserDTO,
                         IsSuccess = false,
                         Errors = "The user is duplicated"
                     };
                 }
             }
-            catch
+            catch (Exception ex) 
             {
-                Debug.WriteLine("The user is duplicated");
-                return new Result()
+                return new Result<ReadUserDTO>()
                 {
+                    Value = null,
                     IsSuccess = false,
-                    Errors = "The user is duplicated"
+                    Errors = $"{ex.Message}"
                 };
             }
-
-            return new Result()
-            {
-                IsSuccess = true,
-                Errors = "User Created"
-            };
         }
 
-        //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
+        private static void CalculateGiftByUserType(User newUser)
         {
-            if (name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            if (address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            if (phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
+            switch (newUser.UserType)
+            {
+                case UserType.Normal:
+                    CalculateGiftForNormalUser(newUser);                    
+                    break;
+                case UserType.SuperUser:
+                    CalculateGiftForSuperUser(newUser);
+                    break;
+                case UserType.Premium:
+                    CalculateGiftForPremiumUser(newUser);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid User Type.", nameof(newUser.UserType));
+            }
         }
-    }
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
+
+        private static void CalculateGiftForPremiumUser(User newUser)
+        {
+            int premiumLevel = 100;
+            if (newUser.Money > premiumLevel)
+            {
+                CalculateGift(newUser, 2);
+            }
+        }
+
+        private static void CalculateGiftForSuperUser(User newUser)
+        {
+            int superLevel = 100;
+            if (newUser.Money > superLevel)
+            {
+                CalculateGift(newUser, Convert.ToDecimal(0.2));
+            }
+        }
+
+        private static void CalculateGiftForNormalUser(User newUser)
+        {
+            int normalLowLevel = 10;
+            int normalTopLevel = 100;
+            if (newUser.Money > normalLowLevel && newUser.Money < normalTopLevel)
+            {
+                CalculateGift(newUser, Convert.ToDecimal(0.8));
+            }
+            else if (newUser.Money > normalTopLevel)
+            {
+                CalculateGift(newUser, Convert.ToDecimal(0.12));
+            }
+        }
+
+        private static void CalculateGift(User newUser, decimal percentage)
+        {
+            var gift = newUser.Money * percentage;
+            newUser.Money = newUser.Money + gift;
+        }
+
+        private static void NormalizeEmail(User newUser)
+        {
+            var atIndex = newUser.Email.IndexOf("+");
+            if (atIndex >= 0)
+            {
+                newUser.Email = newUser.Email.Substring(0, atIndex).Replace(".", "") + newUser.Email.Substring(newUser.Email.IndexOf("@"), newUser.Email.Length - newUser.Email.IndexOf("@"));
+            }
+            else
+            {
+                newUser.Email = newUser.Email.Replace(".", "");
+            }
+        }
     }
 }
