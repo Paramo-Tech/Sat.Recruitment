@@ -1,202 +1,78 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-using System;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Sat.Recruitment.Core.DataTransferObjects;
+using Sat.Recruitment.Core.Interfaces;
+using Sat.Recruitment.Core.Models.User;
+using Sat.Recruitment.Kernel.Features.Users.CreateUserCommand;
+using Sat.Recruitment.Kernel.Features.Users.GetUserQueryByIdCommand;
+using Sat.Recruitment.Kernel.Features.Users.GetUsersQueryCommand;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
-    public class Result
-    {
-        public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
-    }
-
+    /// <summary>
+    /// Users controller
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    public class UsersController : Controller
     {
+        private readonly IMediator _mediator;
+        private readonly IValidator<CreateUserRequest> _validator;
 
-        private readonly List<User> _users = new List<User>();
-        public UsersController()
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mediator">Mediator to command handlers</param>
+        /// <param name="validator">Validator of request command</param>
+        public UsersController(IMediator mediator, IValidator<CreateUserRequest> validator)
         {
+            _mediator = mediator;
+            _validator = validator;
         }
 
+        /// <summary>
+        /// Returns all users
+        /// </summary>
+        /// <returns>List of users</returns>
+        [HttpGet]
+        public async Task<ActionResult<IResponseResult<List<IUser>>>> GetUsers()
+        {
+            var users = await _mediator.Send(new GetUsersQueryRequest());
+
+            return new ResponseResultOk<List<IUser>>( users, $"GET-200");
+        }
+
+        /// <summary>
+        /// Returns user by Id
+        /// </summary>
+        /// <param name="id">User Id</param>
+        /// <returns>User information</returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IResponseResult<IUser>>> GetUserById(string id)
+        {
+            var user = await _mediator.Send(new GetUserByIdQueryRequest { Id = id });
+
+            return new ResponseResultOk<IUser>(user, $"GET-200");
+        }
+
+        /// <summary>
+        /// Creates a new User
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public async Task<IResponseResult<string>> CreateUser(CreateUserRequest command)
         {
-            var errors = "";
-
-            ValidateErrors(name, email, address, phone, ref errors);
-
-            if (errors != null && errors != "")
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
-
-            var newUser = new User
+            var result = await _validator.ValidateAsync(command);
+            if (!result.IsValid)
             {
-                Name = name,
-                Email = email,
-                Address = address,
-                Phone = phone,
-                UserType = userType,
-                Money = decimal.Parse(money)
-            };
-
-            if (newUser.UserType == "Normal")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.12);
-                    //If new user is normal and has more than USD100
-                    var gif = decimal.Parse(money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-                if (decimal.Parse(money) < 100)
-                {
-                    if (decimal.Parse(money) > 10)
-                    {
-                        var percentage = Convert.ToDecimal(0.8);
-                        var gif = decimal.Parse(money) * percentage;
-                        newUser.Money = newUser.Money + gif;
-                    }
-                }
+                throw new ValidationException(result.ToString());
             }
-            if (newUser.UserType == "SuperUser")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.20);
-                    var gif = decimal.Parse(money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
-            if (newUser.UserType == "Premium")
-            {
-                if (decimal.Parse(money) > 100)
-                {
-                    var gif = decimal.Parse(money) * 2;
-                    newUser.Money = newUser.Money + gif;
-                }
-            }
-
-
-            var reader = ReadUsersFromFile();
-
-            //Normalize email
-            var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-
-            newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
-
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var user = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(user);
-            }
-            reader.Close();
-            try
-            {
-                var isDuplicated = false;
-                foreach (var user in _users)
-                {
-                    if (user.Email == newUser.Email
-                        ||
-                        user.Phone == newUser.Phone)
-                    {
-                        isDuplicated = true;
-                    }
-                    else if (user.Name == newUser.Name)
-                    {
-                        if (user.Address == newUser.Address)
-                        {
-                            isDuplicated = true;
-                            throw new Exception("User is duplicated");
-                        }
-
-                    }
-                }
-
-                if (!isDuplicated)
-                {
-                    Debug.WriteLine("User Created");
-
-                    return new Result()
-                    {
-                        IsSuccess = true,
-                        Errors = "User Created"
-                    };
-                }
-                else
-                {
-                    Debug.WriteLine("The user is duplicated");
-
-                    return new Result()
-                    {
-                        IsSuccess = false,
-                        Errors = "The user is duplicated"
-                    };
-                }
-            }
-            catch
-            {
-                Debug.WriteLine("The user is duplicated");
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = "The user is duplicated"
-                };
-            }
-
-            return new Result()
-            {
-                IsSuccess = true,
-                Errors = "User Created"
-            };
+            var id = await _mediator.Send(command);
+            return new ResponseResultOk<string>(id.ToString(), $"POST-200");
         }
-
-        //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
-        {
-            if (name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            if (address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            if (phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
-        }
-    }
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
     }
 }
