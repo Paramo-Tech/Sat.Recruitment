@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Test
 {
-    public class MockUserDataService : IUserDataService
+    public class FakeUserDataService : IUserDataService
     {
         public Task<IReadOnlyList<UserBase>> GetAll()
         {
