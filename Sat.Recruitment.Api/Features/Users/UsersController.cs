@@ -34,6 +34,9 @@ namespace Sat.Recruitment.Api.Features.Users
         /// <response code="400">
         /// Returns validation errors if data is missing or "The user is duplicated" if user is duplicated
         /// </response>
+        /// <response code="500">
+        /// Returns exception details for debugging mode, otherwise "Unhandled error" message
+        /// </response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
