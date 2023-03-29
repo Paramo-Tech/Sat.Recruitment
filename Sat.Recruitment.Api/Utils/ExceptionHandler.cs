@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 using System.Text.Json;
@@ -9,10 +10,12 @@ namespace Sat.Recruitment.Api.Utils
     public class ExceptionHandler
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandler> _logger;
 
-        public ExceptionHandler(RequestDelegate next)
+        public ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -23,6 +26,8 @@ namespace Sat.Recruitment.Api.Utils
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Unhandled error.");
+
                 await HandleException(context, ex);
             }
         }

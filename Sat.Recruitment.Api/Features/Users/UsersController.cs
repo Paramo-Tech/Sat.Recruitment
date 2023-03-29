@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.Features.Common;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,8 +10,13 @@ namespace Sat.Recruitment.Api.Features.Users
     public partial class UsersController : ApiControllerBase
     {
         private readonly IUserDataService _userDataService;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserDataService userDataService) => _userDataService = userDataService;
+        public UsersController(IUserDataService userDataService, ILogger<UsersController> logger)
+        {
+            _userDataService = userDataService;
+            _logger = logger;
+        }
 
         /// <summary>
         /// Creates a User
@@ -58,9 +64,16 @@ namespace Sat.Recruitment.Api.Features.Users
                 (user.Name == newUser.Name && user.Address == newUser.Address)
             );
 
-            return isDuplicated
-                ? BadRequest("The user is duplicated")
-                : Created("User Created");
+            if (isDuplicated)
+            {
+                _logger.LogInformation("The user is duplicated. E-mail: {email}", request.Email);
+                return BadRequest("The user is duplicated");
+            }
+            else
+            {
+                _logger.LogInformation("User Created. E-mail: {email}", request.Email);
+                return Created("User Created");
+            }
         }
     }
 }

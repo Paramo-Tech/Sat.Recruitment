@@ -13,7 +13,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public async Task UserCreationShouldWorkFineWhenPassingCorrectData()
         {
-            var userController = new UsersController(new MockUserDataService());
+            var userController = new UsersController(new MockUserDataService(), new FakeLogger<UsersController>());
 
             var result = await userController.CreateUser(
                 new CreateUserRequest
@@ -37,7 +37,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public async Task UserCreationShouldDetectDuplicatedUser()
         {
-            var userController = new UsersController(new MockUserDataService());
+            var userController = new UsersController(new MockUserDataService(), new FakeLogger<UsersController>());
 
             var result = await userController.CreateUser(
                 new CreateUserRequest
