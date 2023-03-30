@@ -16,8 +16,6 @@ namespace Sat.Recruitment.Api.Controllers
         private readonly ILogger<UsersController> _logger;
         private readonly IUsersService _usersService;
 
-        private readonly List<User> _users = new List<User>();
-        
         public UsersController(ILogger<UsersController> logger, IUsersService usersService)
         {
             _logger = logger;
@@ -30,14 +28,6 @@ namespace Sat.Recruitment.Api.Controllers
         {
             _logger.LogInformation($"Add user");
             return await _usersService.Add(user);
-        }
-
-        [HttpGet]
-        [Route("/get-users")]
-        public async Task<IEnumerable<User>> GetUsers()
-        {
-            _logger.LogInformation($"Get all users");
-            return await _usersService.GetAll();
         }
     }
 }

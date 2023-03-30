@@ -49,13 +49,13 @@ namespace Sat.Recruitment.Api.Services
                 errors = "The name is required";
             if (String.IsNullOrEmpty(user.Email))
                 //Validate if Email is null
-                errors += " The email is required";
+                errors += (String.IsNullOrEmpty(errors) ? "" : "; ") + "The email is required";
             if (String.IsNullOrEmpty(user.Address))
                 //Validate if Address is null
-                errors += " The address is required";
+                errors += (String.IsNullOrEmpty(errors) ? "" : "; ") + "The address is required";
             if (String.IsNullOrEmpty(user.Phone))
                 //Validate if Phone is null
-                errors += " The phone is required";
+                errors += (String.IsNullOrEmpty(errors) ? "" : "; ") + "The phone is required";
 
             if (!string.IsNullOrEmpty(errors)) result = new Result() { IsSuccess = false, Errors = errors };
             
@@ -87,7 +87,7 @@ namespace Sat.Recruitment.Api.Services
                 "Premium" => money > 100 ? 2 : 0,
                 _ => 0,
             };
-            decimal moneyGif = money + money * percentage;
+            decimal moneyGif = money + (money * percentage);
             return moneyGif;
         }
 
