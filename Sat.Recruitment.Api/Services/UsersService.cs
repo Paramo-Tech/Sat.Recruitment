@@ -65,12 +65,14 @@ namespace Sat.Recruitment.Api.Services
         public async Task<Result> ValidateUserRepo(User user)
         {
             Result result = new Result() { IsSuccess = true, Errors = string.Empty };
-            
+
             var usersList = await _usersRepository.GetAllAsync();
+
+            foreach (var item in usersList) item.Email = GetNormalizeEmail(item.Email);
 
             if (usersList.Count > 0 &&
                 usersList
-                .Where(x => x.Name == user.Name || x.Email == user.Email || x.Phone == user.Address || x.Address == user.Address)
+                .Where(x => x.Name == user.Name || x.Email == user.Email || x.Phone == user.Phone || x.Address == user.Address)
                 .Count() > 0
                 )
                 result = new Result() { IsSuccess = false, Errors = "User is duplicated" };
