@@ -3,6 +3,7 @@ using Sat.Recruitment.Api.Interfaces;
 using Sat.Recruitment.Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Services
@@ -16,14 +17,22 @@ namespace Sat.Recruitment.Api.Services
             _usersRepository = usersRepository;
         }
 
-        public Task<Result> Add(User user)
+        public async Task<Result> Add(User user)
         {
+            var validationData = ValidateUserData(user);
+
+            if (validationData != null && !validationData.Result.IsSuccess)
+                return validationData.Result;
+
             user.Money = GetTypeUserMoneyGif(user.UserType, user.Money);
-            user.Email = NormalizeEmail(user.Email);
-            Result result = ValidateUser(user);
-            //if (!result.IsSuccess);
-            
-            throw new System.NotImplementedException();
+            user.Email = GetNormalizeEmail(user.Email);
+
+            var validationRepo = ValidateUserRepo(user);
+
+            if (validationRepo != null && !validationRepo.Result.IsSuccess)
+                return validationRepo.Result;
+
+            return await _usersRepository.AddAsync(user);
         }
 
         public async Task<List<User>> GetAll()
@@ -31,7 +40,7 @@ namespace Sat.Recruitment.Api.Services
             return await _usersRepository.GetAllAsync();
         }
 
-        public Result ValidateUser(User user)
+        public async Task<Result> ValidateUserData(User user)
         {
             Result result = new Result() { IsSuccess = true, Errors = string.Empty };
             string errors = "";
@@ -40,19 +49,35 @@ namespace Sat.Recruitment.Api.Services
                 errors = "The name is required";
             if (String.IsNullOrEmpty(user.Email))
                 //Validate if Email is null
-                errors = errors + " The email is required";
+                errors += " The email is required";
             if (String.IsNullOrEmpty(user.Address))
                 //Validate if Address is null
-                errors = errors + " The address is required";
+                errors += " The address is required";
             if (String.IsNullOrEmpty(user.Phone))
                 //Validate if Phone is null
-                errors = errors + " The phone is required";
+                errors += " The phone is required";
 
             if (!string.IsNullOrEmpty(errors)) result = new Result() { IsSuccess = false, Errors = errors };
             
-            return result;
+            return await Task.FromResult(new Result () { IsSuccess = result.IsSuccess, Errors = result.Errors });
         }
-        
+
+        public async Task<Result> ValidateUserRepo(User user)
+        {
+            Result result = new Result() { IsSuccess = true, Errors = string.Empty };
+            
+            var usersList = await _usersRepository.GetAllAsync();
+
+            if (usersList.Count > 0 &&
+                usersList
+                .Where(x => x.Name == user.Name || x.Email == user.Email || x.Phone == user.Address || x.Address == user.Address)
+                .Count() > 0
+                )
+                result = new Result() { IsSuccess = false, Errors = "User is duplicated" };
+
+            return await Task.FromResult(new Result() { IsSuccess = result.IsSuccess, Errors = result.Errors });
+        }
+
         public decimal GetTypeUserMoneyGif(string userType, decimal money)
         {
             decimal percentage = userType switch
@@ -66,16 +91,24 @@ namespace Sat.Recruitment.Api.Services
             return moneyGif;
         }
 
-        public string NormalizeEmail(string email)
+        public string GetNormalizeEmail(string email)
         {
             //Normalize email
-            var aux = email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            if (email.Contains('@'))
+            {
+                var aux = email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+                var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
 
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+                aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
 
-            return string.Join("@", new string[] { aux[0], aux[1] });
+                return string.Join("@", new string[] { aux[0], aux[1] });
+            }
+            else
+            {
+                return email;
+            }
+            
         }
     }
 }

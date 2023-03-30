@@ -11,13 +11,19 @@ namespace Sat.Recruitment.Api.Data
         public Task<Result> AddAsync(User user)
         {
             DataContext.UserList.Add(user);
+            DataAccess.AppendUserToFile(user);
             return Task.FromResult(new Result { IsSuccess = true, Errors = "User Created" });
         }
 
         public Task<List<User>> GetAllAsync()
         {
+            DataAccess.ReadUsersFromFile();
             return Task.FromResult(DataContext.UserList);
         }
 
+        public Task<Result> TestAsync()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

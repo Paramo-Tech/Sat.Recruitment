@@ -1,15 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Sat.Recruitment.Api.Models;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using System.Net;
-using System.Xml.Linq;
-using System.Security.Policy;
 
 namespace Sat.Recruitment.Api.Controllers
 {
@@ -36,69 +30,6 @@ namespace Sat.Recruitment.Api.Controllers
         {
             _logger.LogInformation($"Add user");
             return await _usersService.Add(user);
-            
-            ////var newUser = new User
-            ////{
-            ////    Name = user.Name,
-            ////    Email = user.Email,
-            ////    Address = user.Address,
-            ////    Phone = user.Phone,
-            ////    UserType = user.UserType,
-            ////    Money = user.Money
-            ////};
-
-            ////try
-            ////{
-            ////    var isDuplicated = false;
-            ////    foreach (var xuser in _users)
-            ////    {
-            ////        if (xuser.Email == newUser.Email
-            ////            ||
-            ////            xuser.Phone == newUser.Phone)
-            ////        {
-            ////            isDuplicated = true;
-            ////        }
-            ////        else if (xuser.Name == newUser.Name)
-            ////        {
-            ////            if (xuser.Address == newUser.Address)
-            ////            {
-            ////                isDuplicated = true;
-            ////                throw new Exception("User is duplicated");
-            ////            }
-
-            ////        }
-            ////    }
-
-            ////    if (!isDuplicated)
-            ////    {
-            ////        Debug.WriteLine("User Created");
-
-            ////        return new Result()
-            ////        {
-            ////            IsSuccess = true,
-            ////            Errors = "User Created"
-            ////        };
-            ////    }
-            ////    else
-            ////    {
-            ////        Debug.WriteLine("The user is duplicated");
-
-            ////        return new Result()
-            ////        {
-            ////            IsSuccess = false,
-            ////            Errors = "The user is duplicated"
-            ////        };
-            ////    }
-            ////}
-            ////catch
-            ////{
-            ////    Debug.WriteLine("The user is duplicated");
-            ////    return new Result()
-            ////    {
-            ////        IsSuccess = false,
-            ////        Errors = "The user is duplicated"
-            ////    };
-            ////}
         }
 
         [HttpGet]

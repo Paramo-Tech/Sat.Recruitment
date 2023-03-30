@@ -30,7 +30,6 @@ namespace Sat.Recruitment.Api
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddLogging();
-            services.ReadUsersFromFile();
             services.AddScoped<IUsersRepository, UserRepository>();
             services.AddScoped<IUsersService, UsersService>();
         }
@@ -48,7 +47,7 @@ namespace Sat.Recruitment.Api
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sat Recruitment API V1");
             });
             app.UseRouting();
 
