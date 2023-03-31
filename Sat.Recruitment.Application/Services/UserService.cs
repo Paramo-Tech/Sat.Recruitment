@@ -1,23 +1,24 @@
-﻿using Microsoft.OpenApi.Models;
-using Sat.Recruitment.Api.Interfaces;
-using Sat.Recruitment.Api.Models;
+﻿using Sat.Recruitment.Application.Common.Interfaces.Persistance;
+using Sat.Recruitment.Application.Services.Interfaces;
+using Sat.Recruitment.Contracts.Results;
+using Sat.Recruitment.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sat.Recruitment.Api.Services
+namespace Sat.Recruitment.Application.Services
 {
-    public class UsersService : ServiceBase<User>, IUsersService
+    public class UserService : ServiceBase<User>, IUserService
     {
-        protected readonly IUsersRepository _usersRepository;
+        protected readonly IUserRepository _userRepository;
 
-        public UsersService(IUsersRepository usersRepository) : base(usersRepository)
+        public UserService(IUserRepository userRepository) : base(userRepository)
         {
-            _usersRepository = usersRepository;
+            _userRepository = userRepository;
         }
 
-        public async Task<Result> Add(User user)
+        public override async Task<Result> AddItemAsync(User user)
         {
             var validationData = ValidateUserData(user);
 
@@ -32,12 +33,12 @@ namespace Sat.Recruitment.Api.Services
             if (validationRepo != null && !validationRepo.Result.IsSuccess)
                 return validationRepo.Result;
 
-            return await _usersRepository.AddAsync(user);
+            return await _userRepository.AddAsync(user);
         }
 
-        public async Task<List<User>> GetAll()
+        public override async Task<List<User>> GetAllAsync()
         {
-            return await _usersRepository.GetAllAsync();
+            return await _userRepository.GetAllAsync();
         }
 
         public async Task<Result> ValidateUserData(User user)
@@ -58,15 +59,15 @@ namespace Sat.Recruitment.Api.Services
                 errors += (String.IsNullOrEmpty(errors) ? "" : "; ") + "The phone is required";
 
             if (!string.IsNullOrEmpty(errors)) result = new Result() { IsSuccess = false, Errors = errors };
-            
-            return await Task.FromResult(new Result () { IsSuccess = result.IsSuccess, Errors = result.Errors });
+
+            return await Task.FromResult(new Result() { IsSuccess = result.IsSuccess, Errors = result.Errors });
         }
 
         public async Task<Result> ValidateUserRepo(User user)
         {
             Result result = new Result() { IsSuccess = true, Errors = string.Empty };
 
-            var usersList = await _usersRepository.GetAllAsync();
+            var usersList = await _userRepository.GetAllAsync();
 
             foreach (var item in usersList) item.Email = GetNormalizeEmail(item.Email);
 
@@ -110,7 +111,7 @@ namespace Sat.Recruitment.Api.Services
             {
                 return email;
             }
-            
+
         }
     }
 }

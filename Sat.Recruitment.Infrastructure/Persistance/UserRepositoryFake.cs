@@ -1,11 +1,12 @@
-﻿using Sat.Recruitment.Api.Interfaces;
-using Sat.Recruitment.Api.Models;
+﻿using Sat.Recruitment.Application.Common.Interfaces.Persistance;
+using Sat.Recruitment.Contracts.Results;
+using Sat.Recruitment.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sat.Recruitment.Api.Data
+namespace Sat.Recruitment.Infrastructure.Persistance
 {
-    public class UserRepositoryFake : IUsersRepository
+    public class UserRepositoryFake : IUserRepository
     {
         private readonly List<User> _users;
 

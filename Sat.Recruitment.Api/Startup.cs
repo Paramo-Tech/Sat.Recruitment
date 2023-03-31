@@ -1,17 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Sat.Recruitment.Api.Data;
-using Sat.Recruitment.Api.Interfaces;
-using Sat.Recruitment.Api.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Sat.Recruitment.Application;
+using Sat.Recruitment.Infrastructure;
 
 namespace Sat.Recruitment.Api
 {
@@ -27,11 +20,12 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+                .AddApplication()
+                .AddInfrastructure();
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddLogging();
-            services.AddScoped<IUsersRepository, UserRepository>();
-            services.AddScoped<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

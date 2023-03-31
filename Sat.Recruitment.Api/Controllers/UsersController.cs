@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sat.Recruitment.Api.Models;
+using Sat.Recruitment.Domain.Entities;
+using Sat.Recruitment.Contracts.Results;
 using Microsoft.Extensions.Logging;
-using Sat.Recruitment.Api.Interfaces;
+using Sat.Recruitment.Application.Services.Interfaces;
 
 namespace Sat.Recruitment.Api.Controllers
 {
@@ -14,12 +14,12 @@ namespace Sat.Recruitment.Api.Controllers
     {
 
         private readonly ILogger<UsersController> _logger;
-        private readonly IUsersService _usersService;
+        private readonly IUserService _userService;
 
-        public UsersController(ILogger<UsersController> logger, IUsersService usersService)
+        public UsersController(ILogger<UsersController> logger, IUserService usersService)
         {
             _logger = logger;
-            _usersService = usersService;
+            _userService = usersService;
         }
 
         [HttpPost]
@@ -27,7 +27,7 @@ namespace Sat.Recruitment.Api.Controllers
         public async Task<Result> CreateUser(User user)
         {
             _logger.LogInformation($"Add user");
-            return await _usersService.Add(user);
+            return await _userService.AddItemAsync(user);
         }
     }
 }

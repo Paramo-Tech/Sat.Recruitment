@@ -1,11 +1,15 @@
-﻿using Sat.Recruitment.Api.Models;
+﻿using Sat.Recruitment.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
-namespace Sat.Recruitment.Api.Data
+namespace Sat.Recruitment.Infrastructure.DataAccess
 {
-    public  static class DataAccess
+    public static class FileHandler
     {
+        /// <summary>
+        /// Opens the file, read each single line in the file, and then closes the file.
+        /// </summary>
         public static void ReadUsersFromFile()
         {
             var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
@@ -14,7 +18,7 @@ namespace Sat.Recruitment.Api.Data
 
             StreamReader reader = new StreamReader(fileStream);
 
-            DataContext.UserList = new System.Collections.Generic.List<User>();
+            FileContext.ListUsers = new List<User>();
 
             while (reader.Peek() >= 0)
             {
@@ -30,7 +34,7 @@ namespace Sat.Recruitment.Api.Data
                     Money = decimal.Parse(line.Split(',')[5].ToString()),
                 };
 
-                DataContext.UserList.Add(user);
+                FileContext.ListUsers.Add(user);
             }
 
             reader.Close();
@@ -45,7 +49,7 @@ namespace Sat.Recruitment.Api.Data
         {
             var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
 
-            string value = user.Name + ',' + user.Email + ',' + user.Phone + ',' + user.Address + ',' + user.UserType + ',' + 
+            string value = user.Name + ',' + user.Email + ',' + user.Phone + ',' + user.Address + ',' + user.UserType + ',' +
                            user.Money.ToString().Replace(".", "").Replace(',', '.');
 
             File.AppendAllText(path, Environment.NewLine + value);

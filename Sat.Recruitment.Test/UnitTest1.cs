@@ -1,28 +1,28 @@
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Sat.Recruitment.Api.Controllers;
-using Sat.Recruitment.Api.Data;
-using Sat.Recruitment.Api.Interfaces;
-using Sat.Recruitment.Api.Models;
-using Sat.Recruitment.Api.Services;
+using Sat.Recruitment.Domain.Entities;
 using System;
 using Xunit;
+using Sat.Recruitment.Application.Services.Interfaces;
+using Sat.Recruitment.Application.Common.Interfaces.Persistance;
+using Sat.Recruitment.Application.Services;
+using Sat.Recruitment.Infrastructure.Persistance;
 
 namespace Sat.Recruitment.Test
 {
     [CollectionDefinition("Tests", DisableParallelization = true)]
     public class UnitTest1
     {
-        private readonly UsersController _usersController;
-        private readonly IUsersService _usersService;
-        private readonly IUsersRepository _usersRepository;
+        private readonly UsersController _userController;
+        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
 
         public UnitTest1()
         {
             var _logger = new Mock<Microsoft.Extensions.Logging.ILogger<UsersController>>();
-            _usersRepository = new UserRepositoryFake();
-            _usersService = new UsersService(_usersRepository);
-            _usersController = new UsersController(_logger.Object, _usersService);
+            _userRepository = new UserRepositoryFake();
+            _userService = new UserService(_userRepository);
+            _userController = new UsersController(_logger.Object, _userService);
         }
 
         #region Create new users
@@ -36,7 +36,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.True(result.IsSuccess);
@@ -56,7 +56,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.False(result.IsSuccess);
@@ -72,7 +72,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.False(result.IsSuccess);
@@ -88,7 +88,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.False(result.IsSuccess);
@@ -104,7 +104,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.False(result.IsSuccess);
@@ -123,7 +123,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.False(result.IsSuccess);
@@ -139,7 +139,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.False(result.IsSuccess);
@@ -155,7 +155,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.False(result.IsSuccess);
@@ -171,7 +171,7 @@ namespace Sat.Recruitment.Test
             User newUser = new User() { Name = userName, Email = userEmail, Phone = userPhone, Address = userAddress, UserType = userType, Money = userMoney };
 
             //Act
-            var result = _usersController.CreateUser(newUser).Result;
+            var result = _userController.CreateUser(newUser).Result;
 
             //Assert
             Assert.False(result.IsSuccess);
@@ -192,8 +192,8 @@ namespace Sat.Recruitment.Test
             decimal expectedMoney = userMoney + (userMoney * percentage);
 
             //Act
-            UsersService _usersService = new UsersService(_usersRepository);
-            decimal actualMoney = _usersService.GetTypeUserMoneyGif(userType, userMoney);
+            UserService userService = new UserService(_userRepository);
+            decimal actualMoney = userService.GetTypeUserMoneyGif(userType, userMoney);
 
             //Assert
             Assert.Equal(expectedMoney, actualMoney);
@@ -209,8 +209,8 @@ namespace Sat.Recruitment.Test
             decimal expectedMoney = userMoney + (userMoney * percentage);
 
             //Act
-            UsersService usersService = new UsersService(_usersRepository);
-            decimal actualMoney = usersService.GetTypeUserMoneyGif(userType, userMoney);
+            UserService userService = new UserService(_userRepository);
+            decimal actualMoney = userService.GetTypeUserMoneyGif(userType, userMoney);
 
             //Assert
             Assert.Equal(expectedMoney, actualMoney);
@@ -226,8 +226,8 @@ namespace Sat.Recruitment.Test
             decimal expectedMoney = userMoney + (userMoney * percentage);
 
             //Act
-            UsersService usersService = new UsersService(_usersRepository);
-            decimal actualMoney = usersService.GetTypeUserMoneyGif(userType, userMoney);
+            UserService userService = new UserService(_userRepository);
+            decimal actualMoney = userService.GetTypeUserMoneyGif(userType, userMoney);
 
             //Assert
             Assert.Equal(expectedMoney, actualMoney);
@@ -243,8 +243,8 @@ namespace Sat.Recruitment.Test
             decimal expectedMoney = userMoney + (userMoney * percentage);
 
             //Act
-            UsersService usersService = new UsersService(_usersRepository);
-            decimal actualMoney = usersService.GetTypeUserMoneyGif(userType, userMoney);
+            UserService userService = new UserService(_userRepository);
+            decimal actualMoney = userService.GetTypeUserMoneyGif(userType, userMoney);
 
             //Assert
             Assert.Equal(expectedMoney, actualMoney);
@@ -260,8 +260,8 @@ namespace Sat.Recruitment.Test
             decimal expectedMoney = userMoney + (userMoney * percentage);
 
             //Act
-            UsersService usersService = new UsersService(_usersRepository);
-            decimal actualMoney = usersService.GetTypeUserMoneyGif(userType, userMoney);
+            UserService userService = new UserService(_userRepository);
+            decimal actualMoney = userService.GetTypeUserMoneyGif(userType, userMoney);
 
             //Assert
             Assert.Equal(expectedMoney, actualMoney);
@@ -277,8 +277,8 @@ namespace Sat.Recruitment.Test
             decimal expectedMoney = userMoney + (userMoney * percentage);
 
             //Act
-            UsersService usersService = new UsersService(_usersRepository);
-            decimal actualMoney = usersService.GetTypeUserMoneyGif(userType, userMoney);
+            UserService userService = new UserService(_userRepository);
+            decimal actualMoney = userService.GetTypeUserMoneyGif(userType, userMoney);
 
             //Assert
             Assert.Equal(expectedMoney, actualMoney);
@@ -294,8 +294,8 @@ namespace Sat.Recruitment.Test
             decimal expectedMoney = userMoney + (userMoney * percentage);
 
             //Act
-            UsersService usersService = new UsersService(_usersRepository);
-            decimal actualMoney = usersService.GetTypeUserMoneyGif(userType, userMoney);
+            UserService userService = new UserService(_userRepository);
+            decimal actualMoney = userService.GetTypeUserMoneyGif(userType, userMoney);
 
             //Assert
             Assert.Equal(expectedMoney, actualMoney);
