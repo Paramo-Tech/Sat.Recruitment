@@ -1,6 +1,4 @@
 using Application;
-using Application.Validators;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -8,15 +6,23 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
 using System;
+using WebApi;
+using Serilog.Exceptions;
+
 
 namespace Sat.Recruitment.Api
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+
+            Log.Logger = CreateSerilogLogger(configuration);
         }
 
         public IConfiguration Configuration { get; }
@@ -60,5 +66,29 @@ namespace Sat.Recruitment.Api
                 endpoints.MapControllers();
             });
         }
+
+        static Serilog.ILogger CreateSerilogLogger(IConfiguration configuration)
+        {
+            var t = "[{Timestamp:HH:mm:ss} {Level:u3}] {partitionKeyRangeId,2} {Message:lj} {Properties} {NewLine}{Exception}";
+            return new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                // Filter out ASP.NET Core infrastructre logs that are Information and below
+                .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+                .Enrich.WithProperty("Application", ProductInfo.Application)
+                .Enrich.WithProperty("ServiceProcess", ProductInfo.ProcessName)
+                .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails()
+                .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code, outputTemplate: t)
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+        }
+    }
+
+
+    public partial class Startup
+    {
+        public static readonly ProductInfo ProductInfo = ProductInfo.GetProductInfo();
     }
 }
+

@@ -1,16 +1,13 @@
 ﻿using Application.Contracts;
 using Application.Contracts.Repositories;
-using Application.Contracts.Validators;
 using Application.Models;
 using Application.Services;
-using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
-using FluentValidation.Results;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Sat.Recruitment.Test.Application
@@ -21,6 +18,7 @@ namespace Sat.Recruitment.Test.Application
         private readonly Mock<IGiftFactory> _giftFactoryMock;
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<IGiftService> _giftService;
+        private readonly Mock<ILogger<UserService>> _loggerMock;
 
         private readonly UserService _service;
 
@@ -30,8 +28,9 @@ namespace Sat.Recruitment.Test.Application
             _giftFactoryMock = new Mock<IGiftFactory>();
             _mapperMock = new Mock<IMapper>();
             _giftService = new Mock<IGiftService>();
+            _loggerMock = new Mock<ILogger<UserService>>();
 
-            _service = new UserService(_repositoryMock.Object, _giftFactoryMock.Object, _mapperMock.Object);
+            _service = new UserService(_repositoryMock.Object, _giftFactoryMock.Object, _mapperMock.Object, _loggerMock.Object);
         }
 
         [Fact]

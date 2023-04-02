@@ -5,6 +5,8 @@ using Application.Models;
 using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,26 +19,30 @@ namespace Application.Services
         private readonly IGiftFactory _factory;
         private readonly IMapper _mapper;
         private readonly UserCreationValidator _userCreationValidator;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(IUserRepository userRepository, IGiftFactory factory, IMapper mapper)
+        public UserService(IUserRepository userRepository, IGiftFactory factory, IMapper mapper, ILogger<UserService> logger)
         {
             _userRepository = userRepository;
             _userCreationValidator = new UserCreationValidator();
             _factory = factory;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<Result> Create(UserCreationDto userCreationDto)
         {
+            _logger.LogInformation("UserService.Create. Start, email: {email}", userCreationDto.Email);
             var result = _userCreationValidator.Validate(userCreationDto);
 
             if (!result.IsValid)
             {
                 var errors = string.Join(" ", result.Errors.Select(x => x.ErrorMessage));
+                _logger.LogError("UserService.Create. Validation error, errorMessage: {errors}", errors);
                 return Result.Failure(errors);
             }
 
-            var user = _mapper.Map<User>(userCreationDto);            
+            var user = _mapper.Map<User>(userCreationDto);
 
             var users = await _userRepository.GetAllAsync();
 
@@ -46,7 +52,7 @@ namespace Application.Services
 
                 if (isDuplicated)
                 {
-                    Debug.WriteLine("The user is duplicated");
+                    _logger.LogError("UserService.Create. The user is duplicated, email: {email}", userCreationDto.Email);
 
                     return Result.Failure("The user is duplicated");
                 }
@@ -58,13 +64,15 @@ namespace Application.Services
 
                 await _userRepository.CreateAsync(user);
 
-                Debug.WriteLine("User Created");
+                _logger.LogInformation("UserService.Create. The user was Created, email: {email}", userCreationDto.Email);
+
                 return Result.Success("User Created");
 
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.WriteLine("The user is duplicated");
+                _logger.LogError("UserService.Create. Error while creating an user email: {email} and exception message", userCreationDto.Email, ex.Message);
+
                 return Result.Failure("The user is duplicated");
             }
         }
