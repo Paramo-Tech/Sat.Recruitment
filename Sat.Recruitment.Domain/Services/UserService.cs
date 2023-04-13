@@ -1,0 +1,78 @@
+﻿using Sat.Recruitment.Domain.Contracts.BonusCalculation;
+using Sat.Recruitment.Domain.Contracts.Repositories;
+using Sat.Recruitment.Domain.Contracts.Services;
+using Sat.Recruitment.Domain.Model;
+using Sat.Recruitment.Domain.BonusCalculation;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Sat.Recruitment.Domain.Services
+{
+    public class UserService : IUserService
+    {
+
+
+        public IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository)
+        {
+
+            _userRepository = userRepository;
+        }
+        private decimal CalculateBonus(User user, decimal percentage)
+        {
+            var gif = user.Money * percentage;
+            return user.Money + gif;
+        }
+        private void AddingBonus(User newUser)
+        {
+
+            IBonusCalculation bonusCalculation = null;
+
+            switch (newUser.UserType)
+            {
+                case "Normal":
+                    bonusCalculation = new BonusCalculationUserNormal();
+                    break;
+                case "SuperUser":
+                    bonusCalculation = new BonusCalculationSuperUser();
+                    break;
+                case "Premiun":
+                    bonusCalculation = new BonusCalculationPremiun();
+                    break;
+            }
+
+            newUser.Money = bonusCalculation.CalculateBonus(newUser);
+        }
+
+        public async Task<ICollection<User>> GetUsersAsync()
+        {
+
+            return await _userRepository.GetUsers();
+        }
+
+        public async Task AddAsync(User user)
+        {
+            AddingBonus(user);
+            await _userRepository.AddUser(user);
+        }
+
+        public async Task<bool> ExistsAsync(User newUser)
+        {
+            var isDuplicated = false;
+            var users = await GetUsersAsync();
+            foreach (var user in users)
+            {
+                if ((user.Email == newUser.Email || user.Phone == newUser.Phone) ||
+                    (user.Name == newUser.Name && user.Address == newUser.Address))
+
+                {
+                    isDuplicated = true;
+                }
+            }
+
+            return isDuplicated;
+        }
+
+
+    }
+}

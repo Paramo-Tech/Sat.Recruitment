@@ -20,8 +20,12 @@ namespace Sat.Recruitment.Api
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
-                {
+                {   
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .ConfigureLogging(builder =>
+            {
+                builder.AddLog4Net("log4net.config");
+            });
     }
 }
