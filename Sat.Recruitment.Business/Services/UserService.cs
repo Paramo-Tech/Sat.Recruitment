@@ -21,16 +21,16 @@ namespace Sat.Recruitment.Business.Services
         /// <returns>The <see cref="ResultModel"/>.</returns>
         public ResultModel CreateUser(UserModel user)
         {
-            var errors = "";
+            var Message = "";
 
-            ValidateErrors(user, ref errors);
+            ValidateMessage(user, ref Message);
 
-            if (errors != null && errors != "")
+            if (Message != null && Message != "")
                 return new ResultModel()
                 {
                     Data = user,
                     IsSuccess = false,
-                    Errors = errors
+                    Message = Message
                 };
 
             user.Money = AssignMoney(user);
@@ -54,15 +54,15 @@ namespace Sat.Recruitment.Business.Services
             }
             reader.Close();
 
-            IsDuplicated(_users, user, ref errors);
+            IsDuplicated(_users, user, ref Message);
 
-            if(errors == "")
+            if(Message == "")
             {
                 return new ResultModel()
                 {
                     Data = user,
                     IsSuccess = true,
-                    Errors = "User Created"
+                    Message = "User Created"
                 };
             }
             else
@@ -71,7 +71,7 @@ namespace Sat.Recruitment.Business.Services
                 {
                     Data = null,
                     IsSuccess = false,
-                    Errors = errors
+                    Message = Message
                 };
             }
         }
@@ -82,33 +82,27 @@ namespace Sat.Recruitment.Business.Services
         /// Validate required properties
         /// </summary>
         /// <param name="user">The <see cref="UserModel"/> model.</param>
-        /// <param name="errors">The error variable.</param>        
-        public void ValidateErrors(UserModel user, ref string errors)
+        /// <param name="Message">The error variable.</param>        
+        private void ValidateMessage(UserModel user, ref string Message)
         {
-            if (user.Name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (user.Email == null)
-                //Validate if Email is null
-                errors += " The email is required";
-            if (user.Address == null)
-                //Validate if Address is null
-                errors += " The address is required";
-            if (user.Phone == null)
-                //Validate if Phone is null
-                errors += " The phone is required";
+            if (user.Name == "")
+                Message = "The name is required";
+            if (user.Email == "")
+                Message += " The email is required";
+            if (user.Address == "")
+                Message += " The address is required";
+            if (user.Phone == "")
+                Message += " The phone is required";
         }
 
         /// <summary>
-        /// Read users file from file
+        /// Read users from a file
         /// </summary>        
         /// <returns>The <see cref="StreamReader"/> of users.</returns>
         public StreamReader ReadUsersFromFile()
         {
             var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
-
             FileStream fileStream = new FileStream(path, FileMode.Open);
-
             StreamReader reader = new StreamReader(fileStream);
             return reader;
         }
@@ -117,8 +111,8 @@ namespace Sat.Recruitment.Business.Services
         /// Validate if a user already exists.
         /// </summary>
         /// <param name="_users">List of users <see cref="UserModel"/>.</param>
-        /// <param name="errors">The error variable.</param>        
-        public void IsDuplicated(List<UserModel> _users, UserModel userModel ,ref string errors)
+        /// <param name="Message">The error variable.</param>        
+        private void IsDuplicated(List<UserModel> _users, UserModel userModel ,ref string Message)
         {
             var isDuplicated = false;
             foreach (var user in _users)
@@ -126,7 +120,7 @@ namespace Sat.Recruitment.Business.Services
                 if ((user.Email == userModel.Email || user.Phone == userModel.Phone) || (user.Name == userModel.Name && user.Address == userModel.Address)) isDuplicated = true;
 
             }
-            if (isDuplicated) errors += "The user is duplicated";
+            if (isDuplicated) Message += "The user is duplicated";
         }
 
         /// <summary>

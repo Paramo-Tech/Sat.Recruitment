@@ -8,6 +8,6 @@ namespace Sat.Recruitment.Business.Models
     {
         public UserModel Data { get; set; }
         public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
+        public string Message { get; set; }
     }
 }
