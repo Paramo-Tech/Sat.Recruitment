@@ -1,13 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Sat.Recruitment.Api.Repository;
 using Sat.Recruitment.Domain.Contracts.Repositories;
 using Sat.Recruitment.Domain.Contracts.Services;
 using Sat.Recruitment.Domain.Services;
+using Sat.Recruitment.Repository.EF;
 using System;
 
 namespace Sat.Recruitment.Api
@@ -26,6 +27,11 @@ namespace Sat.Recruitment.Api
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddDbContext<ParamoDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                                         ef => ef.MigrationsAssembly(typeof(ParamoDbContext).Assembly.FullName)));
+            services.AddScoped<IParamoDbContext>(provider => provider.GetService<ParamoDbContext>());
+
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -56,6 +62,6 @@ namespace Sat.Recruitment.Api
             });
         }
 
-       
+
     }
 }

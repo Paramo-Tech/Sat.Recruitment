@@ -8,6 +8,7 @@ namespace Sat.Recruitment.Api.ViewModel
         public string Name { get; set; }
         
         [Required]
+        [EmailValidation]
         [EmailAddress]
         public string Email { get; set; }
         

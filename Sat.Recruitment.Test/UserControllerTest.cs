@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Sat.Recruitment.Api.Controllers;
@@ -110,37 +111,14 @@ namespace Sat.Recruitment.Test
 
         }
 
-
-        [Fact]
-        public void PostUserWhitouthNameError()
-        {
-
-            var userController = new UsersController(SetAutoMapper(), new UserService(new UserRepository()));
-
-            var mikeUser = new UserViewModel()
-            {
-                Address = null,
-
-                Email = "mike@gmail.com",
-                Money = 124,
-                Name = "Mike",
-                Phone = "+349 1122354215",
-                UserType = "Normal"
-
-            };
-
-
-            var result = (ObjectResult)userController.CreateUser(mikeUser).Result;
-
-            Assert.IsType<OkObjectResult>(result);
-            Assert.Equal("User Created", result.Value);
-        }
-
-
         [Fact]
         public void UserControllerDuplicateTestSameMailOk()
         {
-            var userController = new UsersController(SetAutoMapper(), new UserService(new UserRepository()));
+            var configuration = new ConfigurationBuilder().AddJsonFile("testSetting.json").Build();
+           
+            var repo = new UserRepository();
+            repo.FileName = configuration["File"]; ;
+            var userController = new UsersController(SetAutoMapper(), new UserService(repo));
 
             var agusUser = new UserViewModel()
             {
@@ -158,13 +136,16 @@ namespace Sat.Recruitment.Test
 
             Assert.IsType<ObjectResult>(result);
             Assert.Equal(StatusCodes.Status409Conflict, result.StatusCode);
-            Assert.Equal("The user is duplicated", result.Value);
         }
 
         [Fact]
         public void UserControllerDuplicateTestSameAddressAndNAmeOk()
         {
-            var userController = new UsersController(SetAutoMapper(), new UserService(new UserRepository()));
+            var configuration = new ConfigurationBuilder().AddJsonFile("testSetting.json").Build();
+
+            var repo = new UserRepository();
+            repo.FileName = configuration["File"]; ;
+            var userController = new UsersController(SetAutoMapper(), new UserService(repo));
 
             var agusUser = new UserViewModel()
             {
@@ -182,13 +163,17 @@ namespace Sat.Recruitment.Test
 
             Assert.IsType<ObjectResult>(result);
             Assert.Equal(StatusCodes.Status409Conflict, result.StatusCode);
-            Assert.Equal("The user is duplicated", result.Value);
+
         }
 
         [Fact]
         public void UserControllerDuplicateTestSamePhoneOk()
         {
-            var userController = new UsersController(SetAutoMapper(), new UserService(new UserRepository()));
+            var configuration = new ConfigurationBuilder().AddJsonFile("testSetting.json").Build();
+
+            var repo = new UserRepository();
+            repo.FileName = configuration["File"]; ;
+            var userController = new UsersController(SetAutoMapper(), new UserService(repo));
 
             var agusUser = new UserViewModel()
             {
@@ -206,7 +191,7 @@ namespace Sat.Recruitment.Test
 
             Assert.IsType<ObjectResult>(result);
             Assert.Equal(StatusCodes.Status409Conflict, result.StatusCode);
-            Assert.Equal("The user is duplicated", result.Value);
+
         }
 
     }

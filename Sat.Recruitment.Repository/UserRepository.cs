@@ -13,11 +13,18 @@ namespace Sat.Recruitment.Api.Repository
     {
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
+        private string _fileName = "/Files/Users.txt";
+
+        public string FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
+        }
         public async Task<List<User>> GetUsers()
         {
 
             List<User> users = new List<User>();
-            var path = Directory.GetCurrentDirectory() + "/Files/Users2.txt";
+            var path = Directory.GetCurrentDirectory() + FileName;
             using (StreamReader reader = new StreamReader(new FileStream(path, FileMode.Open)))
             {
                 while (reader.Peek() >= 0)
@@ -41,8 +48,8 @@ namespace Sat.Recruitment.Api.Repository
 
         public string ConvertirUsuarioToString(User user)
         {
-           return string.Format("{0},{1},{2},{3},{4},{5}", user.Name, user.Email, user.Phone, user.Address, user.UserType, user.Money); 
-            
+            return string.Format("{0},{1},{2},{3},{4},{5}", user.Name, user.Email, user.Phone, user.Address, user.UserType, user.Money);
+
         }
         public async Task AddUser(User user)
         {

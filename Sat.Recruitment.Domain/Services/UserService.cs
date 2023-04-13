@@ -40,8 +40,10 @@ namespace Sat.Recruitment.Domain.Services
                     bonusCalculation = new BonusCalculationPremiun();
                     break;
             }
-
-            newUser.Money = bonusCalculation.CalculateBonus(newUser);
+            if (bonusCalculation != null)
+            {
+                newUser.Money = bonusCalculation.CalculateBonus(newUser);
+            }
         }
 
         public async Task<ICollection<User>> GetUsersAsync()
@@ -62,8 +64,8 @@ namespace Sat.Recruitment.Domain.Services
             var users = await GetUsersAsync();
             foreach (var user in users)
             {
-                if ((user.Email == newUser.Email || user.Phone == newUser.Phone) ||
-                    (user.Name == newUser.Name && user.Address == newUser.Address))
+                if ((user.Email.ToLower() == newUser.Email.ToLower() || user.Phone == newUser.Phone) ||
+                    (user.Name.ToLower() == newUser.Name.ToLower() && user.Address.ToLower() == newUser.Address.ToLower()))
 
                 {
                     isDuplicated = true;

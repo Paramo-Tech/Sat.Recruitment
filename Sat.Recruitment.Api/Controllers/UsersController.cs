@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sat.Recruitment.Api.ViewModel;
 using Sat.Recruitment.Domain.Contracts.Services;
 using Sat.Recruitment.Domain.Model;
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
@@ -25,7 +22,6 @@ namespace Sat.Recruitment.Api.Controllers
         {
             _userService = userService;
             _mapper = mapper;
-
         }
 
         [HttpPost]
@@ -42,7 +38,7 @@ namespace Sat.Recruitment.Api.Controllers
                 if (await _userService.ExistsAsync(user))
                 {
                     log.Error("User Duplicated" + JsonConvert.SerializeObject(user));
-                    return StatusCode(StatusCodes.Status409Conflict, "The user is duplicated");
+                    return StatusCode(StatusCodes.Status409Conflict, "The user is already in the list");
                 }
                 else
                 {
