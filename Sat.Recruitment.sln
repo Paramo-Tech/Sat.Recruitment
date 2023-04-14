@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30709.64
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api", "Sat.Recruitment.Api\Sat.Recruitment.Api.csproj", "{1F342EA2-E7B1-4E53-AB93-9C62288D3FB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Domain", "Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj", "{AE74F17E-7749-4A39-9B1D-437547BB9E9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Repository", "Sat.Recruitment.Repository\Sat.Recruitment.Repository.csproj", "{78E1D575-E2D7-4235-BB32-B671478267DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Repository.EF", "Sat.Recruitment.Repository.EF\Sat.Recruitment.Repository.EF.csproj", "{3C41D9D5-5D48-47CB-A59D-0F08EB75C581}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE74F17E-7749-4A39-9B1D-437547BB9E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE74F17E-7749-4A39-9B1D-437547BB9E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE74F17E-7749-4A39-9B1D-437547BB9E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE74F17E-7749-4A39-9B1D-437547BB9E9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E1D575-E2D7-4235-BB32-B671478267DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E1D575-E2D7-4235-BB32-B671478267DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E1D575-E2D7-4235-BB32-B671478267DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E1D575-E2D7-4235-BB32-B671478267DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C41D9D5-5D48-47CB-A59D-0F08EB75C581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C41D9D5-5D48-47CB-A59D-0F08EB75C581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C41D9D5-5D48-47CB-A59D-0F08EB75C581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C41D9D5-5D48-47CB-A59D-0F08EB75C581}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
