@@ -1,15 +1,17 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
+using Sat.Recruitment.Api.Validators;
+using Sat.Recruitment.Application.Contracts.Application;
+using Sat.Recruitment.Application.Contracts.Persistence;
+using Sat.Recruitment.Application.Dto;
+using Sat.Recruitment.Application.Services;
+using Sat.Recruitment.Infrastructure.Persistence;
 
 namespace Sat.Recruitment.Api
 {
@@ -25,8 +27,17 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
+            services.AddFluentValidationAutoValidation();
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sat.Recruitment.Api", Version = "v1" });
+            });
+            services.AddTransient<IValidator<UserDto>, UserValidator>();
+            services.AddScoped(typeof(IUserService), typeof(UserServices));
+            services.AddScoped(typeof(IUserRepository), typeof(UserPersistence));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
