@@ -30,8 +30,6 @@ namespace Sat.Recruitment.Api
             services.AddDbContext<ParamoDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                                          ef => ef.MigrationsAssembly(typeof(ParamoDbContext).Assembly.FullName)));
-            services.AddScoped<IParamoDbContext>(provider => provider.GetService<ParamoDbContext>());
-
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

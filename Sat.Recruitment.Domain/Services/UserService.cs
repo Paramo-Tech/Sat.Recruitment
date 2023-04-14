@@ -18,11 +18,7 @@ namespace Sat.Recruitment.Domain.Services
 
             _userRepository = userRepository;
         }
-        private decimal CalculateBonus(User user, decimal percentage)
-        {
-            var gif = user.Money * percentage;
-            return user.Money + gif;
-        }
+       
         private void AddingBonus(User newUser)
         {
 

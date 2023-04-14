@@ -2,8 +2,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Moq;
 using Sat.Recruitment.Api.Controllers;
 using Sat.Recruitment.Api.Maps;
 using Sat.Recruitment.Api.Repository;
@@ -139,6 +137,33 @@ namespace Sat.Recruitment.Test
         }
 
         [Fact]
+        public void UserControllerDuplicateTestSameMailLowerCaseOk()
+        {
+            var configuration = new ConfigurationBuilder().AddJsonFile("testSetting.json").Build();
+
+            var repo = new UserRepository();
+            repo.FileName = configuration["File"]; ;
+            var userController = new UsersController(SetAutoMapper(), new UserService(repo));
+
+            var agusUser = new UserViewModel()
+            {
+                Address = "Av. Juan G",
+                Email = "agustina@gmail.com",
+                Money = 124,
+                Name = "Agustina",
+                Phone = "+349 1122354215",
+                UserType = "Normal"
+
+            };
+
+            var result = (ObjectResult)userController.CreateUser(agusUser).Result;
+
+
+            Assert.IsType<ObjectResult>(result);
+            Assert.Equal(StatusCodes.Status409Conflict, result.StatusCode);
+        }
+
+        [Fact]
         public void UserControllerDuplicateTestSameAddressAndNAmeOk()
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("testSetting.json").Build();
@@ -165,6 +190,8 @@ namespace Sat.Recruitment.Test
             Assert.Equal(StatusCodes.Status409Conflict, result.StatusCode);
 
         }
+
+       
 
         [Fact]
         public void UserControllerDuplicateTestSamePhoneOk()

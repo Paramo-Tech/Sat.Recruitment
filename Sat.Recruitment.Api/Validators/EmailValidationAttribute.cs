@@ -5,6 +5,13 @@ public class EmailValidationAttribute : ValidationAttribute
 {
     private const string EmailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
 
+    /// <summary>
+    /// Checks if an email it is valid, in case that the string is null 
+    /// return true, in case that you need a required string, you should
+    /// use the required validator too.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public override bool IsValid(object value)
     {
         if (value == null)

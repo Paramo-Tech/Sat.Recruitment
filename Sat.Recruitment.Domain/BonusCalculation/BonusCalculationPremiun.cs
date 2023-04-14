@@ -8,8 +8,6 @@ namespace Sat.Recruitment.Domain.BonusCalculation
 {
     public class BonusCalculationPremiun : IBonusCalculation
     {
-
-
         public decimal CalculateBonus(User user)
         {
             decimal percentageToIncreaseMoney = 0;

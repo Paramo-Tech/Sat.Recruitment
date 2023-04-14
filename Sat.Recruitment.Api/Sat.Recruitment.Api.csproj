@@ -26,7 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj" />
     <ProjectReference Include="..\Sat.Recruitment.Repository.EF\Sat.Recruitment.Repository.EF.csproj" />
-    <ProjectReference Include="..\Sat.Recruitment.Repository\Sat.Recruitment.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>

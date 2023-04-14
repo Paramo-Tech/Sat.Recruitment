@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Repository.EF
 {
-    public class ParamoDbContext : DbContext, IParamoDbContext
+    /// <summary>
+    /// Entity Framework Context
+    /// </summary>
+    public class ParamoDbContext : DbContext
     {
         public ParamoDbContext(DbContextOptions<ParamoDbContext> options)
            : base(options)

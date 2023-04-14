@@ -20,8 +20,6 @@ namespace Sat.Recruitment.Repository.EF
         {
             await _paramoDbContext.Users.AddAsync(user);
             await _paramoDbContext.SaveChangesAsync();
-
-
         }
 
         public async Task<List<User>> GetUsers()

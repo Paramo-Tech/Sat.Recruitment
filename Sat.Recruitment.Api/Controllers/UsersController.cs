@@ -25,6 +25,7 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpPost]
+        
         public async Task<ActionResult> CreateUser([FromBody] UserViewModel userViewModel)
         {
             try

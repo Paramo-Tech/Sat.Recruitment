@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Repository
 {
+    /// <summary>
+    /// Mocking Repository
+    /// </summary>
     public class UserRepository : IUserRepository
     {
         private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
@@ -22,7 +25,6 @@ namespace Sat.Recruitment.Api.Repository
         }
         public async Task<List<User>> GetUsers()
         {
-
             List<User> users = new List<User>();
             var path = Directory.GetCurrentDirectory() + FileName;
             using (StreamReader reader = new StreamReader(new FileStream(path, FileMode.Open)))

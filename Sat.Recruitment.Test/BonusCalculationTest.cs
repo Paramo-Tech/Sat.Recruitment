@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Sat.Recruitment.Domain.BonusCalculation;
+﻿using Sat.Recruitment.Domain.BonusCalculation;
 using Sat.Recruitment.Domain.Model;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Sat.Recruitment.Test

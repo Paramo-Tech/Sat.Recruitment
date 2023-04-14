@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Api\Sat.Recruitment.Api.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Repository\Sat.Recruitment.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>

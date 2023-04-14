@@ -7,15 +7,7 @@ using System.Text;
 namespace Sat.Recruitment.Domain.BonusCalculation
 {
     public class BonusCalculationUserNormal : IBonusCalculation
-    {
-        private User _user;
-
-
-        private decimal CalculateBonus(User user, decimal percentage)
-        {
-            var gif = user.Money * percentage;
-            return user.Money + gif;
-        }
+    {   
         public decimal CalculateBonus(User user)
         {
             decimal percentageToIncreaseMoney = 0;
