@@ -8,6 +8,5 @@ namespace Sat.Recruitment.Business.Contracts
     {
         decimal AssignMoney(UserModel user);
         ResultModel CreateUser(UserModel user);
-        StreamReader ReadUsersFromFile();
     }
 }

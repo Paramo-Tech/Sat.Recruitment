@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Text;
 
 namespace Sat.Recruitment.Business.Services
@@ -34,25 +35,10 @@ namespace Sat.Recruitment.Business.Services
                 };
 
             user.Money = AssignMoney(user);
-            var reader = ReadUsersFromFile();
+            ReadUsersFromFile();
 
             user.Email = NormalizeEmail(user.Email);
-
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var userModel = new UserModel
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(userModel);
-            }
-            reader.Close();
+            
 
             IsDuplicated(_users, user, ref Message);
 
@@ -99,12 +85,24 @@ namespace Sat.Recruitment.Business.Services
         /// Read users from a file
         /// </summary>        
         /// <returns>The <see cref="StreamReader"/> of users.</returns>
-        public StreamReader ReadUsersFromFile()
+        public virtual void ReadUsersFromFile()
         {
             var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
-            FileStream fileStream = new FileStream(path, FileMode.Open);
-            StreamReader reader = new StreamReader(fileStream);
-            return reader;
+            var text = File.ReadAllText(path);
+            var lines = text.Split('\n');
+            foreach (var line in lines)
+            {
+                var userModel = new UserModel
+                {
+                    Name = line.Split(',')[0].ToString(),
+                    Email = line.Split(',')[1].ToString(),
+                    Phone = line.Split(',')[2].ToString(),
+                    Address = line.Split(',')[3].ToString(),
+                    UserType = line.Split(',')[4].ToString(),
+                    Money = decimal.Parse(line.Split(',')[5].ToString()),
+                };
+                _users.Add(userModel);
+            }
         }
 
         /// <summary>
