@@ -39,7 +39,6 @@ namespace Sat.Recruitment.Business.Services
 
             user.Email = NormalizeEmail(user.Email);
             
-
             IsDuplicated(_users, user, ref Message);
 
             if(Message == "")
