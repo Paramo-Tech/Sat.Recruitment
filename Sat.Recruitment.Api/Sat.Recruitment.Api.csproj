@@ -10,6 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.Business.Models\Sat.Recruitment.Business.Models.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Business\Sat.Recruitment.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Files\Users.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
