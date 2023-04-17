@@ -1,10 +1,8 @@
 using System;
 using System.Dynamic;
-
 using Microsoft.AspNetCore.Mvc;
-
 using Sat.Recruitment.Api.Controllers;
-
+using Sat.Recruitment.Api.Entities.Dto;
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -17,10 +15,19 @@ namespace Sat.Recruitment.Test
         {
             var userController = new UsersController();
 
-            var result = userController.CreateUser("Mike", "mike@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
+            var userDto = new UserDTO
+            {
+                name = "Mike",
+                email = "mike@gmail.com",
+                address = "Av. Juan G",
+                phone = "+349 1122354215",
+                userType = "Normal",
+                money = 124
+            };
 
+            var result = userController.CreateUser(userDto);
 
-            Assert.Equal(true, result.IsSuccess);
+            Assert.True(result.IsSuccess);
             Assert.Equal("User Created", result.Errors);
         }
 
@@ -29,10 +36,20 @@ namespace Sat.Recruitment.Test
         {
             var userController = new UsersController();
 
-            var result = userController.CreateUser("Agustina", "Agustina@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
+            var userDto = new UserDTO
+            {
+                name = "Agustina",
+                email = "Agustina@gmail.com",
+                address = "Av. Juan G",
+                phone = "+349 1122354215",
+                userType = "Normal",
+                money = 124
+            };
+
+            var result = userController.CreateUser(userDto);
 
 
-            Assert.Equal(false, result.IsSuccess);
+            Assert.False(result.IsSuccess);
             Assert.Equal("The user is duplicated", result.Errors);
         }
     }
