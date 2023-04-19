@@ -27,8 +27,8 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/create-User")]
-        public async Task<Result<UserDto>> CreateUser(UserDto request)
+        [Route("api/[controller]")]
+        public async Task<IActionResult> CreateUser(UserDto request)
         {
 
             try
@@ -36,27 +36,29 @@ namespace Sat.Recruitment.Api.Controllers
                 var user = this._mapper.Map<USER>(request);
                 var result = await this._userService.Create(user);
                 if (result != _success)
-                    return new Result<UserDto>(null)
+                {
+                    return BadRequest(new Result<UserDto>(null)
                     {
                         IsSuccess = false,
                         Message = "The User is duplicated"
-                    };
+                    });
+                }
             }
             catch
             {
                 Debug.WriteLine("The User is duplicated");
-                return new Result<UserDto>(null)
+                return BadRequest(new Result<UserDto>(null)
                 {
                     IsSuccess = false,
                     Message = "The User is duplicated"
-                };
+                });
             }
 
-            return new Result<UserDto>(null)
+            return CreatedAtAction(nameof(CreateUser), new Result<UserDto>(null)
             {
                 IsSuccess = true,
                 Message = "User Created"
-            };
+            });
         }
 
 
