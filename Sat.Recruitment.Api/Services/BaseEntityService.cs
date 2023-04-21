@@ -13,7 +13,7 @@ namespace Sat.Recruitment.Api.Services
             _fileHelper = new FileHelper(FileName);
         }
 
-        public abstract Entity FormatEntity(string[] lines);
+        protected abstract Entity FormatEntity(string[] lines);
 
         public abstract bool Create(Entity entity);
 

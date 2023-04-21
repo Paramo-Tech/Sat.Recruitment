@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Sat.Recruitment.Api.Services
 {
-    public class UserService : BaseEntityService<User>
+    public class UserService : BaseEntityService<User>, IUserService
     {
         protected override string FileName => "Users";
 
@@ -15,7 +15,7 @@ namespace Sat.Recruitment.Api.Services
             return !users.Any(u => u.Email == entity.Email || u.Phone == entity.Phone || (u.Name == entity.Address && u.Address == entity.Address));
         }
 
-        public override User FormatEntity(string[] fields)
+        protected override User FormatEntity(string[] fields)
         {
             return new User
             {

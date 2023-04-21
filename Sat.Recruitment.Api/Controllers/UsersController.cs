@@ -13,11 +13,11 @@ namespace Sat.Recruitment.Api.Controllers
     public partial class UsersController : ControllerBase
     {
 
-        //private readonly List<User> _users = new List<User>();
-        private UserService _service;
-        public UsersController()
+        private readonly IUserService _service;
+
+        public UsersController(IUserService userService)
         {
-            _service = new UserService();
+            _service = userService;
         }
 
         [HttpPost]
