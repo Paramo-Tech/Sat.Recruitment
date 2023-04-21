@@ -25,6 +25,7 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpPost]
+        [Obsolete("Este método está obsoleto, utilice en su lugar la v2 de users.")]
         [Route("/create-user")]
         public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
         {
