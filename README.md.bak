@@ -49,8 +49,3 @@ And once you have finished the refactoring you can send us:
 
 
 ## Solution
-
-* The username and password is paramotech, you can see the credentials, SecretKey and ConnectionDb in 'User Secrets' section
-* You can use SQL Server database or localdb, just run the command 'update-database'
-* Use Sat.Recruitment.Token in order to get a valid jwt
-* Authorize the users api v2 with the json web token of Sat.Recruitment.Token
