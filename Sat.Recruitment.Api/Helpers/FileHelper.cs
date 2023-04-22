@@ -16,17 +16,25 @@ namespace Sat.Recruitment.Api.Helpers
 
         public List<string> ReadFromFile()
         {
-            var lines = new List<string>();
-            var path = Directory.GetCurrentDirectory() + string.Format("/Files/{0}.txt", _fileName);
-            using (StreamReader sr = new StreamReader(path))
+            try
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                var lines = new List<string>();
+                var path = Directory.GetCurrentDirectory() + string.Format("/Files/{0}.txt", _fileName);
+                using (StreamReader sr = new StreamReader(path))
                 {
-                    lines.Add(line);
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        lines.Add(line);
+                    }
                 }
+                return lines;
             }
-            return lines;
+            catch (Exception e)
+            {
+
+                throw new Exception("Error while getting the file", e);
+            }
         }
 
     }

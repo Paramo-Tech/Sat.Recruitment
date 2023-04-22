@@ -15,20 +15,7 @@ namespace Sat.Recruitment.Api.Models
 
         public User()
         {
-            switch (this.UserType)
-            {
-                case UserType.Normal:
-                    _moneyStrategy = new NormalUserMoneyStrategy();
-                    break;
-                case UserType.SuperUser:
-                    _moneyStrategy = new SuperUserMoneyStrategy();
-                    break;
-                case UserType.Premium:
-                    _moneyStrategy = new PremiumUserMoneyStrategy();
-                    break;
-                default:
-                    throw new System.Exception("Invalid User Type");
-            }
+
 
         }
 
@@ -38,7 +25,8 @@ namespace Sat.Recruitment.Api.Models
         [EmailAddress]
         public string Email
         {
-            get {
+            get
+            {
                 var aux = _email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
                 var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
@@ -59,7 +47,24 @@ namespace Sat.Recruitment.Api.Models
         [Required]
         public decimal Money
         {
-            get { return _money + _moneyStrategy.CalculateAdditionalMoney(_money); }
+            get
+            {
+                switch (this.UserType)
+                {
+                    case UserType.Normal:
+                        _moneyStrategy = new NormalUserMoneyStrategy();
+                        break;
+                    case UserType.SuperUser:
+                        _moneyStrategy = new SuperUserMoneyStrategy();
+                        break;
+                    case UserType.Premium:
+                        _moneyStrategy = new PremiumUserMoneyStrategy();
+                        break;
+                    default:
+                        throw new System.Exception("Invalid User Type");
+                }
+                return _money + _moneyStrategy.CalculateAdditionalMoney(_money);
+            }
             set { _money = value; }
         }
     }
