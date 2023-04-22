@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sat.Recruitment.Api.Helpers;
 using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Services;
 using Serilog;
@@ -31,6 +32,10 @@ namespace Sat.Recruitment.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(ErrorLoggingFilter));
+            });
             services.AddSwaggerGen();
             services.AddControllers().AddJsonOptions(opt =>
             {

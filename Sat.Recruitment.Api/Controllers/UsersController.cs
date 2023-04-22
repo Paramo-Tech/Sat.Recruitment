@@ -3,6 +3,7 @@ using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Services;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Sat.Recruitment.Api.Helpers;
 
 namespace Sat.Recruitment.Api.Controllers
 {
@@ -33,12 +34,13 @@ namespace Sat.Recruitment.Api.Controllers
             if (_service.Create(newUser))
             {
                 _logger.LogInformation("User Created");
-                return Ok("User Created");
+                return Ok(new { message = "User Created" });
             }
             _logger.LogWarning("The user is duplicated");
             return Conflict("The user is duplicated");
 
         }
+
     }
 
 }
