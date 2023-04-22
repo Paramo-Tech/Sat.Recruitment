@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Sat.Recruitment.Api.Helpers;
 using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Services;
@@ -53,7 +54,10 @@ namespace Sat.Recruitment.Api
                 loggingBuilder.AddSerilog(dispose: true);
             });
             services.AddScoped<IUserService, UserService>();
-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sat.Recruitment", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,12 +69,11 @@ namespace Sat.Recruitment.Api
             }
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sat.Recruitment v1");
             });
+
             app.UseRouting();
 
             app.UseAuthorization();

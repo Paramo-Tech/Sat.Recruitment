@@ -27,7 +27,7 @@ namespace Sat.Recruitment.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogError("BadRequest");
+                _logger.LogWarning("BadRequest");
                 return BadRequest(ModelState);
             }
 
@@ -37,7 +37,7 @@ namespace Sat.Recruitment.Api.Controllers
                 return Ok(new { message = "User Created" });
             }
             _logger.LogWarning("The user is duplicated");
-            return Conflict("The user is duplicated");
+            return Conflict(new { message = "The user is duplicated" });
 
         }
 
