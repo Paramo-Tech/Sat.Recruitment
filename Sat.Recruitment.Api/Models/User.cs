@@ -1,5 +1,6 @@
 ﻿using Sat.Recruitment.Api.Enums;
 using Sat.Recruitment.Api.Strategies;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sat.Recruitment.Api.Models
@@ -37,7 +38,15 @@ namespace Sat.Recruitment.Api.Models
         [EmailAddress]
         public string Email
         {
-            get { return _email; }
+            get {
+                var aux = _email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+
+                var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+
+                aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+
+                return string.Join("@", new string[] { aux[0], aux[1] });
+            }
             set { _email = value; }
         }
         [Required]
@@ -50,8 +59,8 @@ namespace Sat.Recruitment.Api.Models
         [Required]
         public decimal Money
         {
-            get { return _money;  }
-            set { _money = value + _moneyStrategy.CalculateAdditionalMoney(value); ; }
+            get { return _money + _moneyStrategy.CalculateAdditionalMoney(_money); }
+            set { _money = value; }
         }
     }
 }

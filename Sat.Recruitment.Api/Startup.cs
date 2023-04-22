@@ -7,8 +7,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Services;
+using Serilog;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -32,6 +35,17 @@ namespace Sat.Recruitment.Api
             services.AddControllers().AddJsonOptions(opt =>
             {
                 opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+            var logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Logs", "log-.txt");
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddSerilog(dispose: true);
             });
             services.AddScoped<IUserService, UserService>();
 

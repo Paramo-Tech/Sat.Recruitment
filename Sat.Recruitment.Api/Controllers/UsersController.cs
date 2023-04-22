@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sat.Recruitment.Api.Models;
 using Sat.Recruitment.Api.Services;
-using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Sat.Recruitment.Api.Controllers
 {
@@ -13,11 +12,13 @@ namespace Sat.Recruitment.Api.Controllers
     public partial class UsersController : ControllerBase
     {
 
+        private readonly ILogger<UsersController> _logger;
         private readonly IUserService _service;
 
-        public UsersController(IUserService userService)
+        public UsersController(ILogger<UsersController> logger, IUserService userService)
         {
             _service = userService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -25,31 +26,19 @@ namespace Sat.Recruitment.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogError("BadRequest");
                 return BadRequest(ModelState);
             }
 
-
             if (_service.Create(newUser))
             {
-                return Ok(new Result
-                {
-                    IsSuccess = true,
-                    Errors = "User Created"
-                });
+                _logger.LogInformation("User Created");
+                return Ok("User Created");
             }
-            return Ok(new Result
-            {
-                IsSuccess = false,
-                Errors = "The user is duplicated"
-            });
+            _logger.LogWarning("The user is duplicated");
+            return Conflict("The user is duplicated");
 
         }
-    }
-
-    public class Result
-    {
-        public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
     }
 
 }
