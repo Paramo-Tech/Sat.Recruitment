@@ -1,15 +1,16 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Sat.Recruitment.Business.User.CreateUser;
+using Sat.Recruitment.Persistance;
+using Sat.Recruitment.Persistence.Interfaces;
+using Sat.Recruitment.Persistence.Repositories;
+using System.Reflection;
 
 namespace Sat.Recruitment.Api
 {
@@ -25,8 +26,13 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<SatRecruitmentDBContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                                          ef => ef.MigrationsAssembly(typeof(SatRecruitmentDBContext).Assembly.FullName)));
+            services.AddTransient<IUserFileRepository, UserFileRepository>();
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateUserCommandHandler).Assembly));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +51,7 @@ namespace Sat.Recruitment.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
