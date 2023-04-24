@@ -1,12 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.DTOs\Sat.Recruitment.DTOs.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.EF\Sat.Recruitment.EF.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Services\Sat.Recruitment.Services.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Validations\Sat.Recruitment.Validations.csproj" />
   </ItemGroup>
 
   <ItemGroup>
