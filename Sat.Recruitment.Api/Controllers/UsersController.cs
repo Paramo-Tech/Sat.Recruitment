@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.InterfacesApplication;
+using Infraestructure.dto;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using System;
@@ -14,19 +16,34 @@ namespace Sat.Recruitment.Api.Controllers
         public string Errors { get; set; }
     }
 
+
+
+
     [ApiController]
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
     {
-
+        private readonly IUserUseCase _userUseCase; // USE THIS INTERFACE
         private readonly List<User> _users = new List<User>();
-        public UsersController()
+        public UsersController(IUserUseCase userUseCase)
         {
+            _userUseCase = userUseCase;
         }
+
 
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
+        public async Task<Result> CreateUser(UserDto userRequest)
+        {
+            return new Result()
+            {
+                IsSuccess = true,
+                Errors = "User Created"
+            };
+        }
+
+        [HttpPost]
+        public async Task<Result> CreateUser2(string name, string email, string address, string phone, string userType, string money)
         {
             var errors = "";
 
