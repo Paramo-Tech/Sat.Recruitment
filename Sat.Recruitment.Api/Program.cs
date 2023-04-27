@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sat.Recruitment.Application;
 using Sat.Recruitment.Infrastructure;
+using Sat.Recruitment.Infrastructure.Middlewares;
 using Sat.Recruitment.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,7 +38,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

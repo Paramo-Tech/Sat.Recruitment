@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Sat.Recruitment.Application.Common.Models;
 
 namespace Sat.Recruitment.Application.Common.Bahaviors;
 

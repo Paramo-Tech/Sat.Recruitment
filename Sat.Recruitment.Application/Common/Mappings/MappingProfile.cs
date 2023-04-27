@@ -12,40 +12,22 @@ public class MappingProfile : Profile
 
     private void ApplyMappingsFromAssembly(Assembly assembly)
     {
-        var mapFromType = typeof(IMapFrom<>);
-
-        var mappingMethodName = nameof(IMapFrom<object>.Mapping);
-
-        bool HasInterface(Type t) => t.IsGenericType && t.GetGenericTypeDefinition() == mapFromType;
-
-        var types = assembly.GetExportedTypes().Where(t => t.GetInterfaces().Any(HasInterface)).ToList();
-
-        var argumentTypes = new Type[] { typeof(Profile) };
+        var types = assembly.GetExportedTypes()
+                .Where(t => t.GetInterfaces().Any(i =>
+                    i.IsGenericType
+                    && (i.GetGenericTypeDefinition() == typeof(IMapFrom<>)
+                    || i.GetGenericTypeDefinition() == typeof(IMapTo<>))))
+                .ToList();
 
         foreach (var type in types)
         {
             var instance = Activator.CreateInstance(type);
 
-            var methodInfo = type.GetMethod(mappingMethodName);
+            var methodInfo = type.GetMethod("Mapping")
+                ?? (type.GetInterface("IMapFrom`1") ?? type.GetInterface("IMapTo`1")!).GetMethod("Mapping");
 
-            if (methodInfo != null)
-            {
-                methodInfo.Invoke(instance, new object[] { this });
-            }
-            else
-            {
-                var interfaces = type.GetInterfaces().Where(HasInterface).ToList();
+            methodInfo?.Invoke(instance, new object[] { this });
 
-                if (interfaces.Count > 0)
-                {
-                    foreach (var @interface in interfaces)
-                    {
-                        var interfaceMethodInfo = @interface.GetMethod(mappingMethodName, argumentTypes);
-
-                        interfaceMethodInfo?.Invoke(instance, new object[] { this });
-                    }
-                }
-            }
         }
     }
 }

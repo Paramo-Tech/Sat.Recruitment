@@ -4,7 +4,7 @@ using Sat.Recruitment.Domain.Entities;
 
 namespace Sat.Recruitment.Infrastructure.Persistence
 {
-    public class SatDbContext : DbContext, IDbContext
+    public partial class SatDbContext : DbContext, IDbContext
     {
         public SatDbContext()
         {
@@ -27,6 +27,10 @@ namespace Sat.Recruitment.Infrastructure.Persistence
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

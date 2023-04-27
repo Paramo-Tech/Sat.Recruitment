@@ -48,11 +48,9 @@ namespace Sat.Recruitment.Infrastructure.Persistence
 
         public async Task TrySeedAsync()
         {
-            if (_context.Users.Any())
+            if (!_context.Users.Any())
             {
                 var reader = ReadUsersFromFile();
-                List<User> _users = new();
-
                 while (reader.Peek() >= 0)
                 {
                     var line = reader.ReadLineAsync().Result;
@@ -65,9 +63,10 @@ namespace Sat.Recruitment.Infrastructure.Persistence
                         UserType = line.Split(',')[4].ToString(),
                         Money = decimal.Parse(line.Split(',')[5].ToString()),
                     };
-                    _users.Add(user);
+                    _context.Users.Add(user);
                 }
                 reader.Close();
+                await _context.SaveChangesAsync();
             }
         }
 

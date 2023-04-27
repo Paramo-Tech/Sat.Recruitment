@@ -2,6 +2,8 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Sat.Recruitment.Application.Common.Bahaviors;
+using Sat.Recruitment.Application.Common.Interfaces;
+using Sat.Recruitment.Application.Services;
 using System.Reflection;
 
 namespace Sat.Recruitment.Application
@@ -16,6 +18,8 @@ namespace Sat.Recruitment.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
+            services.AddScoped<IMoneyCalculatorService, MoneyCalculatorService>();
+            services.AddScoped<IEmailHelper, EmailHelper>();
             return services;
         }
     }
