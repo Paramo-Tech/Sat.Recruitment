@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
+using Sat.Recruitment.Application.Common.Models;
+using Sat.Recruitment.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,15 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
-    public class Result
-    {
-        public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
-    }
-
-    [ApiController]
-    [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    public partial class UsersController : ApiControllerBase
     {
 
         private readonly List<User> _users = new List<User>();
@@ -28,17 +21,6 @@ namespace Sat.Recruitment.Api.Controllers
         [Route("/create-user")]
         public async Task<Result> CreateUser(string name, string email, string address, string phone, string userType, string money)
         {
-            var errors = "";
-
-            ValidateErrors(name, email, address, phone, ref errors);
-
-            if (errors != null && errors != "")
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
-
             var newUser = new User
             {
                 Name = name,
@@ -87,7 +69,6 @@ namespace Sat.Recruitment.Api.Controllers
             }
 
 
-            var reader = ReadUsersFromFile();
 
             //Normalize email
             var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
@@ -98,21 +79,6 @@ namespace Sat.Recruitment.Api.Controllers
 
             newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
 
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var user = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(user);
-            }
-            reader.Close();
             try
             {
                 var isDuplicated = false;
@@ -142,7 +108,7 @@ namespace Sat.Recruitment.Api.Controllers
                     return new Result()
                     {
                         IsSuccess = true,
-                        Errors = "User Created"
+                        Message = "User Created"
                     };
                 }
                 else
@@ -152,7 +118,7 @@ namespace Sat.Recruitment.Api.Controllers
                     return new Result()
                     {
                         IsSuccess = false,
-                        Errors = "The user is duplicated"
+                        Message = "The user is duplicated"
                     };
                 }
             }
@@ -162,41 +128,15 @@ namespace Sat.Recruitment.Api.Controllers
                 return new Result()
                 {
                     IsSuccess = false,
-                    Errors = "The user is duplicated"
+                    Message = "The user is duplicated"
                 };
             }
 
             return new Result()
             {
                 IsSuccess = true,
-                Errors = "User Created"
+                Message = "User Created"
             };
         }
-
-        //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
-        {
-            if (name == null)
-                //Validate if Name is null
-                errors = "The name is required";
-            if (email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
-            if (address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
-            if (phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
-        }
-    }
-    public class User
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
     }
 }
