@@ -2,10 +2,12 @@ using Application.Interfaces;
 using Application.InterfacesApplication;
 using Application.UseCases.user;
 using FluentValidation.AspNetCore;
+using Infraestructure.Configdb;
 using Infraestructure.persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,7 +38,12 @@ namespace Sat.Recruitment.Api
             services.AddScoped<IUserDbContext, UserDbContext>();
             services.AddScoped<IUserUseCase, User>();
 
-            
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            services.AddDbContext<ApiDbContext>(options =>
+            options.UseNpgsql(connectionString));
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

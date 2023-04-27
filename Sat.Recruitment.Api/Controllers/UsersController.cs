@@ -30,6 +30,13 @@ namespace Sat.Recruitment.Api.Controllers
             _userUseCase = userUseCase;
         }
 
+        [HttpGet]
+        [Route("/test")]
+        public async Task<IActionResult> Index()
+        {
+            return Ok("This work ok");
+        }
+
 
         [HttpPost]
         [Route("/create-user")]

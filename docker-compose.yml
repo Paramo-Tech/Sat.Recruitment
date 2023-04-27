@@ -1,0 +1,39 @@
+version: '3.4'
+
+
+networks:
+  sat.recruitment.api-dev:
+    driver: bridge 
+
+
+services:
+  sat.recruitment.api:
+    image: sat.recruitment.api:latest
+    depends_on:
+      - "postgres_image"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"     
+    environment:
+      DB_CONNECTION_STRING: "host=postgres_image;port=5432;database=recruitment;username=admin;password=admin"
+    networks:
+      - sat.recruitment.api-dev  
+  
+  postgres_image:
+    image: postgres:latest
+    ports:
+      - "5432"
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+      - /dbscripts/st.sql :/docker-entrypoint-initdb.d/st.sql
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "recruitment"
+    networks:
+      - sat.recruitment.api-dev
+volumes:
+  db_volume:
