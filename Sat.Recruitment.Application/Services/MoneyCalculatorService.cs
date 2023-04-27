@@ -10,20 +10,20 @@ namespace Sat.Recruitment.Application.Services
             var money = user.Money;
             decimal gif = 0;
 
-            switch (user.UserType)
+            switch (user.UserType.ToLower())
             {
-                case "Normal":
+                case "normal":
                     // If new user is normal and has more than USD100
                     if (money > 100)
                         gif = money * 0.12m;
                     else if (money > 10)
                         gif = money * 0.8m;
                     break;
-                case "SuperUser":
+                case "superuser":
                     if (money > 100)
                         gif = money * 0.20m;
                     break;
-                case "Premium":
+                case "premium":
                     if (money > 100)
                         gif = money * 2;
                     break;
