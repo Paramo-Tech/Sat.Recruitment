@@ -28,7 +28,7 @@ services:
     restart: always
     volumes:
       - db_volume:/var/lib/postgresql/data
-      - /dbscripts/st.sql :/docker-entrypoint-initdb.d/st.sql
+      - ./dbscripts/seet.sql:/docker-entrypoint-initdb.d/seet.sql
     environment:
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "admin"
