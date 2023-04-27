@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  sat.recruitment.api:
+    image: ${DOCKER_REGISTRY-}satrecruitmentapi
+    build:
+      context: .
+      dockerfile: src/Sat.Recruitment.Api/Dockerfile

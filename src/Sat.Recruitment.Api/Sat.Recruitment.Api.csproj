@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+		<UserSecretsId>4bed3529-8a90-433c-b539-fb4ae7705007</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" Version="3.2.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.32">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="3.1.32" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+		<PackageReference Include="NLog.Web.AspNetCore" Version="5.2.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\Sat.Recruitment.Application\Sat.Recruitment.Application.csproj" />
+	  <ProjectReference Include="..\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj" />
+	</ItemGroup>
+</Project>
