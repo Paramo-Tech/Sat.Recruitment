@@ -18,7 +18,7 @@ namespace Infraestructure.Configdb
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseNpgsql(_configuration.GetConnectionString("PostgreSQL"));
+            
         }
 
         public DbSet<UserDto> userDto { get; set; }

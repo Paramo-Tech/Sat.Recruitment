@@ -21,7 +21,7 @@ namespace Infraestructure.persistence
         {
 
             var userDto = new UserDto()
-            { Name = user.Name, Email = user.Email, Address = user.Address, Phone = user.Phone, UserType = user.UserType.ToString(), Money = 2000 };
+            { Name = user.Name, Email = user.Email, Address = user.Address, Phone = user.Phone, UserType = user.UserType.ToString(), Money = user.Money };
 
             _apiDbContext.userDto.Add(userDto);
             var insert = await _apiDbContext.SaveChangesAsync();
