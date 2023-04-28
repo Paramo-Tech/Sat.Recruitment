@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Extensions;
 using Sat.Recruitment.Api.DTOs;
 using Sat.Recruitment.Api.Entities;
 using Sat.Recruitment.Api.Services;
@@ -11,18 +10,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sat.Recruitment.Api.Controllers
+namespace Sat.Recruitment.Api.Responses
 {
-
-    /**
-     * Supuestos:
-     * Se asume que la uri del endpoint se puede cambiar asi matchea con las practicas REST
-     * Se asume que el UserType debe ser del tipo Normal, SuperUser, o Premium.
-     * 
-     * 
-     * */
-
-    //TODO: Poner el tipo de string aceptado en el request para UserType
     [ApiController]
     [Route("api/[controller]")]
     public partial class UsersController : ControllerBase
@@ -38,6 +27,28 @@ namespace Sat.Recruitment.Api.Controllers
             _logger = logger;
             _mapper = mapper;
         }
+
+
+        //[HttpPost]
+        //[Route("/create-user")]
+        //public async Task<ActionResult<Response>> CreateUserDeprecated(string name, string email, string address, string phone, string userType, string money)
+        //{
+        //    decimal.TryParse(money, out decimal resultConvert);
+
+        //    var userDto = new UserDTO
+        //    {
+        //        Name = name,
+        //        Email = email,
+        //        Address = address,
+        //        Phone = phone,
+        //        UserType = userType,
+        //        Money = resultConvert
+        //    };
+
+        //    return await CreateUser(userDto);
+        //}
+
+
 
         /// <summary>
         /// Create a new User
@@ -71,7 +82,7 @@ namespace Sat.Recruitment.Api.Controllers
             }
             catch(Exception ex)
             {
-                _logger.LogError("An error ocured", ex);
+                _logger.LogError(ex, $"An error ocured processing user: {@requestUser}");
                 return BadRequest(new Response { IsSuccess = false, Message = ex.Message });
             }
         }

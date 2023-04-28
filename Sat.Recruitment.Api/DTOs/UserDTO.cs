@@ -8,20 +8,5 @@
         public string Phone { get; set; }
         public string UserType { get; set; }
         public decimal Money { get; set; }
-
-        public UserDTO()
-        {
-
-        }
-
-        public UserDTO(string name, string email, string address, string phone, string userType, decimal money)
-        {
-            Name = name;
-            Email = email;
-            Address = address;
-            Phone = phone;
-            UserType = userType;
-            Money = money;            
-        }
     }
 }

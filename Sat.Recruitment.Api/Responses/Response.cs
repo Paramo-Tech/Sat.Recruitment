@@ -1,4 +1,4 @@
-﻿namespace Sat.Recruitment.Api.Controllers
+﻿namespace Sat.Recruitment.Api.Responses
 {
     public class Response
     {

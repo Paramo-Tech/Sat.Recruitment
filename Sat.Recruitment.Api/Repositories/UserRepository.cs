@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IRepository<User>
     {
         private List<User> _userList;
         
@@ -16,28 +16,24 @@ namespace Sat.Recruitment.Api.Repositories
 
         public UserRepository()
         {
-            _filePath = Directory.GetCurrentDirectory() + "/Files/Users.txt"; ;
+            _filePath = Directory.GetCurrentDirectory() + "/Files/Users.txt";
         }
 
         public async Task<bool> Create(User entity)
         {
-            bool isOk;
-
             await GetAllAsync();
 
             if (IsDuplicated(entity))
             {
-                throw new Exception("User is duplicated");
+                return false;
             }
             else
             {
-                isOk = true;
                 _userList.Add(entity);
-
                 await InsertNewUserAsync(entity);
             }
 
-            return isOk;
+            return true;
         }
 
         private async Task InsertNewUserAsync(User user)
