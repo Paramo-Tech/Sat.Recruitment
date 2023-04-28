@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sat.Recruitment.Api.DTOs;
-using Sat.Recruitment.Api.Entities;
-using Sat.Recruitment.Api.Services;
-using Sat.Recruitment.Api.Validations;
+using Sat.Recruitment.Api.Business.DTOs;
+using Sat.Recruitment.Api.Business.Entities;
+using Sat.Recruitment.Api.Business.Responses;
+using Sat.Recruitment.Api.Business.Services;
+using Sat.Recruitment.Api.Business.Validations;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,6 @@ namespace Sat.Recruitment.Api.Responses
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        //addmapper
         public UsersController(IUserService userService, ILogger<UsersController> logger, IMapper mapper)
         {
             _userService = userService;

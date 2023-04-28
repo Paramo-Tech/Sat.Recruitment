@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
-using Sat.Recruitment.Api.DTOs;
-using Sat.Recruitment.Api.Entities;
+using Sat.Recruitment.Api.Business.DTOs;
+using Sat.Recruitment.Api.Business.Entities;
 using System;
 
-namespace Sat.Recruitment.Api.Validations
+namespace Sat.Recruitment.Api.Business.Validations
 {
     public class UserValidator : AbstractValidator<UserDTO>
     {
@@ -16,7 +16,7 @@ namespace Sat.Recruitment.Api.Validations
             RuleFor(user => user.Email).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(ERROR_MESSAGE).EmailAddress(EmailValidationMode.AspNetCoreCompatible);
             RuleFor(user => user.Address).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(ERROR_MESSAGE);
             RuleFor(user => user.Phone).Cascade(CascadeMode.Stop).NotEmpty().WithMessage(ERROR_MESSAGE).Matches(@"^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$");
-            RuleFor(user => user.UserType).Cascade(CascadeMode.Stop).Must( x => Enum.TryParse(x, out UserType result)).WithMessage("The {PropertyName} is invalid");
+            RuleFor(user => user.UserType).Cascade(CascadeMode.Stop).Must(x => Enum.TryParse(x, out UserType result)).WithMessage("The {PropertyName} is invalid");
         }
     }
 }

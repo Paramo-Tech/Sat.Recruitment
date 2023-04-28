@@ -1,11 +1,11 @@
-﻿using Sat.Recruitment.Api.Utils;
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using Sat.Recruitment.Api.Entities;
-using Sat.Recruitment.Api.Repositories;
-using Sat.Recruitment.Api.Strategies;
+using Sat.Recruitment.Api.Data.Repositories;
+using Sat.Recruitment.Api.Business.Entities;
+using Sat.Recruitment.Api.Business.Strategies;
+using Sat.Recruitment.Api.Business.Utils;
 
-namespace Sat.Recruitment.Api.Services
+namespace Sat.Recruitment.Api.Business.Services
 {
     public class UserService : IUserService
     {

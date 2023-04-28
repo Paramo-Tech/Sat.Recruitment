@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sat.Recruitment.Api.Entities;
-using Sat.Recruitment.Api.Repositories;
-using Sat.Recruitment.Api.Services;
 using System.IO;
 using System.Reflection;
 using System;
+using Sat.Recruitment.Api.Data.Repositories;
+using Sat.Recruitment.Api.Business.Entities;
+using Sat.Recruitment.Api.Business.Services;
 
 namespace Sat.Recruitment.Api
 {

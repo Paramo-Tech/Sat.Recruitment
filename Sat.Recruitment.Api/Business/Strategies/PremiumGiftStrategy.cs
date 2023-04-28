@@ -1,7 +1,6 @@
-﻿using Sat.Recruitment.Api.DTOs;
-using Sat.Recruitment.Api.Entities;
+﻿using Sat.Recruitment.Api.Business.Entities;
 
-namespace Sat.Recruitment.Api.Strategies
+namespace Sat.Recruitment.Api.Business.Strategies
 {
     public class PremiumGiftStrategy : BaseStrategy, IGiftStrategy
     {

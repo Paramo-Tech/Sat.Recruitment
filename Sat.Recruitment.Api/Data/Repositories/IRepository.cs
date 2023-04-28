@@ -1,8 +1,7 @@
-﻿using Sat.Recruitment.Api.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sat.Recruitment.Api.Repositories
+namespace Sat.Recruitment.Api.Data.Repositories
 {
     public interface IRepository<T>
     {

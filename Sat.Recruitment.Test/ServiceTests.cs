@@ -1,8 +1,7 @@
 ﻿using Moq;
-using Sat.Recruitment.Api.DTOs;
-using Sat.Recruitment.Api.Entities;
-using Sat.Recruitment.Api.Repositories;
-using Sat.Recruitment.Api.Services;
+using Sat.Recruitment.Api.Business.Entities;
+using Sat.Recruitment.Api.Business.Services;
+using Sat.Recruitment.Api.Data.Repositories;
 using System;
 using System.Threading.Tasks;
 using Xunit;

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Sat.Recruitment.Api.DTOs;
-using Sat.Recruitment.Api.Entities;
+using Sat.Recruitment.Api.Business.DTOs;
+using Sat.Recruitment.Api.Business.Entities;
 
-namespace Sat.Recruitment.Api.Mappings
+namespace Sat.Recruitment.Api.Data.Mappings
 {
     public class AutoMapperProfiles : Profile
     {

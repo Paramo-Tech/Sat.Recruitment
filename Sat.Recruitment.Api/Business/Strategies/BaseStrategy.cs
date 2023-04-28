@@ -1,4 +1,4 @@
-﻿namespace Sat.Recruitment.Api.Strategies
+﻿namespace Sat.Recruitment.Api.Business.Strategies
 {
     public class BaseStrategy
     {

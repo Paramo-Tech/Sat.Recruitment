@@ -1,16 +1,15 @@
-using System;
-using System.Dynamic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Sat.Recruitment.Api.Responses;
-using Sat.Recruitment.Api.DTOs;
-using Sat.Recruitment.Api.Entities;
-using Sat.Recruitment.Api.Responses;
-using Sat.Recruitment.Api.Services;
 using Xunit;
+using Sat.Recruitment.Api.Business.Entities;
+using Sat.Recruitment.Api.Business.Responses;
+using Sat.Recruitment.Api.Business.Services;
+using Sat.Recruitment.Api.Business.DTOs;
+using Sat.Recruitment.Api.Data.Mappings;
 
 namespace Sat.Recruitment.Test
 {
@@ -26,7 +25,7 @@ namespace Sat.Recruitment.Test
             _loggerMock = new Mock<ILogger<UsersController>>();
             _userServiceMock = new Mock<IUserService>();
 
-            var mapperConf = new MapperConfiguration(cfg => cfg.AddProfile(new Api.Mappings.AutoMapperProfiles()));
+            var mapperConf = new MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperProfiles()));
             _mapper = mapperConf.CreateMapper();
         }
 

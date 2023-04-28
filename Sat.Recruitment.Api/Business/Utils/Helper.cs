@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sat.Recruitment.Api.Utils
+namespace Sat.Recruitment.Api.Business.Utils
 {
     public class Helper
     {

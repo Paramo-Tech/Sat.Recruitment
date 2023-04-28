@@ -15,9 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Files\Users - Copy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Files\Users.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,4 +1,4 @@
-﻿namespace Sat.Recruitment.Api.Entities
+﻿namespace Sat.Recruitment.Api.Business.Entities
 {
     public enum UserType
     {

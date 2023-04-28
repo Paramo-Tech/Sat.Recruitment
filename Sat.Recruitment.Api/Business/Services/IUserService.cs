@@ -1,8 +1,7 @@
-﻿using Sat.Recruitment.Api.DTOs;
-using Sat.Recruitment.Api.Entities;
+﻿using Sat.Recruitment.Api.Business.Entities;
 using System.Threading.Tasks;
 
-namespace Sat.Recruitment.Api.Services
+namespace Sat.Recruitment.Api.Business.Services
 {
     public interface IUserService
     {

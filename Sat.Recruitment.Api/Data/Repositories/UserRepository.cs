@@ -1,17 +1,17 @@
 ﻿using Microsoft.OpenApi.Extensions;
-using Sat.Recruitment.Api.Entities;
+using Sat.Recruitment.Api.Business.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sat.Recruitment.Api.Repositories
+namespace Sat.Recruitment.Api.Data.Repositories
 {
     public class UserRepository : IRepository<User>
     {
         private List<User> _userList;
-        
+
         private readonly string _filePath;
 
         public UserRepository()
@@ -41,8 +41,8 @@ namespace Sat.Recruitment.Api.Repositories
             using (StreamWriter outputFile = new StreamWriter(_filePath, true))
             {
                 string line = $"\n{user.Name},{user.Email},{user.Phone},{user.Address},{user.UserType.GetDisplayName()},{user.Money}";
-                await outputFile.WriteLineAsync(line);
-            }            
+                await outputFile.WriteAsync(line);
+            }
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -78,7 +78,7 @@ namespace Sat.Recruitment.Api.Repositories
         {
             return _userList.Any(x =>
                 x.Email == user.Email || x.Phone == user.Phone ||
-                (x.Name == user.Name && x.Address == user.Address));
+                x.Name == user.Name && x.Address == user.Address);
         }
 
         private StreamReader ReadUsersFromFile()
