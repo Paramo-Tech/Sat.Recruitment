@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IUserDbContext
+    public interface IUserRepository
     {
-        bool Create(UserDomain user);
+        Task<bool> Create(UserDomain user);
         bool Update(UserDomain user);
         bool Delete(int id);
     }

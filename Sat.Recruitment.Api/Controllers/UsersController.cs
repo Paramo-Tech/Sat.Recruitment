@@ -38,15 +38,35 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
 
+
+
+
         [HttpPost]
         [Route("/create-user")]
-        public async Task<Result> CreateUser(UserDto userRequest)
+        public async Task<IActionResult> CreateUser(UserDto userRequest)
         {
-            return new Result()
+            try
             {
-                IsSuccess = true,
-                Errors = "User Created"
-            };
+                var create = await _userUseCase.CreateUser(_userUseCase.CreateUserDomain(userRequest.Name, userRequest.Email, userRequest.Address, userRequest.Phone, userRequest.UserType, userRequest.Money));
+                if (create)
+                {
+                    var result = new Result()
+                    {
+                        IsSuccess = true,
+                        Errors = "User Created"
+                    };
+                    return Ok(result);
+                }
+
+                return BadRequest();
+
+            }
+            catch (Exception ex)
+            {
+                //logger errors
+                return BadRequest(ex.Message);
+
+            }
         }
 
         [HttpPost]
@@ -54,7 +74,7 @@ namespace Sat.Recruitment.Api.Controllers
         {
             var errors = "";
 
-            ValidateErrors(name, email, address, phone, ref errors);
+            ValidateErrors(name, email, address, phone, ref errors);//ok
 
             if (errors != null && errors != "")
                 return new Result()
@@ -73,7 +93,7 @@ namespace Sat.Recruitment.Api.Controllers
                 Money = decimal.Parse(money)
             };
 
-            if (newUser.UserType == "Normal")
+            if (newUser.UserType == "Normal") //falta
             {
                 if (decimal.Parse(money) > 100)
                 {
@@ -140,7 +160,7 @@ namespace Sat.Recruitment.Api.Controllers
             try
             {
                 var isDuplicated = false;
-                foreach (var user in _users)
+                foreach (var user in _users) //hacer el get para evaluar si existe
                 {
                     if (user.Email == newUser.Email
                         ||

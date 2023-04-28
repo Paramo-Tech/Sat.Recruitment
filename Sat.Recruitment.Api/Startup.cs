@@ -35,10 +35,10 @@ namespace Sat.Recruitment.Api
             services.AddControllers().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Validations>());
             services.AddSwaggerGen();
 
-            services.AddScoped<IUserDbContext, UserDbContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserUseCase, User>();
 
-            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            var connectionString = (Configuration.GetConnectionString("PostgreSQL"));
             services.AddDbContext<ApiDbContext>(options =>
             options.UseNpgsql(connectionString));
 
