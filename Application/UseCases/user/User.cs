@@ -42,9 +42,11 @@ namespace Application.UseCases.user
             //open/close principle and polymorphism
             user.Money = user.calculateMoney.CalculateAllocationToUser(user.Money);
 
-            await _userRepository.Create(user);
+            var result = await _userRepository.Create(user);
 
-            return true;
+            if (result) return true;
+
+            return false;
         }
     }
 }

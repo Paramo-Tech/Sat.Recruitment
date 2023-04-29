@@ -37,10 +37,6 @@ namespace Sat.Recruitment.Api.Controllers
             return Ok("This work ok");
         }
 
-
-
-
-
         [HttpPost]
         [Route("/create-user")]
         public async Task<IActionResult> CreateUser(UserDto userRequest)
