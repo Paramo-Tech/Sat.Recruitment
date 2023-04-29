@@ -17,7 +17,7 @@ services:
     ports:
       - "3000:80"     
     environment:
-      DB_CONNECTION_STRING: "host=localhost;port=5432;database=recruitment;username=admin;password=admin"
+      DB_CONNECTION_STRING: "host=postgres_image_test;port=5432;database=recruitment;username=admin;password=admin"
     networks:
       - sat.recruitment.api-dev  
   
