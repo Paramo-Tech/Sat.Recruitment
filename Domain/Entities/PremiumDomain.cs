@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain.Entities
 {
-    public class UserDomain : IUserType
+    public class PremiumDomain : IUserType
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,7 +15,6 @@ namespace Domain.Entities
         public string Phone { get; set; }
         public UserType UserType { get; set; }
         public decimal Money { get; set; }
-        public ICalculateMoney calculateMoney { get; set; } = new NormalUser();
+        public ICalculateMoney calculateMoney { get; set; } = new PremiumUser();
     }
-
 }

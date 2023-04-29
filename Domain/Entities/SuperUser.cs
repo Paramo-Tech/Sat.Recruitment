@@ -1,17 +1,14 @@
-﻿using Application.UseCases.user.interfacesBussiness;
+﻿
 using Domain.Entities;
+using Domain.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.UseCases.user
+namespace Domain.Entities
 {
-    public class SuperUser : Domain.Entities.UserDomain, IAllocationMoneyToUser
+    public class SuperUser : ICalculateMoney
     {
-        public SuperUser()
-        {
-
-        }
 
         public decimal CalculateAllocationToUser(decimal money)
         {

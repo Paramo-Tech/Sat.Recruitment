@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.UseCases.user.interfacesBussiness
+namespace Domain.Events
 {
-    public interface IAllocationMoneyToUser
+    public interface ICalculateMoney
     {
         decimal CalculateAllocationToUser(decimal money);
+
     }
 }
+

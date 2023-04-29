@@ -1,19 +1,14 @@
-﻿using Application.UseCases.user.interfacesBussiness;
-using Domain.Entities;
+﻿using Domain.Enums;
+using Domain.Events;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Application.UseCases.user
+
+namespace Domain.Entities
 {
-    public class NormalUser : Domain.Entities.UserDomain, IAllocationMoneyToUser
+    public class NormalUser : ICalculateMoney
     {
         //open to its extension closed to its modification
-        public NormalUser(decimal money)
-        {
-
-        }
-
+      
         public decimal CalculateAllocationToUser(decimal money)
         {
             if (money > 100)

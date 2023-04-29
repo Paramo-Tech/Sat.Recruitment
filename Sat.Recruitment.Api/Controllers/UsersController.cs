@@ -23,7 +23,7 @@ namespace Sat.Recruitment.Api.Controllers
     [Route("[controller]")]
     public partial class UsersController : ControllerBase
     {
-        private readonly IUserUseCase _userUseCase; // USE THIS INTERFACE
+        private readonly IUserUseCase _userUseCase;
         private readonly List<User> _users = new List<User>();
         public UsersController(IUserUseCase userUseCase)
         {

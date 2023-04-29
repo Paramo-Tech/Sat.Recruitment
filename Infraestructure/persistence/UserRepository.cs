@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
+using Domain.Events;
 using Infraestructure.Configdb;
 using Infraestructure.dto;
 using System;
@@ -17,7 +18,7 @@ namespace Infraestructure.persistence
         {
             _apiDbContext = apiDbContext;
         }
-        public async Task<bool> Create(UserDomain user)
+        public async Task<bool> Create(IUserType user)
         {
 
             var userDto = new UserDto()

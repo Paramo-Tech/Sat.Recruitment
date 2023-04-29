@@ -1,6 +1,8 @@
 using Application.Interfaces;
 using Application.InterfacesApplication;
 using Application.UseCases.user;
+using Domain.Entities;
+using Domain.Events;
 using FluentValidation.AspNetCore;
 using Infraestructure.Configdb;
 using Infraestructure.persistence;
@@ -36,13 +38,17 @@ namespace Sat.Recruitment.Api
             services.AddSwaggerGen();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserType, UserDomain>();
+            services.AddScoped<IUserType, PremiumDomain>();
+            services.AddScoped<IUserType, SuperDomain>();
+            services.AddScoped<ICalculateMoney, NormalUser>();
+            services.AddScoped<ICalculateMoney, PremiumUser>();
+            services.AddScoped<ICalculateMoney, SuperUser>();
             services.AddScoped<IUserUseCase, User>();
 
             var connectionString = (Configuration.GetConnectionString("PostgreSQL"));
             services.AddDbContext<ApiDbContext>(options =>
             options.UseNpgsql(connectionString));
-
-
 
         }
 
