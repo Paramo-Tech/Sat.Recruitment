@@ -16,11 +16,5 @@
     <ProjectReference Include="..\Infraestructure\Infraestructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Files\Users.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 
 </Project>

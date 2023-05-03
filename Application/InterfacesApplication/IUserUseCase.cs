@@ -9,5 +9,7 @@ namespace Application.InterfacesApplication
     {
         Task<bool> CreateUser(IUserType user);
         IUserType CreateUserDomain(string name, string email, string address, string phone, string userType, decimal money);
+
+        Task<IUserType> GetUser(int id);
     }
 }

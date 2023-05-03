@@ -38,6 +38,7 @@ namespace Sat.Recruitment.Api
             services.AddSwaggerGen();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            
             services.AddScoped<IUserType, UserDomain>();
             services.AddScoped<IUserType, PremiumDomain>();
             services.AddScoped<IUserType, SuperDomain>();

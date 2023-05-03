@@ -10,6 +10,11 @@ namespace Application.Interfaces
     public interface IUserRepository
     {
         Task<bool> Create(IUserType user);
+
+        Task<IUserType> GetUserById(int id);
+
+        Task<IUserType> GetUserByName(string name, string email);
+
         bool Update(UserDomain user);
         bool Delete(int id);
     }

@@ -14,6 +14,7 @@ namespace Application.UseCases.user
     {
         private readonly IUserRepository _userRepository;
 
+
         public User(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -40,13 +41,36 @@ namespace Application.UseCases.user
         public async Task<bool> CreateUser(IUserType user)
         {
             //open/close principle and polymorphism
+            var userExist = await _userRepository.GetUserByName(user.Name, user.Email);
+            if (userExist != null) throw new ApplicationException("user exists");
+            var email = ValidateEmail(user.Email);
+            user.Email = email;
             user.Money = user.calculateMoney.CalculateAllocationToUser(user.Money);
-
             var result = await _userRepository.Create(user);
-
             if (result) return true;
-
             return false;
+        }
+
+        public async Task<IUserType> GetUser(int id)
+        {
+            var userDomain = await _userRepository.GetUserById(id);
+            if (userDomain == null)
+                throw new KeyNotFoundException("user not found");
+            return userDomain;
+        }
+
+        public string ValidateEmail(string email)
+        {
+            if (email == null) throw new NullReferenceException("email Null");
+            var aux = email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+
+            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+
+            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+
+            email = string.Join("@", new string[] { aux[0], aux[1] });
+
+            return email;
         }
     }
 }
