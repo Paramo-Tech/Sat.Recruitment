@@ -1,15 +1,17 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using Sat.Recruitment.Api.DbContext;
+using Sat.Recruitment.Api.Handlers.CommandHandlers;
+using Sat.Recruitment.Api.Models;
+using Sat.Recruitment.Api.Services;
+using System.IO;
+using System.Text;
 
 namespace Sat.Recruitment.Api
 {
@@ -22,14 +24,56 @@ namespace Sat.Recruitment.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(AddUserCommandHandler).Assembly));
+
+            if (Configuration["Repository"].ToUpper() == "FILE")
+            {
+                services.AddScoped<IRepository<User>>(provider =>
+                {
+                    var filePath = Directory.GetCurrentDirectory() + Configuration["FilePath"];
+                    return new UserRepository(filePath);
+                });
+            }
+            else
+            {
+                string mySqlConnectionStr = Configuration.GetConnectionString("MySQLConnection").ToString();
+                services.AddDbContext<MyDbContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("MySQLConnection"), ServerVersion.AutoDetect(mySqlConnectionStr)));
+                services.AddScoped<IRepository<User>, UserRepositoryMySql>();
+            }
+
+            services.AddSingleton<ITokenService, TokenService>();
+
+
+
+            // Configuración del token JWT
+            var key = Encoding.ASCII.GetBytes(Configuration["JWT:SecretPass"]);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+
+
             services.AddControllers();
             services.AddSwaggerGen();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -46,12 +90,15 @@ namespace Sat.Recruitment.Api
             });
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }
