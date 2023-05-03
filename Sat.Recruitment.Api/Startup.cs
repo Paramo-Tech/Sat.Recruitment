@@ -1,11 +1,20 @@
+using Application.Interfaces;
+using Application.InterfacesApplication;
+using Application.UseCases.user;
+using Domain.Entities;
+using Domain.Events;
+using FluentValidation.AspNetCore;
+using Infraestructure.Configdb;
+using Infraestructure.persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using Sat.Recruitment.Api.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +34,23 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Validations>());
             services.AddSwaggerGen();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            
+            services.AddScoped<IUserType, UserDomain>();
+            services.AddScoped<IUserType, PremiumDomain>();
+            services.AddScoped<IUserType, SuperDomain>();
+            services.AddScoped<ICalculateMoney, NormalUser>();
+            services.AddScoped<ICalculateMoney, PremiumUser>();
+            services.AddScoped<ICalculateMoney, SuperUser>();
+            services.AddScoped<IUserUseCase, User>();
+
+            var connectionString = (Configuration.GetConnectionString("PostgreSQL"));
+            services.AddDbContext<ApiDbContext>(options =>
+            options.UseNpgsql(connectionString));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +60,7 @@ namespace Sat.Recruitment.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
