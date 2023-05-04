@@ -1,0 +1,66 @@
+2023-05-03 20:49:08.7467 Info Message Template Auto Format enabled
+2023-05-03 20:49:08.7467 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 20:49:08.8092 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 20:49:08.8092 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 20:49:08.8398 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 20:49:09.6190 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 20:49:33.6433 Info Message Template Auto Format enabled
+2023-05-03 20:49:33.6433 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 20:49:33.6707 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 20:49:33.6707 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 20:49:33.6847 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 20:49:33.7569 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 20:49:33.7957 Info Shutdown() called. Logger closing...
+2023-05-03 20:49:33.7957 Info Closing old configuration.
+2023-05-03 20:49:33.8054 Info Logger has been closed down.
+2023-05-03 20:49:51.8044 Info Message Template Auto Format enabled
+2023-05-03 20:49:51.8135 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 20:49:51.8651 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 20:49:51.8651 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 20:49:51.8919 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 20:49:52.3277 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 20:52:17.7066 Info Message Template Auto Format enabled
+2023-05-03 20:52:17.7120 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 20:52:17.7522 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 20:52:17.7522 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 20:52:17.7731 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 20:52:18.1112 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:03:54.0956 Info Message Template Auto Format enabled
+2023-05-03 21:03:54.0956 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 21:03:54.1255 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 21:03:54.1255 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 21:03:54.1403 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:03:54.2314 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:03:54.2646 Info Shutdown() called. Logger closing...
+2023-05-03 21:03:54.2646 Info Closing old configuration.
+2023-05-03 21:03:54.2750 Info Logger has been closed down.
+2023-05-03 21:19:19.1920 Info Message Template Auto Format enabled
+2023-05-03 21:19:19.2030 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 21:19:19.2692 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 21:19:19.2692 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 21:19:19.3081 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:19:20.1218 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:19:36.6840 Info Message Template Auto Format enabled
+2023-05-03 21:19:36.6840 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 21:19:36.7260 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 21:19:36.7260 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 21:19:36.7480 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:19:36.8595 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:19:36.9105 Info Shutdown() called. Logger closing...
+2023-05-03 21:19:36.9105 Info Closing old configuration.
+2023-05-03 21:19:36.9234 Info Logger has been closed down.
+2023-05-03 21:21:33.4697 Info Message Template Auto Format enabled
+2023-05-03 21:21:33.4697 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 21:21:33.5118 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 21:21:33.5118 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 21:21:33.5337 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:21:33.6414 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:21:33.6905 Info Shutdown() called. Logger closing...
+2023-05-03 21:21:33.6905 Info Closing old configuration.
+2023-05-03 21:21:33.7035 Info Logger has been closed down.
+2023-05-03 21:22:12.7248 Info Message Template Auto Format enabled
+2023-05-03 21:22:12.7327 Info Loading assembly: NLog.Web.AspNetCore
+2023-05-03 21:22:12.7900 Info Registered target NLog.Targets.FileTarget(Name=alldata)
+2023-05-03 21:22:12.7900 Info Registered target NLog.Targets.FileTarget(Name=ControllersLogs)
+2023-05-03 21:22:12.8180 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
+2023-05-03 21:22:13.5612 Info Validating config: TargetNames=alldata, ControllersLogs, ConfigItems=45, FilePath=C:\Users\luism\Source\Repos\Sat.Recruitment\Sat.Rec.Api\bin\Debug\net6.0\NLog.config
