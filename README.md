@@ -1,48 +1,38 @@
 # Sat.Recruitment
 
-A developer went on vacation and several issues arose in the project that needed to be resolved.
+Code challenge from Paramo Technologies.
 
-The webAPI works, but it has many flaws in architecture, code quality, testing and etc.
+## Refactors
+The API now supports both TextFile and SQLServer to persist the information.
 
-We need you to refactor the code of this project.
+To configure this, at the `appsettings.json` file, the `PersistenceOptions`must be configured as it follow for:
 
-Remember to treat it as a refactoring of a final code, which will go to production and has to be as good as possible.
+- TextFile
+```json
+  "PersistenceOptions": {
+    "Type": 0
+  }
+```
 
-## What we expect to find in the Challenge
+- SQLServer
+```json
+{
+  "PersistenceOptions": {
+    "Type": 1
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=your_connection_string"
+  }
+}
+```
 
-In the result of the refactoring we would like to find:
+## Docker support
+A dockerfile and docker-compose were added to run the application with docker. To run this, Docker Desktop is required (in Windows). 
 
-- Object-oriented programming.
+### How to run in Docker
 
-- An architectural model. The one that you consider most applicable or that you have more experience.
-
-- The Clean Code concepts that you consider important.
-
-- The best unit tests you can do and with the code coverage you consider important.
-
-- A polymorphic system or some design pattern. The one that fits the most or that you like the most.
-
-- Transversal/crosscutting concepts that you consider important to a webAPI in production such as logging, validation, exception handling...
-
-- REST concepts, SOLID principles and good practices applied.
-
-- And you want to take more time in the challenge you can change the type of persistence (currently TXT file), but consider that your new implementation should be working.
-
-Do the best you can.
-
-
-## How much time do you have for the challenge
-
-It is a small WebAPI and normally a good refactoring can be done in about 2 hours.
-
-But we know that each one has its speed and in general we prefer to prioritize the quality of delivery, so there is no time limit.
+1. Open a new terminal (Powershell, WSL2 or Gitbash preferrably).
+2. Go to the root of the project where both `dockerfile` and `docker-compose.yml` are located.
+3. Run `docker compose up`
 
 
-## As you must deliver the challenge once finished
-
-For you to do the challenge you must create a branch or a fork from this one (main).
-
-And once you have finished the refactoring you can send us:
-
-* The link of your branch on Github
-* The link of a PR from your branch to the original repo

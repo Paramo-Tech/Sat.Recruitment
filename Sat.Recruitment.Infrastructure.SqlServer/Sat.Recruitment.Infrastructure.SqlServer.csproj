@@ -1,36 +1,25 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.32">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.32" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.32">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.32" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sat.Recruitment.Application\Sat.Recruitment.Application.csproj" />
-    <ProjectReference Include="..\Sat.Recruitment.Infrastructure.SqlServer\Sat.Recruitment.Infrastructure.SqlServer.csproj" />
-    <ProjectReference Include="..\Sat.Recruitment.Infrastructure.TextFile\Sat.Recruitment.Infrastructure.TextFile.csproj" />
     <ProjectReference Include="..\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Files\Users.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 
 </Project>

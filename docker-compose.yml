@@ -1,0 +1,22 @@
+version: "3.9"
+services:  
+  development-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      SA_PASSWORD: "securePassword001!"
+      ACCEPT_EULA: "Y"
+
+  recruitment-api:
+    image: recruitment-api:latest
+    ports:
+      - 8080:5000
+    build:
+      dockerfile: ./dockerfile
+    restart: on-failure
+    depends_on: 
+      - development-db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=development-db;Database=master;User=sa;Password=securePassword001!
