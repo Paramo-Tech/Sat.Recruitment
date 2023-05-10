@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog" Version="5.1.4" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.BLL\Sat.Recruitment.BLL.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.DAL\Sat.Recruitment.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
