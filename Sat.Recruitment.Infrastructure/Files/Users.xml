@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Users>
+  <User>
+    <Name>Juan</Name>
+    <Email>Juan@marmol.com</Email>
+    <Phone>+5491154762312</Phone>
+    <Address>Peru 2464</Address>
+    <UserType>Normal</UserType>
+    <Money>1234</Money>
+  </User>
+  <User>
+    <Name>Franco</Name>
+    <Email>Franco.Perez@gmail.com</Email>
+    <Phone>+534645213542</Phone>
+    <Address>Alvear y Colombres</Address>
+    <UserType>Premium</UserType>
+    <Money>112234</Money>
+  </User>
+  <User>
+    <Name>Agustina</Name>
+    <Email>Agustina@gmail.com</Email>
+    <Phone>+534645213542</Phone>
+    <Address>Garay y Otra Calle</Address>
+    <UserType>SuperUser</UserType>
+    <Money>112234</Money>
+  </User>
+  <User>
+    <Name>Leandro Bressanello</Name>
+    <Email>leandrobressanello@gmail.com</Email>
+    <Phone>01150376314</Phone>
+    <Address>Vidt 2125</Address>
+    <UserType>Normal</UserType>
+    <Money>144.0</Money>
+  </User>
+</Users>
