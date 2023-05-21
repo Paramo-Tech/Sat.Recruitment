@@ -17,7 +17,26 @@ namespace Sat.Recruitment.Services
         {
             _userRepository = userRepository;
         }
+        public async Task<UserDTO> GetUser(string email)
+        {
+            var user = _userRepository.GetByEmail(email);
+            if(user == null) 
+            { 
+                return new UserDTO(); 
+            }
+            //TODO:Add AutoMapper
+            var result = new UserDTO()
+            {
+                Address = user.Address,
+                Email = email,
+                Money = user.Money,
+                Name = user.Name,
+                Phone = user.Phone,
+                UserType = user.UserType.ToString(),
+            };
 
+            return result;
+        }
         public async Task<UserDTO> SaveUser(UserDTO newUser)
         {
             var user = new User
@@ -78,8 +97,10 @@ namespace Sat.Recruitment.Services
             var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
             var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+            if(atIndex > 0)
+            {
+                aux[0] = aux[0].Remove(atIndex);
+            }            
 
             newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
         }

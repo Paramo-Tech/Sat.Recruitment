@@ -7,5 +7,6 @@ namespace Sat.Recruitment.Domain.Respositories
     {
         List<User> ReadUsers();
         void CreateUser(User user);
+        User GetByEmail(string email);
     }
 }

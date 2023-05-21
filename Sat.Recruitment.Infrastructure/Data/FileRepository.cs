@@ -23,6 +23,12 @@ namespace Sat.Recruitment.Infrastructure.Data
             WriteUsers(users);
         }
 
+        public User GetByEmail(string email)
+        {
+            var users = ReadUsers();
+            return users.Find(u => u.Email == email);
+        }
+
         public List<User> ReadUsers()
         {
             var users = new List<User>();
