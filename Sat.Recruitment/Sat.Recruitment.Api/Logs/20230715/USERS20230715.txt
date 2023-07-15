@@ -1,0 +1,21 @@
+2023-07-15 18:06:11 Request :  name ramon,email oropeza,address potio ,phone 14127320010, UserType Normal ,money 1000000 
+2023-07-15 18:06:13 catch : Error getting value from 'ReadTimeout' on 'System.IO.FileStream'. 
+2023-07-15 18:06:25 Request :  name ramon,email oropeza,address potio ,phone 14127320010, UserType Normal ,money 1000000 
+2023-07-15 18:06:47 catch : The process cannot access the file 'C:\Users\169041\Desktop\Test Tecnico\Sat.Recruitment\Sat.Recruitment.Api\Files\Users.txt' because it is being used by another process. 
+2023-07-15 18:07:09 Request :  name ramon,email oropeza,address potio ,phone 14127320010, UserType Normal ,money 1000000 
+2023-07-15 18:07:34 catch : The process cannot access the file 'C:\Users\169041\Desktop\Test Tecnico\Sat.Recruitment\Sat.Recruitment.Api\Files\Users.txt' because it is being used by another process. 
+2023-07-15 18:09:12 Request :  name ramon,email oropeza,address potio ,phone 14127320010, UserType Normal ,money 1000000 
+2023-07-15 18:10:32 catch : The process cannot access the file 'C:\Users\169041\Desktop\Test Tecnico\Sat.Recruitment\Sat.Recruitment.Api\Files\Users.txt' because it is being used by another process. 
+2023-07-15 18:14:02 Request :  name ramon,email ramon@oropeza.com,address potosi ,phone 11273320010, UserType Normal ,money 100000 
+2023-07-15 18:14:33 catch : Error getting value from 'ReadTimeout' on 'System.IO.FileStream'. 
+2023-07-15 18:14:43 Request :  name ramon,email ramon@oropeza.com,address potosi ,phone 11273320010, UserType Normal ,money 100000 
+2023-07-15 18:15:06 catch : Error getting value from 'ReadTimeout' on 'System.IO.FileStream'. 
+2023-07-15 18:15:15 Request :  name ramon,email ramon@oropeza.com,address potosi ,phone 11273320010, UserType Normal ,money 100000 
+2023-07-15 18:15:22 catch : The process cannot access the file 'C:\Users\169041\Desktop\Test Tecnico\Sat.Recruitment\Sat.Recruitment.Api\Files\Users.txt' because it is being used by another process. 
+2023-07-15 18:15:31 Request :  name ramon,email ramon@oropeza.com,address potosi ,phone 11273320010, UserType Normal ,money 100000 
+2023-07-15 18:16:05 catch : Object reference not set to an instance of an object. 
+2023-07-15 18:16:08 Request :  name ramon,email ramon@oropeza.com,address potosi ,phone 11273320010, UserType Normal ,money 100000 
+2023-07-15 18:16:10 catch : The process cannot access the file 'C:\Users\169041\Desktop\Test Tecnico\Sat.Recruitment\Sat.Recruitment.Api\Files\Users.txt' because it is being used by another process. 
+2023-07-15 18:17:01 Request :  name ramon,email ramon@gmail.com,address potosi ,phone 1127320010, UserType Normal ,money 1000000 
+2023-07-15 18:18:06  users  [{"Address":"Peru 2464","Phone":"+5491154762312","Name":"Juan","Email":"Juan@marmol.com","UserType":"Normal","Money":1234.0},{"Address":"Alvear y Colombres","Phone":"+534645213542","Name":"Franco","Email":"Franco.Perez@gmail.com","UserType":"Premium","Money":112234.0},{"Address":"Garay y Otra Calle","Phone":"+534645213542","Name":"Agustina","Email":"Agustina@gmail.com","UserType":"SuperUser","Money":112234.0}] 
+2023-07-15 18:18:17  result validate exist userfile  {"IsSuccess":true,"Errors":"User Created"}
