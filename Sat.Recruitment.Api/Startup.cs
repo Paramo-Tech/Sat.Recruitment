@@ -26,6 +26,7 @@ namespace Sat.Recruitment.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<UserService>();
             services.AddSwaggerGen();
         }
 
