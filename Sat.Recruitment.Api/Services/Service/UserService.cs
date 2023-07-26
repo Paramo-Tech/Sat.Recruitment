@@ -37,7 +37,10 @@ namespace Sat.Recruitment.Api.Services.Service
 
         public async Task<Result> InsertAndSaveAsync(userCreateDTO user)
         {
-            var money = decimal.Parse(user.money);
+            try
+            {
+                var money = decimal.Parse(user.money);
+
             var directory = "/Files/Users.txt";
             var newUser = new User
             {
@@ -87,24 +90,26 @@ namespace Sat.Recruitment.Api.Services.Service
             }
 
             var reader = _readUserFileService.ReadUsersFromFile(directory);
-
-            NormalizeEmail(newUser);
-
-            var usersFromFile = new List<User>();
-
-            while (reader.Peek() >= 0)
+            var normalize = NormalizeEmail(newUser);
+           if(!normalize.IsSuccess)
             {
-                
-                var line = reader.ReadLine();
-                if(line != "" && line != null) { 
-                var userFromFile = ParseUserFromLine(line);
-                usersFromFile.Add(userFromFile);
-                }
+                return normalize;
+
             }
-            reader.Close();
+                var usersFromFile = new List<User>();
 
-            try
-            {
+                while (reader.Peek() >= 0)
+                {
+
+                    var line = reader.ReadLine();
+                    if (line != "" && line != null)
+                    {
+                        var userFromFile = BuildUser(line);
+                        usersFromFile.Add(userFromFile);
+                    }
+                }
+                reader.Close();
+
                 bool isDuplicated = usersFromFile.Any(u => u.Email == newUser.Email || u.Phone == newUser.Phone);
 
                 if (isDuplicated)
@@ -117,9 +122,9 @@ namespace Sat.Recruitment.Api.Services.Service
                     };
                 }
 
-                bool hasDuplicateNameAndAddress = usersFromFile.Any(u => u.Name == newUser.Name && u.Address == newUser.Address);
+                bool duplicateNameAndAddress = usersFromFile.Any(u => u.Name == newUser.Name && u.Address == newUser.Address);
 
-                if (hasDuplicateNameAndAddress)
+                if (duplicateNameAndAddress)
                 {
                     return new Result()
                     {
@@ -130,7 +135,7 @@ namespace Sat.Recruitment.Api.Services.Service
                 }
 
 
-                if (!isDuplicated && !hasDuplicateNameAndAddress)
+                if (!isDuplicated && !duplicateNameAndAddress)
                 {
                    
 
@@ -167,12 +172,14 @@ namespace Sat.Recruitment.Api.Services.Service
             }
             catch (Exception e)
             {
-                Debug.WriteLine("The user is duplicated " + e.Message);
+                Debug.WriteLine("- Exception :" + e.GetType());
+                var message = "Server Error: " + e.Message;
+                if (e.GetType() == typeof(FormatException)) message = "Error al tratar de convertir de string a number";
                 return new Result()
                 {
                     IsSuccess = false,
                     codeStatus = 500,
-                    Errors = "Server Error" + e.Message
+                    Errors = message
                 };
             }
 
@@ -184,15 +191,25 @@ namespace Sat.Recruitment.Api.Services.Service
         }
 
 
-        private void NormalizeEmail(User user)
+        private Result NormalizeEmail(User user)
         {
-            var aux = user.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-            user.Email = string.Join("@", new string[] { aux[0], aux[1] });
+            try
+            {
+                var aux = user.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+                var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+                aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+                user.Email = string.Join("@", new string[] { aux[0], aux[1] });
+                return new Result() { IsSuccess = true };
+            }
+            catch (Exception e )
+            {
+                return new Result() { IsSuccess=false, codeStatus= 500, Errors= "Execpcion " + e.Message};
+                throw;
+            }
+            
         }
 
-        private User ParseUserFromLine(string line)
+        private User BuildUser(string line)
         {
             var data = line.Split(',');
             return new User
