@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.DTOs\Sat.Recruitment.DTOs.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Entities\Sat.Recruitment.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

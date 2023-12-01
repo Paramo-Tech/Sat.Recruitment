@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.DTOs\Sat.Recruitment.DTOs.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Entities\Sat.Recruitment.Entities.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Presenter\Sat.Recruitment.Presenter.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.UseCasesAbstractions\Sat.Recruitment.UseCasesAbstractions.csproj" />
+  </ItemGroup>
+
+</Project>
