@@ -1,10 +1,4 @@
-using System;
-using System.Dynamic;
-
-using Microsoft.AspNetCore.Mvc;
-
 using Sat.Recruitment.Api.Controllers;
-
 using Xunit;
 
 namespace Sat.Recruitment.Test
@@ -18,7 +12,6 @@ namespace Sat.Recruitment.Test
             var userController = new UsersController();
 
             var result = userController.CreateUser("Mike", "mike@gmail.com", "Av. Juan G", "+349 1122354215", "Normal", "124").Result;
-
 
             Assert.Equal(true, result.IsSuccess);
             Assert.Equal("User Created", result.Errors);
