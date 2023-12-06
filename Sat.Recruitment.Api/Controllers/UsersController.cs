@@ -113,17 +113,7 @@ namespace Sat.Recruitment.Api.Controllers
                     }
                 }
 
-                if (!isDuplicated)
-                {
-                    Debug.WriteLine("User Created");
-
-                    return Task.FromResult(new Result()
-                    {
-                        IsSuccess = true,
-                        Errors = "User Created"
-                    });
-                }
-                else
+                if (isDuplicated)
                 {
                     Debug.WriteLine("The user is duplicated");
 
@@ -131,6 +121,16 @@ namespace Sat.Recruitment.Api.Controllers
                     {
                         IsSuccess = false,
                         Errors = "The user is duplicated"
+                    });                    
+                }
+                else
+                {
+                    Debug.WriteLine("User Created");
+
+                    return Task.FromResult(new Result()
+                    {
+                        IsSuccess = true,
+                        Errors = "User Created"
                     });
                 }
             }
