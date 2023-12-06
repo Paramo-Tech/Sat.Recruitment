@@ -27,7 +27,7 @@ namespace Sat.Recruitment.Api.Controllers
         {
             var errors = ValidateErrors(name, email, address, phone);
 
-            if (String.IsNullOrEmpty(errors))
+            if (!String.IsNullOrEmpty(errors))
                 return Task.FromResult(new Result()
                 {
                     IsSuccess = false,
@@ -80,14 +80,7 @@ namespace Sat.Recruitment.Api.Controllers
 
             var reader = ReadUsersFromFile();
 
-            //Normalize email
-            var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-
-            newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
+            newUser.Email = NormalizeEmail(newUser.Email);
 
             while (reader.Peek() >= 0)
             {
@@ -113,14 +106,10 @@ namespace Sat.Recruitment.Api.Controllers
                     {
                         isDuplicated = true;
                     }
-                    else if (user.Name == newUser.Name)
+                    else if (user.Name == newUser.Name && user.Address == newUser.Address)
                     {
-                        if (user.Address == newUser.Address)
-                        {
-                            isDuplicated = true;
-                            throw new Exception("User is duplicated");
-                        }
-
+                        isDuplicated = true;
+                        throw new Exception("User is duplicated");
                     }
                 }
 
@@ -154,12 +143,16 @@ namespace Sat.Recruitment.Api.Controllers
                     Errors = "The user is duplicated"
                 });
             }
+        }
 
-            return Task.FromResult(new Result()
-            {
-                IsSuccess = true,
-                Errors = "User Created"
-            });
+        private string NormalizeEmail(string email)
+        {
+            var aux = email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+            email = string.Join("@", new string[] { aux[0], aux[1] });
+
+            return email;
         }
 
         private string ValidateErrors(string name, string email, string address, string phone)
