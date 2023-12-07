@@ -15,6 +15,10 @@ namespace Sat.Recruitment.Api.Controllers
         private readonly List<User> _users = new List<User>();
         private readonly FileService _fileService;
 
+        public UsersController()
+        {
+        }
+
         public UsersController(FileService fileService)
         {
             _fileService = fileService;
