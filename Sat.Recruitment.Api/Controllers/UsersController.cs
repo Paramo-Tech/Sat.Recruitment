@@ -40,17 +40,7 @@ namespace Sat.Recruitment.Api.Controllers
                     }
                     else
                     {
-                        var newUser = new User
-                        {
-                            Name = user.Name,
-                            Email = user.Email,
-                            Address = user.Address,
-                            Phone = user.Phone,
-                            UserType = user.UserType,
-                            Money = user.Money
-                        };
-
-                        _userService.CreateUser(newUser);
+                        _userService.CreateUser(user);
 
                         return Task.FromResult(new Result()
                         {
@@ -73,7 +63,7 @@ namespace Sat.Recruitment.Api.Controllers
                 return Task.FromResult(new Result()
                 {
                     IsSuccess = false,
-                    Errors = "Please fill all the required fields.",
+                    Errors = "Please fill all the required fields."
                 }); ;
             }           
         }
