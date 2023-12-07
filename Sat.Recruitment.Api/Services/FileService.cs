@@ -1,10 +1,10 @@
 ﻿using System.IO;
 
-namespace Sat.Recruitment.Api.Controllers
+namespace Sat.Recruitment.Api.Services
 {
-    public partial class UsersController
+    public class FileService
     {
-        private StreamReader ReadUsersFromFile()
+        public StreamReader ReadUsersFromFile()
         {
             var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
 

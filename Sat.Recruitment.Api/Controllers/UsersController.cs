@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sat.Recruitment.Api.Models;
+using Sat.Recruitment.Api.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,8 +13,11 @@ namespace Sat.Recruitment.Api.Controllers
     public partial class UsersController : ControllerBase
     {
         private readonly List<User> _users = new List<User>();
-        public UsersController()
+        private readonly FileService _fileService;
+
+        public UsersController(FileService fileService)
         {
+            _fileService = fileService;
         }
 
         [HttpPost]
@@ -73,7 +77,7 @@ namespace Sat.Recruitment.Api.Controllers
                 }
             }
 
-            var reader = ReadUsersFromFile();
+            var reader = _fileService.ReadUsersFromFile();
 
             newUser.Email = NormalizeEmail(newUser.Email);
 
