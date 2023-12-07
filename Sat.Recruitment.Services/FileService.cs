@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
-namespace Sat.Recruitment.Api.Services
+namespace Sat.Recruitment.Services
 {
     public class FileService
     {

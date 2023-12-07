@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sat.Recruitment.Api.Models;
-using Sat.Recruitment.Api.Services;
+using Sat.Recruitment.Models;
+using Sat.Recruitment.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 

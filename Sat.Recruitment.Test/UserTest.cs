@@ -1,8 +1,6 @@
 using Sat.Recruitment.Api.Controllers;
-using Sat.Recruitment.Api.Models;
-using Sat.Recruitment.Api.Services;
-using System;
-using System.IO;
+using Sat.Recruitment.Models;
+using Sat.Recruitment.Services;
 using Xunit;
 
 namespace Sat.Recruitment.Test

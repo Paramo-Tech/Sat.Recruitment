@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Sat.Recruitment.Api.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Security.Policy;
+using Sat.Recruitment.Models;
 
-namespace Sat.Recruitment.Api.Services
+namespace Sat.Recruitment.Services
 {
     public class UserService
     {
@@ -16,7 +14,7 @@ namespace Sat.Recruitment.Api.Services
         }
 
         public void CreateUser(User newUser)
-        {         
+        {
             if (newUser.UserType == "Normal")
             {
                 if (newUser.Money > 100)
@@ -64,7 +62,7 @@ namespace Sat.Recruitment.Api.Services
                 var reader = _fileService.ReadUsersFromFile();
 
                 while (reader.Peek() >= 0)
-                {                    
+                {
                     var line = reader.ReadLineAsync().Result.Split(',');
 
                     if (line.Length > 1 && !line[0].Equals(""))
@@ -81,7 +79,7 @@ namespace Sat.Recruitment.Api.Services
                         users.Add(user);
                     }
                 }
-                    
+
 
                 reader.Close();
 
@@ -91,7 +89,7 @@ namespace Sat.Recruitment.Api.Services
             {
                 throw new Exception(ex.Message);
             }
-            
+
         }
         public string NormalizeEmail(string email)
         {
