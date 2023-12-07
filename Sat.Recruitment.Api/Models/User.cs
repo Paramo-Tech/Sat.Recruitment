@@ -16,7 +16,6 @@ namespace Sat.Recruitment.Api.Models
 
         [Required(ErrorMessage = "Phone is required")]
         [RegularExpression(@"^\+?\d{1,3}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}$", ErrorMessage = "Enter a valid phone number.")]
-        public string PhoneNumber { get; set; }
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "UserType is required")]

@@ -1,4 +1,5 @@
-﻿using Sat.Recruitment.Api.Models;
+﻿using Microsoft.AspNetCore.Hosting;
+using Sat.Recruitment.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Policy;
@@ -21,7 +22,6 @@ namespace Sat.Recruitment.Api.Services
                 if (newUser.Money > 100)
                 {
                     var percentage = Convert.ToDecimal(0.12);
-                    //If new user is normal and has more than USD100
                     var gif = newUser.Money * percentage;
                     newUser.Money += gif;
                 }
@@ -32,7 +32,7 @@ namespace Sat.Recruitment.Api.Services
                     newUser.Money += gif;
                 }
             }
-            if (newUser.UserType == "SuperUser")
+            else if (newUser.UserType == "SuperUser")
             {
                 if (newUser.Money > 100)
                 {
@@ -41,7 +41,7 @@ namespace Sat.Recruitment.Api.Services
                     newUser.Money += gif;
                 }
             }
-            if (newUser.UserType == "Premium")
+            else if (newUser.UserType == "Premium")
             {
                 if (newUser.Money > 100)
                 {
@@ -64,19 +64,24 @@ namespace Sat.Recruitment.Api.Services
                 var reader = _fileService.ReadUsersFromFile();
 
                 while (reader.Peek() >= 0)
-                {
+                {                    
                     var line = reader.ReadLineAsync().Result.Split(',');
-                    var user = new User
+
+                    if (line.Length > 1 && !line[0].Equals(""))
                     {
-                        Name = line[0].ToString(),
-                        Email = line[1].ToString(),
-                        Phone = line[2].ToString(),
-                        Address = line[3].ToString(),
-                        UserType = line[4].ToString(),
-                        Money = decimal.Parse(line[5].ToString()),
-                    };
-                    users.Add(user);
+                        var user = new User
+                        {
+                            Name = line[0].ToString(),
+                            Email = line[1].ToString(),
+                            Phone = line[2].ToString(),
+                            Address = line[3].ToString(),
+                            UserType = line[4].ToString(),
+                            Money = decimal.Parse(line[5].ToString()),
+                        };
+                        users.Add(user);
+                    }
                 }
+                    
 
                 reader.Close();
 

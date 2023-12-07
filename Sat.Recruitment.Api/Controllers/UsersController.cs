@@ -13,15 +13,18 @@ namespace Sat.Recruitment.Api.Controllers
     [ApiController]    
     public partial class UsersController : ControllerBase
     {
-        private List<User> _users = new List<User>();
+        private readonly List<User> _users = new List<User>();
         private readonly UserService _userService;
 
-        public UsersController(UserService userService)
+        public UsersController()
         {
-            _userService = userService;
+            _userService = new UserService();
             _users = _userService.GetUserListFromFile();
         }
 
+        /// <summary>
+        /// Creates a new User. it does not allow duplicates.
+        /// </summary>
         [HttpPost]
         public Task<Result> CreateUser([FromBody] User user)
         {
@@ -40,6 +43,14 @@ namespace Sat.Recruitment.Api.Controllers
                     }
                     else
                     {
+                        if(!user.UserType.Equals("Normal") && !user.UserType.Equals("SuperUser") && !user.UserType.Equals("Premium"))
+                        {
+                            return Task.FromResult(new Result()
+                            {
+                                IsSuccess = false,
+                                Errors = "Invalid UserType. It must be Normal, SuperUser or Premium."
+                            }); ;
+                        }
                         _userService.CreateUser(user);
 
                         return Task.FromResult(new Result()
