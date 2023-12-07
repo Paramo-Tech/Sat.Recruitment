@@ -8,18 +8,22 @@ namespace Sat.Recruitment.Api.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Phone is required")]
+        [RegularExpression(@"^\+?\d{1,3}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}$", ErrorMessage = "Enter a valid phone number.")]
+        public string PhoneNumber { get; set; }
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "UserType is required")]
         public string UserType { get; set; }
 
         [Required(ErrorMessage = "Money is required")]
+        [RegularExpression(@"^\d+(\.\d+)?$", ErrorMessage = "Enter a valid numeric value.")]
         public decimal Money { get; set; }
     }
 }
