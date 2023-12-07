@@ -1,10 +1,7 @@
 ﻿using Sat.Recruitment.Api.Models;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Security.Policy;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Sat.Recruitment.Api.Services
 {
@@ -54,32 +51,42 @@ namespace Sat.Recruitment.Api.Services
             }
 
             newUser.Email = NormalizeEmail(newUser.Email);
+
+            string stringifiedUser = $"{newUser.Name},{newUser.Email},{newUser.Phone},{newUser.Address},{newUser.UserType},{newUser.Money}";
+            _fileService.SaveUserIntoFile(stringifiedUser);
         }
 
         public List<User> GetUserListFromFile()
         {
-            List<User> users = new List<User>();
-
-            var reader = _fileService.ReadUsersFromFile();
-
-            while (reader.Peek() >= 0)
+            try
             {
-                var line = reader.ReadLineAsync().Result;
-                var user = new User
+                List<User> users = new List<User>();
+                var reader = _fileService.ReadUsersFromFile();
+
+                while (reader.Peek() >= 0)
                 {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                users.Add(user);
+                    var line = reader.ReadLineAsync().Result.Split(',');
+                    var user = new User
+                    {
+                        Name = line[0].ToString(),
+                        Email = line[1].ToString(),
+                        Phone = line[2].ToString(),
+                        Address = line[3].ToString(),
+                        UserType = line[4].ToString(),
+                        Money = decimal.Parse(line[5].ToString()),
+                    };
+                    users.Add(user);
+                }
+
+                reader.Close();
+
+                return users;
             }
-
-            reader.Close();
-
-            return users;
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
         }
         public string NormalizeEmail(string email)
         {
