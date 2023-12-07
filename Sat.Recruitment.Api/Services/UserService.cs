@@ -1,6 +1,10 @@
 ﻿using Sat.Recruitment.Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Security.Policy;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Sat.Recruitment.Api.Services
 {
@@ -11,6 +15,45 @@ namespace Sat.Recruitment.Api.Services
         public UserService()
         {
             _fileService = new FileService();
+        }
+
+        public void CreateUser(User newUser)
+        {         
+            if (newUser.UserType == "Normal")
+            {
+                if (newUser.Money > 100)
+                {
+                    var percentage = Convert.ToDecimal(0.12);
+                    //If new user is normal and has more than USD100
+                    var gif = newUser.Money * percentage;
+                    newUser.Money += gif;
+                }
+                if (newUser.Money < 100 && newUser.Money > 10)
+                {
+                    var percentage = Convert.ToDecimal(0.8);
+                    var gif = newUser.Money * percentage;
+                    newUser.Money += gif;
+                }
+            }
+            if (newUser.UserType == "SuperUser")
+            {
+                if (newUser.Money > 100)
+                {
+                    var percentage = Convert.ToDecimal(0.20);
+                    var gif = newUser.Money * percentage;
+                    newUser.Money += gif;
+                }
+            }
+            if (newUser.UserType == "Premium")
+            {
+                if (newUser.Money > 100)
+                {
+                    var gif = newUser.Money * 2;
+                    newUser.Money += gif;
+                }
+            }
+
+            newUser.Email = NormalizeEmail(newUser.Email);
         }
 
         public List<User> GetUserListFromFile()
@@ -46,22 +89,6 @@ namespace Sat.Recruitment.Api.Services
             email = string.Join("@", new string[] { aux[0], aux[1] });
 
             return email;
-        }
-
-        public string ValidateErrors(string name, string email, string address, string phone)
-        {
-            string errors = string.Empty;
-
-            if (name == null)
-                errors = "The name is required";
-            if (email == null)
-                errors += " The email is required.";
-            if (address == null)
-                errors += " The address is required.";
-            if (phone == null)
-                errors += " The phone is required.";
-
-            return errors;
         }
     }
 }
